@@ -1,5 +1,5 @@
 <?php
-include 'rsc/js/head.js';
+include 'rsc/js/head.php';
 ?>
 <!DOCTYPE html>
 
