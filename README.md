@@ -1,2 +1,9 @@
 # APP2000B-Group11
-School project
+
+Prosjektbeskrivelse
+
+
+Utviklere
+Robert Anholt
+Kim Pedersen
+Lars Stian Fagerlid
