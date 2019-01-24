@@ -1,9 +1,8 @@
 <?php
-include 'rsc/js/head.php';
+include 'rsc/php/head.php';
+include 'rsc/php/header.php';
 ?>
-<!DOCTYPE html>
 
-<html>
 
 <body>
 
