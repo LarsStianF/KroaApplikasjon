@@ -1,4 +1,6 @@
+<?php
 include 'rsc/js/head.js';
+?>
 <!DOCTYPE html>
 
 <html>
