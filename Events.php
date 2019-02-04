@@ -20,6 +20,26 @@ include 'rsc/imports/php/header.php';
             <!-- logo navbar stop -->
 
         </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    Test1
+                </div>
+                <div class="col-sm">
+                    Test2
+                </div>
+                <div class="col-sm">
+                    Test3
+                </div>
+                <div class="col-sm">
+                    Test4
+                </div>
+            </div>
+        </div>
+
 
     </section>
 
