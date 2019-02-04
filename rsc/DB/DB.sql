@@ -50,15 +50,6 @@ CREATE TABLE `arrangement` (
   `Tid_Slutt` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `arrangement`
---
-
-INSERT INTO `arrangement` (`ID`, `Navn`, `Dato`, `Tid_Start`, `Tid_Slutt`) VALUES
-(1, 'Quiz', '2019-01-22', '1900', '2300'),
-(2, 'Hellbillies', '2019-01-27', '2000', '0230'),
-(3, 'Afterski', '2019-03-14', '1900', '0130'),
-(4, 'X-russ', '2019-04-04', '1900', '0130');
 
 -- --------------------------------------------------------
 
