@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2019 at 03:04 PM
+-- Generation Time: Feb 04, 2019 at 03:28 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -49,6 +49,16 @@ CREATE TABLE `arrangement` (
   `Tid_Start` varchar(10) DEFAULT NULL,
   `Tid_Slutt` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `arrangement`
+--
+
+INSERT INTO `arrangement` (`ID`, `Navn`, `Dato`, `Tid_Start`, `Tid_Slutt`) VALUES
+(1, 'Quiz', '2019-01-22', '1900', '2300'),
+(2, 'Hellbillies', '2019-01-27', '2000', '0230'),
+(3, 'Afterski', '2019-03-14', '1900', '0130'),
+(4, 'X-russ', '2019-04-04', '1900', '0130');
 
 -- --------------------------------------------------------
 
@@ -143,6 +153,22 @@ ALTER TABLE `frivillig`
 ALTER TABLE `ønsket_frivillig`
   ADD PRIMARY KEY (`Friv_ID`,`Arr_ID`),
   ADD KEY `ID_idx` (`Arr_ID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `arrangement`
+--
+ALTER TABLE `arrangement`
+  MODIFY `ID` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `frivillig`
+--
+ALTER TABLE `frivillig`
+  MODIFY `ID` smallint(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
