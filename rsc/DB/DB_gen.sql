@@ -106,7 +106,7 @@ CREATE TABLE `frivillig` (
   `Etternavn` varchar(30) DEFAULT NULL,
   `TlfNr` char(8) DEFAULT NULL,
   `Email` varchar(30) DEFAULT NULL,
-  `Passord` varchar(20) DEFAULT NULL,
+  `Passord` varchar(100) DEFAULT NULL,
   `Enhet` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -217,10 +217,10 @@ INSERT INTO Arrangement (Navn, Dato, Tid_Start, Tid_Slutt) VALUES
 ('X-russ', '2019-04-04', '1900', '0130');
 
 INSERT INTO Frivillig (Fornavn, Etternavn, TlfNr, Email, Passord, Enhet) VALUES
-('root', 'Sunde', 92928383, 'root@test.no', 'Root123', 0),
-('Kari', 'Øvrebø', 83839292, 'Kari@test.no', 'password', 3),
-('Kim', 'Possible', 77775555, 'Possible@test.no', '56789', 5),
-('Trym', 'Host', 88884444, 'Host@test.no', '1337', 1);
+('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0),
+('Kari', 'Øvrebø', 83839292, 'Kari@test.no', md5('Root123'), 3),
+('Kim', 'Possible', 77775555, 'Possible@test.no', md5('Root123'), 5),
+('Trym', 'Host', 88884444, 'Host@test.no', md5('Root123'), 1);
 
 INSERT INTO Crews (ID, Bar, Vakt, Crew, Teknisk) VALUES
 (1, 0, 1, 0, 1),
