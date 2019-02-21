@@ -1,67 +1,135 @@
 <?php
-include 'rsc/imports/php/head.php';
-include 'rsc/imports/php/header.php';
+include 'rsc/imports/php/components/head.php';
 
 ?>
+    <script>
+        $(document).ready(function(){
+            $("#loginbtn").click(function(){
+                $("#welcomediv").fadeOut(1);
+                $("#logindiv").fadeIn(1);
+            });
+            $(".abortbtn").click(function(){
+                $("#logindiv").fadeOut(1);
+                $("#registerdiv").fadeOut(1);
+                $("#welcomediv").fadeIn(1);
 
-<!--
-##################################################################################
-######################## ! DO NOT EDIT ABOVE THIS POINT ! ########################
-##################################################################################
--->
-<main>
+            });
+            $("#registerbtn").click(function(){
+                $("#welcomediv").fadeOut(1);
+                $("#registerdiv").fadeIn(1);
+
+            });
+        });
 
 
-    <section>
-        <div class="main-picture">
+    </script>
 
-            <!-- logo navbar start -->
-            <a href="#" class=""><img src="rsc/img/Openscenecut.png"></a>
-            <!-- logo navbar stop -->
+    <!--
+    ##################################################################################
+    ######################## ! DO NOT EDIT ABOVE THIS POINT ! ########################
+    ##################################################################################
+    -->
+    <section class="landing-page">
+        <div class="front-cover d-flex">
 
+            <div id="welcomediv" class="bg-light container  align-self-center rounded p-3">
 
-        </div>
-    </section>
-    <section class="pt-5 pb-5">
-        <div class="container">
-            <div class="row">
-
-                <div class="col text-center">
-                    <h1>TEST1</h1>
+                <div class="container-fluid text-center ">
+                    <h1 class="">Welcome!</h1>
+                    <button id="loginbtn" class="btn btn-success btn-lg">Login</button>
+                    <button id="registerbtn" class="btn btn-primary btn-lg">Signup</button>
                 </div>
-                <div class="col text-center">
-                    <h1>TEST2</h1>
-                </div>
-                <div class="col text-center">
-                    <h1>TEST3</h1>
-                </div>
+            </div>
+
+            <div id="logindiv" class="bg-light center container align-self-center rounded p-3 w-50" style="display:none;">
+
+                <form action="rsc/scripts/login_script.php" method="POST" >
+
+                    <!-- Email address: -->
+                    <div class="form-group">
+                        <label for="inputEmail">Email address</label>
+                        <input id="inputEmail" name="login_email" class="form-control" type="email" placeholder="Enter email address" autofocus required>
+                    </div>
+
+                    <!-- Password: -->
+                    <div class="form-group">
+                        <label for="inputPassword">Password:</label>
+                        <input id="inputPassword" name="login_password" class="form-control" type="password" placeholder="Enter password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="button" class="btn btn-secondary abortbtn">Return</button>
+
+                </form>
 
             </div>
-        </div>
-    </section>
-    <section class="pt-5 pb-5">
-        <div class="container">
-            <div class="row">
 
-                <div class="col text-center">
-                    <h1>TEST4</h1>
-                </div>
-                <div class="col text-center">
-                    <h1>TEST5</h1>
-                </div>
+            <div id="registerdiv" class="bg-light center container align-self-center rounded p-3 w-50" style="display: none;">
+
+                <form action="rsc/scripts/reg_script.php" method="post">
+
+                    <!-- First name: -->
+                    <div class="form-group">
+                        <label for="inputNameFirst">First name:</label>
+                        <input id="inputNameFirst" name="fornavn" class="form-control" type="text" placeholder="First name" autofocus required>
+                    </div>
+
+                    <!-- Last name: -->
+                    <div class="form-group">
+                        <label for="inputNameLast">Last name:</label>
+                        <input id="inputNameLast" name="etternavn" class="form-control" type="text" placeholder="Last name" required>
+                    </div>
+
+                    <!-- Email address: -->
+                    <div class="form-group">
+                        <label for="inputEmail">Email address</label>
+                        <input id="inputEmail" name="email" class="form-control" type="email" placeholder="Email address" required>
+                    </div>
+
+                    <!-- Password: -->
+                    <div class="form-group">
+                        <label for="inputPassword">Password:</label>
+                        <input id="inputPassword" name="pass" class="form-control" type="password" placeholder="Password" required>
+                    </div>
+
+
+                    <!-- Phone number: -->
+                    <div class="form-group">
+                        <label for="inputPhone">Phone number:</label>
+                        <input id="inputPhone" name="phone" class="form-control" type="telephone" placeholder="Phone number">
+                    </div>
+
+                    <!-- Wanted Crew:
+
+                    <div class="form-group">
+                        <label for="inputCompany">Crew</label>
+                        <select id="inputCrew" name="crew" class="form-control">
+
+
+
+                        </select>
+                    </div>
+                    -->
+                    <button type="submit" name="submit_user" class="btn btn-success my-3">Submit</button>
+                    <button type="button" class="btn btn-secondary abortbtn">Return</button>
+                </form>
 
             </div>
+
+
+
         </div>
+
+
+
     </section>
 
 
-</main>
 
+    <!--
+    ##################################################################################
+    ######################## ! DO NOT EDIT BELOW THIS POINT ! ########################
+    ##################################################################################
+    -->
 
-<!--
-##################################################################################
-######################## ! DO NOT EDIT BELOW THIS POINT ! ########################
-##################################################################################
--->
-
-<?php include 'rsc/imports/php/footer.php'; ?>
+<?php include 'rsc/imports/php/components/footer.php'; ?>
