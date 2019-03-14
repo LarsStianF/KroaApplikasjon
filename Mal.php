@@ -1,6 +1,6 @@
 <?php
 include 'rsc/imports/php/components/head.php';
-include 'rsc/imports/php/components/header.php';
+include 'rsc/imports/php/components/admin_header.php';
 
 ?>
 

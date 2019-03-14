@@ -46,7 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-            header('Refresh: 0; URL=../../admin/Robert');
+            header('Refresh: 0; URL=../../admin/index.php');
 
 
 
