@@ -71,13 +71,13 @@ include 'rsc/imports/php/components/head.php';
                     <!-- First name: -->
                     <div class="form-group">
                         <label for="inputNameFirst">First name:</label>
-                        <input id="inputNameFirst" name="fornavn" class="form-control" type="text" placeholder="First name" autofocus required>
+                        <input id="inputNameFirst" name="firstname" class="form-control" type="text" placeholder="First name" autofocus required>
                     </div>
 
                     <!-- Last name: -->
                     <div class="form-group">
                         <label for="inputNameLast">Last name:</label>
-                        <input id="inputNameLast" name="etternavn" class="form-control" type="text" placeholder="Last name" required>
+                        <input id="inputNameLast" name="lastname" class="form-control" type="text" placeholder="Last name" required>
                     </div>
 
                     <!-- Email address: -->
@@ -89,14 +89,14 @@ include 'rsc/imports/php/components/head.php';
                     <!-- Password: -->
                     <div class="form-group">
                         <label for="inputPassword">Password:</label>
-                        <input id="inputPassword" name="pass" class="form-control" type="password" placeholder="Password" required>
+                        <input id="inputPassword" name="password" class="form-control" type="password" placeholder="Password" required>
                     </div>
 
 
                     <!-- Phone number: -->
                     <div class="form-group">
                         <label for="inputPhone">Phone number:</label>
-                        <input id="inputPhone" name="phone" class="form-control" type="telephone" placeholder="Phone number">
+                        <input id="inputPhone" name="telephone" class="form-control" type="telephone" placeholder="Phone number">
                     </div>
 
                     <!-- Wanted Crew:

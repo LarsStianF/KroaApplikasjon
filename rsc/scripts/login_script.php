@@ -17,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($pwverify == true) {
 
-        $sql = "SELECT ID FROM frivillig WHERE Email = '$login_email'";
+        $sql = "SELECT ID FROM volunteer WHERE Email = '$login_email'";
         $result = mysqli_query($con, $sql);
         $row = mysqli_fetch_array($result);
         $count = mysqli_num_rows($result);
@@ -28,13 +28,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($count == 1) {
 
-            $sql = "SELECT * FROM frivillig WHERE Email = '$myemail'";
+            $sql = "SELECT * FROM volunteer WHERE Email = '$myemail'";
             $result = mysqli_query($con, $sql);
             $row = mysqli_fetch_array($result);
 
-            $myfullname = $row['Fornavn'] . " " . $row['Etternavn'] ;
+            $myfullname = $row['Firstname'] . " " . $row['Lastname'] ;
             $myenhet = $row['Enhet'];
-            $myphone = $row['TlfNr'];
+            $myphone = $row['Tel'];
             $myid = $row['ID'];
 
 
