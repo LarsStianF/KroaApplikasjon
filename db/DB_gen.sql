@@ -1,8 +1,4 @@
-
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
+@@ -6,24 +6,14 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,232 +13,135 @@ DROP DATABASE IF EXISTS group11;
 -- CREATE DATABASE:
 CREATE DATABASE group11 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
-
-
-
-
-
-
-
--- ###########################################################################
--- DELETE ALL EXISTING TABLES
--- ###########################################################################
-
 -- DROP ALL TABLES IF THEY EXIST:
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP TABLE IF EXISTS ansvarlig;
-DROP TABLE IF EXISTS arrangement;
-DROP TABLE IF EXISTS arrangement_frivillig;
-DROP TABLE IF EXISTS crews;
-DROP TABLE IF EXISTS frivillig;
-DROP TABLE IF EXISTS ønsket_frivillig;
+DROP TABLE IF EXISTS manager;
+DROP TABLE IF EXISTS event;
+DROP TABLE IF EXISTS event_volunteer;
+DROP TABLE IF EXISTS crew;
+DROP TABLE IF EXISTS volunteer;
+DROP TABLE IF EXISTS want_volunteer;
 
 SET FOREIGN_KEY_CHECKS=1;
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `ansvarlig`
---
+-- Table structure for table `volunteer`
 
-CREATE TABLE `ansvarlig` (
-  `ID` smallint(6) NOT NULL,
-  `Bar` tinyint(1) DEFAULT NULL,
-  `Vakt` tinyint(1) DEFAULT NULL,
-  `Crew` tinyint(1) DEFAULT NULL,
-  `Teknisk` tinyint(1) DEFAULT NULL
+CREATE TABLE volunteer (
+  ID smallint(6) NOT NULL AUTO_INCREMENT,
+  Firstname varchar(30) DEFAULT NULL,
+  Lastname varchar(30) DEFAULT NULL,
+  nr char(8) DEFAULT NULL,
+  Email varchar(30) DEFAULT NULL,
+  Password varchar(100) DEFAULT NULL,
+  Unit smallint(6) DEFAULT NULL,
+  CONSTRAINT volunteer_ID PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `arrangement`
+-- Table structure for table `event`
 --
 
-CREATE TABLE `arrangement` (
-  `ID` smallint(6) NOT NULL,
-  `Navn` varchar(50) DEFAULT NULL,
-  `Dato` date DEFAULT NULL,
-  `Tid_Start` varchar(10) DEFAULT NULL,
-  `Tid_Slutt` varchar(10) DEFAULT NULL
+CREATE TABLE event (
+  ID smallint(6) NOT NULL AUTO_INCREMENT,
+  Name varchar(50) DEFAULT NULL,
+  Date date DEFAULT NULL,
+  Time_Start varchar(10) DEFAULT NULL,
+  Time_End varchar(10) DEFAULT NULL,
+  CONSTRAINT eve_ID PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `arrangement_frivillig`
---
+-- Table structure for table `manager`
 
-CREATE TABLE `arrangement_frivillig` (
-  `Friv_ID` smallint(6) NOT NULL,
-  `Arr_ID` smallint(6) NOT NULL
+CREATE TABLE manager (
+  ID smallint(6) NOT NULL,
+  Bar tinyint(1) DEFAULT NULL,
+  Security tinyint(1) DEFAULT NULL,
+  Crew tinyint(1) DEFAULT NULL,
+  Tech tinyint(1) DEFAULT NULL,
+  CONSTRAINT man_ID PRIMARY KEY (ID),
+  CONSTRAINT volunt_ID FOREIGN KEY (ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `crews`
+-- Table structure for table `crew`
 --
 
-CREATE TABLE `crews` (
-  `ID` smallint(6) NOT NULL,
-  `Bar` tinyint(1) DEFAULT NULL,
-  `Vakt` tinyint(1) DEFAULT NULL,
-  `Crew` tinyint(1) DEFAULT NULL,
-  `Teknisk` tinyint(1) DEFAULT NULL
+CREATE TABLE crew (
+  ID smallint(6) NOT NULL,
+  Bar tinyint(1) DEFAULT NULL,
+  Security tinyint(1) DEFAULT NULL,
+  Crew tinyint(1) DEFAULT NULL,
+  Tech tinyint(1) DEFAULT NULL,
+  CONSTRAINT crew_ID PRIMARY KEY (ID),
+  CONSTRAINT manager_ID FOREIGN KEY (ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `frivillig`
+-- Table structure for table `event_volunteer`
 --
 
-CREATE TABLE `frivillig` (
-  `ID` smallint(6) NOT NULL,
-  `Fornavn` varchar(30) DEFAULT NULL,
-  `Etternavn` varchar(30) DEFAULT NULL,
-  `TlfNr` char(8) DEFAULT NULL,
-  `Email` varchar(30) DEFAULT NULL,
-  `Passord` varchar(100) DEFAULT NULL,
-  `Enhet` smallint(6) DEFAULT NULL
+CREATE TABLE event_volunteer (
+  vol_ID smallint(6) NOT NULL,
+  event_ID smallint(6) NOT NULL,
+  CONSTRAINT evevo_ID PRIMARY KEY (vol_ID, event_ID),
+  CONSTRAINT AF_eve_ID FOREIGN KEY (event_ID) REFERENCES event (ID),
+  CONSTRAINT AF_vol_ID FOREIGN KEY (vol_ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `ønsket_frivillig`
---
-
-CREATE TABLE `ønsket_frivillig` (
-  `Friv_ID` smallint(6) NOT NULL,
-  `Arr_ID` smallint(6) NOT NULL
+CREATE TABLE want_volunteer (
+  vol_ID smallint(6) NOT NULL,
+  event_ID smallint(6) NOT NULL,
+  CONSTRAINT evevo_ID PRIMARY KEY (vol_ID, event_ID),
+  CONSTRAINT WA_eve_ID FOREIGN KEY (event_ID) REFERENCES event (ID),
+  CONSTRAINT WA_vol_ID FOREIGN KEY (vol_ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `ansvarlig`
---
-ALTER TABLE `ansvarlig`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `arrangement`
---
-ALTER TABLE `arrangement`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `arrangement_frivillig`
---
-ALTER TABLE `arrangement_frivillig`
-  ADD PRIMARY KEY (`Friv_ID`,`Arr_ID`),
-  ADD KEY `ID_idx` (`Arr_ID`);
-
---
--- Indexes for table `crews`
---
-ALTER TABLE `crews`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `frivillig`
---
-ALTER TABLE `frivillig`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `ønsket_frivillig`
---
-ALTER TABLE `ønsket_frivillig`
-  ADD PRIMARY KEY (`Friv_ID`,`Arr_ID`),
-  ADD KEY `ID_idx` (`Arr_ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `arrangement`
---
-ALTER TABLE `arrangement`
-  MODIFY `ID` smallint(6) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `frivillig`
---
-ALTER TABLE `frivillig`
-  MODIFY `ID` smallint(6) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `ansvarlig`
---
-ALTER TABLE `ansvarlig`
-  ADD CONSTRAINT `Ansv_ID` FOREIGN KEY (`ID`) REFERENCES `frivillig` (`ID`);
-
---
--- Constraints for table `arrangement_frivillig`
---
-ALTER TABLE `arrangement_frivillig`
-  ADD CONSTRAINT `AF_Arr_ID` FOREIGN KEY (`Arr_ID`) REFERENCES `arrangement` (`ID`),
-  ADD CONSTRAINT `AF_Friv_ID` FOREIGN KEY (`Friv_ID`) REFERENCES `frivillig` (`ID`);
-
---
--- Constraints for table `crews`
---
-ALTER TABLE `crews`
-  ADD CONSTRAINT `Crews_ID` FOREIGN KEY (`ID`) REFERENCES `frivillig` (`ID`);
-
---
--- Constraints for table `ønsket_frivillig`
---
-ALTER TABLE `ønsket_frivillig`
-  ADD CONSTRAINT `ØF_Arr_ID` FOREIGN KEY (`Arr_ID`) REFERENCES `arrangement` (`ID`),
-  ADD CONSTRAINT `ØF_Friv_ID` FOREIGN KEY (`Friv_ID`) REFERENCES `frivillig` (`ID`);
-
-
-INSERT INTO Arrangement (Navn, Dato, Tid_Start, Tid_Slutt) VALUES
+INSERT INTO event (Name, Date, Time_Start, Time_End) VALUES
 ('Quiz', '2019-01-22', '1900', '2300'),
 ('Hellbillies', '2019-01-27', '2000', '0230'),
 ('Afterski', '2019-03-14', '1900', '0130'),
 ('X-russ', '2019-04-04', '1900', '0130');
 
-INSERT INTO Frivillig (Fornavn, Etternavn, TlfNr, Email, Passord, Enhet) VALUES
+INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit) VALUES
 ('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0),
 ('Kari', 'Øvrebø', 83839292, 'Kari@test.no', md5('Root123'), 3),
 ('Kim', 'Possible', 77775555, 'Possible@test.no', md5('Root123'), 5),
 ('Trym', 'Host', 88884444, 'Host@test.no', md5('Root123'), 1);
 
-INSERT INTO Crews (ID, Bar, Vakt, Crew, Teknisk) VALUES
+INSERT INTO Crew (ID, Bar, Security, Crew, Tech) VALUES
 (1, 0, 1, 0, 1),
 (2, 1, 0, 1, 0),
 (3, 1, 0, 0, 1),
 (4, 0, 1, 1, 0);
 
-INSERT INTO Ansvarlig (ID, Bar, Vakt, Crew, Teknisk) VALUES
+INSERT INTO Manager (ID, Bar, Security, Crew, Tech) VALUES
 (1, 0, 1, 0, 0),
 (2, 1, 0, 0, 0),
 (3, 0, 0, 0, 1),
 (4, 0, 0, 1, 0);
 
-INSERT INTO Arrangement_Frivillig (Friv_ID, Arr_ID) VALUES
+INSERT INTO event_volunteer (vol_ID, event_ID) VALUES
 (1, 1),
 (1, 2),
 (2, 2),
 (3, 1);
 
-INSERT INTO ønsket_frivillig (Friv_ID, Arr_ID) VALUES
+INSERT INTO want_volunteer (vol_ID, event_ID) VALUES
 (1, 3),
 (2, 4),
-(3, 4),
-(4, 3);
-COMMIT;
+(3, 4);
