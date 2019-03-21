@@ -1,6 +1,6 @@
 
 <style>
-    :root{ --navbar-height: 10rem; }
+    :root{ --navbar-height: 9rem; }
     nav ~ main {margin-top: var(--navbar-height);}
 </style>
 <script src="https://code.jquery.com/jquery-1.12.0.js"></script>

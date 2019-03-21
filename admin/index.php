@@ -12,7 +12,7 @@ include 'rsc/imports/php/components/admin_header.php';
 
 
 
-    <body class="bg-light">
+
 
 
 
@@ -22,7 +22,7 @@ include 'rsc/imports/php/components/admin_header.php';
 
 
 
-        <div class="row mb-3">
+        <div class="row mb-3 ">
             <div class="col-md-8 themed-grid-col">
                 <div class="pb-3">
                     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-warning rounded shadow-sm">
