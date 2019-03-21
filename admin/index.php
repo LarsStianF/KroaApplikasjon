@@ -46,8 +46,13 @@ include 'rsc/imports/php/components/admin_header.php';
                             <div class="media text-muted pt-3">
                                 <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#e83e8c" width="100%" height="100%"/><text fill="#e83e8c" dy=".3em" x="50%" y="50%">32x32</text></svg>
                                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                    <strong class="d-block text-gray-dark">Loveshack</strong>
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                                    <strong class="d-block text-gray-dark h4">Loveshack</strong>
+                                    <strong class="d-block text-gray dark">Date: 26.2.2019 Time: 20.00 - 02.30</strong>
+                                    <strong class="d-block text-gray dark">Meetup: kl 18.00</strong>
+                                    <strong class="d-block text-gray dark">You are working as: Bar</strong>
+                                    <strong class="d-block text-gray dark">6/6 Bar, 4/5 Teknisk, 4/4 Crew, 10/14 Security</strong>
+
+                                    <span class="text-gray dark h6">Additional Notes: </span>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
                                 </p>
                             </div>
                             <div class="media text-muted pt-3">
@@ -74,6 +79,11 @@ include 'rsc/imports/php/components/admin_header.php';
                                 <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#e83e8c" width="100%" height="100%"/><text fill="#e83e8c" dy=".3em" x="50%" y="50%">32x32</text></svg>
                                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                                     <strong class="d-block text-gray-dark">Rotlaus</strong>
+                                    <strong class="d-block text-gray dark">Date: 26.2.2019 Time: 20.00 - 02.30</strong>
+                                    <strong class="d-block text-gray dark">Meetup: kl 18.00</strong>
+                                    <strong class="d-block text-gray dark">You are signed as: Teknisk, Security</strong>
+                                    <strong class="d-block text-gray dark">6/6 Bar, 4/5 Teknisk, 4/4 Crew, 10/14 Security</strong>
+                                    <span class="text-gray dark h6">Additional Notes: </span>
                                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
                                 </p>
                             </div>
@@ -150,7 +160,11 @@ include 'rsc/imports/php/components/admin_header.php';
                 </div>
 
         </div>
+
+
     </main>
+
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
     <script src="offcanvas.js"></script></body>
