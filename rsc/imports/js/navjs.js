@@ -15,5 +15,8 @@ $(document).ready(function(){
         if ($(this).is("#peoplenav")) {
             $("#peoplenavsub").addClass("subshow");
         }
+        else {
+            
+        }
     });
 });
