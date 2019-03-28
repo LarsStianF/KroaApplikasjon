@@ -41,12 +41,7 @@ section.landing-page {
     background-size: cover;
 }
 
-/* OLD NAV
-nav {
-    box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
-    background-image: url("../../img/navhome1.png");
-    margin-bottom: 20px;
-}
+
 
 
 #welcomediv {
@@ -75,6 +70,13 @@ nav {
 .main-picture img {
     width: 100vw;
     height: 500px;
+}
+
+/* OLD NAV
+nav {
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
+    background-image: url("../../img/navhome1.png");
+    margin-bottom: 20px;
 }
 
 .active{
