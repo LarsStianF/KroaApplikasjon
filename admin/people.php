@@ -11,12 +11,6 @@ include 'rsc/imports/php/components/admin_header.php';
     -->
     <link rel="stylesheet" href="../rsc/imports/css/custom.css">
 
-
-
-
-
-
-
     <main role="main" class="container">
 
         <div class="peopleHeader" >
@@ -52,7 +46,7 @@ include 'rsc/imports/php/components/admin_header.php';
         </div>
 
 
-        <div class="list-group">
+        <div class="list-group list-people">
                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
                         <ul class="list-inline ">
