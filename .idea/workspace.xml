@@ -15,7 +15,7 @@
     <splitter split-orientation="horizontal" split-proportion="0.56929636">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="413">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/index.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="933">
@@ -51,11 +51,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/admin/rsc/imports/php/components/admin_header.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="21" column="78" selection-start-line="21" selection-start-column="78" selection-end-line="21" selection-end-column="78" />
+                <state relative-caret-position="731">
+                  <caret line="55" column="60" selection-start-line="55" selection-start-column="60" selection-end-line="55" selection-end-column="60" />
                 </state>
               </provider>
             </entry>
@@ -158,9 +158,9 @@
         <option value="$PROJECT_DIR$/rsc/imports/js/navjs.js" />
         <option value="$PROJECT_DIR$/admin/people.php" />
         <option value="$PROJECT_DIR$/admin/rsc/imports/php/components/admin_head.php" />
-        <option value="$PROJECT_DIR$/admin/rsc/imports/php/components/admin_header.php" />
         <option value="$PROJECT_DIR$/rsc/imports/css/custom.css" />
         <option value="$PROJECT_DIR$/rsc/imports/css/main.css" />
+        <option value="$PROJECT_DIR$/admin/rsc/imports/php/components/admin_header.php" />
       </list>
     </option>
   </component>
@@ -301,7 +301,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70712000" />
+    <option name="totallyTimeSpent" value="72311000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -469,13 +469,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/rsc/imports/php/components/admin_header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="78" selection-start-line="21" selection-start-column="78" selection-end-line="21" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -501,6 +494,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2090">
           <caret line="79" column="1" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/rsc/imports/php/components/admin_header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="55" column="60" selection-start-line="55" selection-start-column="60" selection-end-line="55" selection-end-column="60" />
         </state>
       </provider>
     </entry>
