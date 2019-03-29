@@ -19,33 +19,36 @@ include 'rsc/imports/php/components/admin_header.php';
 
     <main role="main" class="container">
 
+        <div class="input-group form-inline">
+            <input type="text" class="form-control" placeholder="Search for volunteers">
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="button">
+                    <i>Search</i>
+                </button>
+            </div>
 
+        </div>
 
 
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Bootstrap 4 is ...</h5>
-                    <small>35 minutes ago</small>
+                    <h2 class="mb-1">Name Nameson</h2>
+                    <h2 class="mb-1"> <span class="badge badge-success">Units: 4</span> </h2>
                 </div>
-                <p class="mb-1">The detail of the headline comes here</p>
-                <small>More small text here.</small>
+
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">jQuery Latest News</h5>
-                    <small class="text-muted">2 hours</small>
+                    <h2 class="mb-1">Freddie Potasium</h2>
+                    <h2 class="mb-1"> <span class="badge badge-success">Units: 14</span> </h2>
                 </div>
-                <p class="mb-1">The detail of the headline comes here</p>
-                <small>More small text here.</small>
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">What up with CSS?</h5>
-                    <small class="text-muted">1 Day ago</small>
+                    <h2 class="mb-1">Woolbob Roundpants</h2>
+                    <h2 class="mb-1"> <span class="badge badge-danger">Units: 0</span> </h2>
                 </div>
-                <p class="mb-1">The detail of the headline comes here</p>
-                <small>More small text here.</small>
             </a>
         </div>
 
