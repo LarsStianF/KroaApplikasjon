@@ -14,26 +14,35 @@ include 'rsc/imports/php/components/admin_header.php';
 
     <main role="main" class="container">
 
-        <div class="btn-group btn-group-toggle " data-toggle="buttons">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-dark active btn-lg filter-button" data-filter="Manager">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> Manager
             </label>
-            <label class="btn btn-dark btn-lg filter-button" data-filter="Bar-log">
+            <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Bar-log">
                 <input type="radio" name="options" id="option3" autocomplete="off"> Bar log
             </label>
-            <label class="btn btn-dark btn-lg filter-button" data-filter="Security-log">
+            <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Security-log">
                 <input type="radio" name="options" id="option4" autocomplete="off"> Security log
             </label>
-            <label class="btn btn-dark btn-lg filter-button" data-filter="Crew-log">
+            <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Crew-log">
                 <input type="radio" name="options" id="option5" autocomplete="off"> Crew log
             </label>
-            <label class="btn btn-dark btn-lg filter-button" data-filter="Tech-log">
+            <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Tech-log">
                 <input type="radio" name="options" id="option6" autocomplete="off"> Tech log
             </label>
+            <div class="input-group form-inline col-md-8">
+                <input type="text" class="form-control" placeholder="Search for logs">
+                <div class="input-group-append">
+                    <button class="btn btn-dark" type="button">
+                        <i>Search</i>
+                    </button>
+                </div>
+
+            </div>
         </div>
 
         <div class="row filter Manager">
-            <div class="col-md-6 themed-grid-col each-item"> <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Upcoming events</h6>
                     <div class="media text-muted pt-3">
                         <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>
@@ -129,15 +138,7 @@ include 'rsc/imports/php/components/admin_header.php';
         </div>
 
         <div class="row filter Bar-log">
-            <div class="input-group form-inline">
-                <input type="text" class="form-control" placeholder="Search for logs">
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button">
-                        <i>Search</i>
-                    </button>
-                </div>
 
-            </div>
             <div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">
                     <div class="col-md-8">
                         <div class="d-flex w-100 justify-content-between">
@@ -205,15 +206,7 @@ include 'rsc/imports/php/components/admin_header.php';
             </div>
         </div>
         <div class="row filter Security-log">
-            <div class="input-group form-inline">
-                <input type="text" class="form-control" placeholder="Search for logs">
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button">
-                        <i>Search</i>
-                    </button>
-                </div>
 
-            </div>
             <div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">
                 <div class="col-md-8">
                     <div class="d-flex w-100 justify-content-between">
@@ -279,16 +272,9 @@ include 'rsc/imports/php/components/admin_header.php';
                 </div>
             </div>
         </div>
-        <div class="row filter Crew-log">
-            <div class="input-group form-inline">
-                <input type="text" class="form-control" placeholder="Search for logs">
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button">
-                        <i>Search</i>
-                    </button>
-                </div>
 
-            </div>
+        <div class="row filter Crew-log">
+
             <div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">
                 <div class="col-md-8">
                     <div class="d-flex w-100 justify-content-between">
@@ -355,15 +341,7 @@ include 'rsc/imports/php/components/admin_header.php';
             </div>
         </div>
         <div class="row filter Tech-log">
-            <div class="input-group form-inline">
-                <input type="text" class="form-control" placeholder="Search for logs">
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button">
-                        <i>Search</i>
-                    </button>
-                </div>
 
-            </div>
             <div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">
                 <div class="col-md-8">
                     <div class="d-flex w-100 justify-content-between">
