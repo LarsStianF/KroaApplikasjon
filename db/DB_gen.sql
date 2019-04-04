@@ -1,4 +1,4 @@
-@@ -6,24 +6,14 @@ START TRANSACTION;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS event_volunteer;
 DROP TABLE IF EXISTS crew;
 DROP TABLE IF EXISTS volunteer;
 DROP TABLE IF EXISTS want_volunteer;
+DROP TABLE IF EXISTS logs;
 
 SET FOREIGN_KEY_CHECKS=1;
 
@@ -31,11 +32,11 @@ SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE volunteer (
   ID smallint(6) NOT NULL AUTO_INCREMENT,
-  Firstname varchar(30) DEFAULT NULL,
-  Lastname varchar(30) DEFAULT NULL,
-  nr char(8) DEFAULT NULL,
-  Email varchar(30) DEFAULT NULL,
-  Password varchar(100) DEFAULT NULL,
+  Firstname varchar(30) NOT NULL,
+  Lastname varchar(30) NOT NULL,
+  nr char(8) NOT NULL,
+  Email varchar(30) NOT NULL,
+  Password varchar(100) NOT NULL,
   Unit smallint(6) DEFAULT NULL,
   CONSTRAINT volunteer_ID PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -48,10 +49,12 @@ CREATE TABLE volunteer (
 
 CREATE TABLE event (
   ID smallint(6) NOT NULL AUTO_INCREMENT,
-  Name varchar(50) DEFAULT NULL,
-  Date date DEFAULT NULL,
-  Time_Start varchar(10) DEFAULT NULL,
-  Time_End varchar(10) DEFAULT NULL,
+  Name varchar(50) NOT NULL,
+  Date date NOT NULL,
+  Time_Start varchar(10) NOT NULL,
+  Time_End varchar(10) NOT NULL,
+  Type char(1) NOT NULL,
+  Event_text varchar(100) NOT NULL,
   CONSTRAINT eve_ID PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -63,10 +66,10 @@ CREATE TABLE event (
 
 CREATE TABLE manager (
   ID smallint(6) NOT NULL,
-  Bar tinyint(1) DEFAULT NULL,
-  Security tinyint(1) DEFAULT NULL,
-  Crew tinyint(1) DEFAULT NULL,
-  Tech tinyint(1) DEFAULT NULL,
+  Bar tinyint(1) NOT NULL,
+  Security tinyint(1) NOT NULL,
+  Crew tinyint(1) NOT NULL,
+  Tech tinyint(1) NOT NULL,
   CONSTRAINT man_ID PRIMARY KEY (ID),
   CONSTRAINT volunt_ID FOREIGN KEY (ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -79,10 +82,10 @@ CREATE TABLE manager (
 
 CREATE TABLE crew (
   ID smallint(6) NOT NULL,
-  Bar tinyint(1) DEFAULT NULL,
-  Security tinyint(1) DEFAULT NULL,
-  Crew tinyint(1) DEFAULT NULL,
-  Tech tinyint(1) DEFAULT NULL,
+  Bar tinyint(1) NOT NULL,
+  Security tinyint(1) NOT NULL,
+  Crew tinyint(1) NOT NULL,
+  Tech tinyint(1) NOT NULL,
   CONSTRAINT crew_ID PRIMARY KEY (ID),
   CONSTRAINT manager_ID FOREIGN KEY (ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -110,12 +113,20 @@ CREATE TABLE want_volunteer (
   CONSTRAINT WA_vol_ID FOREIGN KEY (vol_ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE logs (
+  event_ID smallint(6) NOT NULL,
+  crew_type varchar(30) NOT NULL,
+  logs varchar(250) NOT NULL,
+  CONSTRAINT log_PK PRIMARY KEY (event_ID, crew_type),
+  CONSTRAINT log_FK FOREIGN KEY (event_ID) REFERENCES event (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO event (Name, Date, Time_Start, Time_End) VALUES
-('Quiz', '2019-01-22', '1900', '2300'),
-('Hellbillies', '2019-01-27', '2000', '0230'),
-('Afterski', '2019-03-14', '1900', '0130'),
-('X-russ', '2019-04-04', '1900', '0130');
+
+INSERT INTO event (Name, Date, Time_Start, Time_End, Type, Event_text) VALUES
+('Quiz', '2019-01-22', '1900', '2300', 'D', 'Dette er Quiz'),
+('Hellbillies', '2019-01-27', '2000', '0230', 'A', 'Hellbillies er gøy'),
+('Afterski', '2019-03-14', '1900', '0130', 'B', 'DJ Dan høster opp afterski stemning'),
+('X-russ', '2019-04-04', '1900', '0130', 'A', 'På med russebuksa!');
 
 INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit) VALUES
 ('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0),
@@ -145,3 +156,11 @@ INSERT INTO want_volunteer (vol_ID, event_ID) VALUES
 (1, 3),
 (2, 4),
 (3, 4);
+
+INSERT INTO logs (event_ID, crew_type, logs) VALUES
+(1, 'Security', 'Dette arrangementet gikk fint'),
+(1, 'Bar', 'Vi hadde masse trøbbel'),
+(2, 'Crew', 'Garderoben suger'),
+(2, 'Security', 'Crew er dårlige i garderobe'),
+(3, 'Bar', 'Solgte masse sprit'),
+(3, 'Security', 'Folk sloss');

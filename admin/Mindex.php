@@ -10,8 +10,6 @@ include 'rsc/imports/php/components/admin_header.php';
     ##################################################################################
     -->
 
-    <body class="bg-light">
-
     <main role="main" class="container">
 
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -40,7 +38,11 @@ include 'rsc/imports/php/components/admin_header.php';
 
             </div>
         </div>
-
+        <!--
+        ############################                ############################
+        ############################ Manager Button ############################
+        ############################                ############################
+        -->
         <div class="row filter Manager">
             <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Upcoming events</h6>
@@ -136,7 +138,11 @@ include 'rsc/imports/php/components/admin_header.php';
                     </small>
                 </div></div>
         </div>
-
+        <!--
+        ############################                ############################
+        ############################    Bar Button  ############################
+        ############################                ############################
+        -->
         <div class="row filter Bar-log">
 
             <div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">
@@ -205,6 +211,11 @@ include 'rsc/imports/php/components/admin_header.php';
                 </div>
             </div>
         </div>
+        <!--
+        ############################                ############################
+        ############################ Security Button ############################
+        ############################                ############################
+        -->
         <div class="row filter Security-log">
 
             <div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">
@@ -272,7 +283,11 @@ include 'rsc/imports/php/components/admin_header.php';
                 </div>
             </div>
         </div>
-
+        <!--
+        ############################                ############################
+        ############################ Crew Button    ############################
+        ############################                ############################
+        -->
         <div class="row filter Crew-log">
 
             <div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">
@@ -340,6 +355,11 @@ include 'rsc/imports/php/components/admin_header.php';
                 </div>
             </div>
         </div>
+        <!--
+        ############################                ############################
+        ############################ Tech Button    ############################
+        ############################                ############################
+        -->
         <div class="row filter Tech-log">
 
             <div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">
