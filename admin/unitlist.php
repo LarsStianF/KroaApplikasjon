@@ -19,15 +19,23 @@ include 'rsc/imports/php/components/admin_header.php';
 
     <main role="main" class="container">
 
-        <div class="input-group form-inline">
-            <input type="text" class="form-control" placeholder="Search for volunteers">
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="button">
-                    <i>Search</i>
-                </button>
+        <div class="peopleHeader" >
+            <h1 class="display-3 text-center"> Unitlist </h1>
+
+            <div class="input-group input-group-lg ">
+                <input type="text" class="form-control" placeholder="Search for volunteers">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button">
+                        <i>Search</i>
+                    </button>
+                </div>
+
             </div>
+            
 
         </div>
+
+
 
 
         <div class="list-group">
