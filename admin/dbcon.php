@@ -11,5 +11,5 @@ $error_msg = "Database connection failed.";
 $con    = mysqli_connect($host, $user, $pass, $db) or die ($error_msg);
 
 // Start session:
-session_start();
+// session_start();
 
