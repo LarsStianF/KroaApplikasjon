@@ -19,7 +19,7 @@ include 'rsc/imports/php/components/admin_header.php';
 
     <main role="main" class="container">
 
-        <div class="pageHeader bg-light" >
+        <div class="bg-light p-3 m-0 card" >
             <h1 class="display-3 text-center"> Unitlist </h1>
 
             <div class="input-group input-group-lg ">

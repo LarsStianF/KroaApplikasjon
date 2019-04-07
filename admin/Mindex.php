@@ -46,28 +46,53 @@ include 'rsc/imports/php/components/admin_header.php';
         ############################ Manager Button ############################
         ############################                ############################
         -->
+
         <div class="row filter Manager">
             <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Upcoming events</h6>
-                    <div class="media text-muted pt-3">
-                        <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>
-                        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                            <?php
-                            /* Attempt MySQL server connection. Assuming you are running MySQL
-                            server with default setting (user 'root' with no password) */
-                            $link = mysqli_connect("localhost", "root", "", "group11");
 
-                            // Check connection
-                            if($link === false){
-                                die("ERROR: Could not connect. " . mysqli_connect_error());
-                            }
+        <?php
+        /* Attempt MySQL server connection. Assuming you are running MySQL
+        server with default setting (user 'root' with no password) */
+        $link = mysqli_connect("localhost", "root", "", "group11");
 
-                            // Attempt select query execution
-                            $sql = "SELECT * FROM event";
-                            if($result = mysqli_query($link, $sql)){
-                                if(mysqli_num_rows($result) > 0){
-                                    while($row = mysqli_fetch_array($result)){
-                                        echo "<strong class=\"d-block text-gray-dark h4\">" . $row['Name'] . "</strong>";
+        // Check connection
+        if($link === false){
+            die("ERROR: Could not connect. " . mysqli_connect_error());
+        }
+
+        // Attempt select query execution
+        $sql = "SELECT * FROM event";
+        if($result = mysqli_query($link, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+
+
+                    echo '    <div class="media text-muted pt-3">';
+                    echo '    <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
+                     echo '   <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
+
+
+                    echo '<strong class="d-block text-gray-dark h4">';
+                    echo $row['Name'];
+                    echo '</strong>';
+
+
+                echo           ' <strong class="d-block text-gray dark">Date: ';
+                    echo $row['Date'];
+                echo ' Time: ';
+                    echo $row['Time_Start'];
+                    echo ' - ';
+                    echo $row['Time_End'];
+                    echo '</strong>';
+                echo           '  <strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
+                echo            ' <strong class="d-block text-gray dark">You are working as: Bar</strong>';
+                echo           '  <strong class="d-block text-gray dark">Volunteers: 6/6 Bar, 4/5 Teknisk, 4/4 Crew, 10/14 Security</strong>';
+                echo          '   <strong class="d-block text-gray dark"> Managers: 1/1 Bar, 0/0 Teknisk, 1/1 Crew, 1/1 Security</strong>';
+                echo       '  <span class="text-gray dark h6">Additional Notes: </span>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.';
+                 echo  '<button type="button" class="btn btn-primary btn-sm btn-outline-success" style="float: right;">Sign up</button>';
+               echo       '   </p>';
+                    echo ' </div>';
                                     }
                                     // Free result set
                                     mysqli_free_result($result);
@@ -81,6 +106,8 @@ include 'rsc/imports/php/components/admin_header.php';
                             // Close connection
                             mysqli_close($link);
                             ?>
+
+                    <!--
                             <strong class="d-block text-gray-dark h4">Kroavalget 2019</strong>
                             <strong class="d-block text-gray dark">Date: 26.2.2019 Time: 20.00 - 02.30</strong>
                             <strong class="d-block text-gray dark">Meetup: kl 18.00</strong>
@@ -170,6 +197,8 @@ include 'rsc/imports/php/components/admin_header.php';
                     </small>
                 </div></div>
         </div>
+
+        --->
         <!--
         ############################                ############################
         ############################    Bar Button  ############################
