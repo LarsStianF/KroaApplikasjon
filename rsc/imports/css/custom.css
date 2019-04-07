@@ -8,9 +8,9 @@ ul {
     margin-block-end: 0;
 }
 /*  adds gap between the main container and the box containing search and filtering  */
-.peopleHeader{
+.pageHeader{
     padding: 1rem;
-    padding-left: 0;
+
 }
 /*  Fixes position of the crew "man" icons  */
 .list-people .man-icon{

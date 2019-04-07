@@ -19,7 +19,7 @@ include 'rsc/imports/php/components/admin_header.php';
 
     <main role="main" class="container">
 
-        <div class="peopleHeader" >
+        <div class="pageHeader bg-light jumbotron jumbotron-fluid" >
             <h1 class="display-3 text-center"> Your Page </h1>
 
         </div>

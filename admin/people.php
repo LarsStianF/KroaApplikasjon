@@ -13,7 +13,7 @@ include 'rsc/imports/php/components/admin_header.php';
 
     <main role="main" class="container">
 
-        <div class="peopleHeader" >
+        <div class="pageHeader bg-light" >
             <h1 class="display-3 text-center"> Volunteers </h1>
             <form class="form-inline " action="#">
                 <div>
