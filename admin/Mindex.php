@@ -10,6 +10,8 @@ include 'rsc/imports/php/components/admin_header.php';
     ##################################################################################
     -->
 
+
+
     <main role="main" class="container">
 
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -38,6 +40,7 @@ include 'rsc/imports/php/components/admin_header.php';
 
             </div>
         </div>
+
         <!--
         ############################                ############################
         ############################ Manager Button ############################
@@ -49,6 +52,35 @@ include 'rsc/imports/php/components/admin_header.php';
                     <div class="media text-muted pt-3">
                         <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>
                         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                            <?php
+                            /* Attempt MySQL server connection. Assuming you are running MySQL
+                            server with default setting (user 'root' with no password) */
+                            $link = mysqli_connect("localhost", "root", "", "group11");
+
+                            // Check connection
+                            if($link === false){
+                                die("ERROR: Could not connect. " . mysqli_connect_error());
+                            }
+
+                            // Attempt select query execution
+                            $sql = "SELECT * FROM event";
+                            if($result = mysqli_query($link, $sql)){
+                                if(mysqli_num_rows($result) > 0){
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo "<strong class=\"d-block text-gray-dark h4\">" . $row['Name'] . "</strong>";
+                                    }
+                                    // Free result set
+                                    mysqli_free_result($result);
+                                } else{
+                                    echo "No records matching your query were found.";
+                                }
+                            } else{
+                                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                            }
+
+                            // Close connection
+                            mysqli_close($link);
+                            ?>
                             <strong class="d-block text-gray-dark h4">Kroavalget 2019</strong>
                             <strong class="d-block text-gray dark">Date: 26.2.2019 Time: 20.00 - 02.30</strong>
                             <strong class="d-block text-gray dark">Meetup: kl 18.00</strong>
