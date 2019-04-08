@@ -126,7 +126,11 @@ INSERT INTO event (Name, Date, Time_Start, Time_End, Type, Event_text) VALUES
 ('Quiz', '2019-01-22', '1900', '2300', 'D', 'Dette er Quiz'),
 ('Hellbillies', '2019-01-27', '2000', '0230', 'A', 'Hellbillies er gøy'),
 ('Afterski', '2019-03-14', '1900', '0130', 'B', 'DJ Dan høster opp afterski stemning'),
-('X-russ', '2019-04-04', '1900', '0130', 'A', 'På med russebuksa!');
+('X-russ', '2019-04-04', '1900', '0130', 'A', 'På med russebuksa!'),
+('Aapen Scene', '2019-04-26', '2130', '0230', 'D', 'Fremfør det du vil'),
+('Sondre Justad', '2019-05-05', '2130', '0100', 'B', 'Sondre Justad kommer til Kroa og det blir gøy!'),
+('Oktoberfest', '2020-10-02', '2000', '0130', 'C', 'Tysklands tradisjon kommer til å Kroa!'),
+('Cezinando', '2020-10-23', '2130', '0100', 'B', 'Cezinando fremfører nytt album på storscena');
 
 INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit) VALUES
 ('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0),
