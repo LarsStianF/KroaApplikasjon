@@ -167,4 +167,6 @@ INSERT INTO logs (event_ID, crew_type, logs) VALUES
 (2, 'Crew', 'Garderoben suger'),
 (2, 'Security', 'Crew er dårlige i garderobe'),
 (3, 'Bar', 'Solgte masse sprit'),
-(3, 'Security', 'Folk sloss');
+(3, 'Security', 'Folk sloss'),
+(4, 'Tech', 'De nye høytalerne funka glimrende! Alt vell!'),
+(5, 'Tech', 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?');

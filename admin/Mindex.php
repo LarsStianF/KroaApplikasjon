@@ -71,8 +71,6 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo '<div class="media text-muted pt-3">';
                         echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
                         echo    '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-
-
                         echo    '<strong class="d-block text-gray-dark h4">';
                         echo    $row['Name'];
                         echo    '</strong>';
@@ -124,12 +122,9 @@ include 'rsc/imports/php/components/admin_header.php';
                                 if(mysqli_num_rows($result) > 0){
                                     while($row = mysqli_fetch_array($result)){
 
-
                                         echo '<div class="media text-muted pt-3">';
                                         echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
                                         echo    '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-
-
                                         echo    '<strong class="d-block text-gray-dark h4">';
                                         echo    $row['Name'];
                                         echo    '</strong>';
@@ -183,7 +178,7 @@ include 'rsc/imports/php/components/admin_header.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'Bar'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = '1'";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -196,7 +191,6 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo            $row['Name'];
                         echo            '</strong>';
                         echo            '<button class="btn btn-success" type="submit">Edit</button>';
-
                         echo        '</div>';
                         echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
                         echo        $row['Date'];
@@ -212,60 +206,9 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo            '</p>';
                         echo        '</div>';
                         echo    '</div>';
-                        echo    '<div class="col-md-4">';
+                        echo    '<div class="col-md-4 justify-content-between">';
                         echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo    '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo        $row['Date'];
-                        echo        ' Time: ';
-                        echo        $row['Time_Start'];
-                        echo        ' - ';
-                        echo        $row['Time_End'];
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</p>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo    '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo        $row['Date'];
-                        echo        ' Time: ';
-                        echo        $row['Time_Start'];
-                        echo        ' - ';
-                        echo        $row['Time_End'];
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</p>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
+                        echo        '<button class="btn btn-success" type="submit">Add</button>';
                         echo    '</div>';
                         echo '</div>';
                     }
@@ -301,7 +244,7 @@ include 'rsc/imports/php/components/admin_header.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'Security'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = '2'";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -314,7 +257,6 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo            $row['Name'];
                         echo            '</strong>';
                         echo            '<button class="btn btn-success" type="submit">Edit</button>';
-
                         echo        '</div>';
                         echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
                         echo        $row['Date'];
@@ -330,60 +272,9 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo            '</p>';
                         echo        '</div>';
                         echo    '</div>';
-                        echo    '<div class="col-md-4">';
+                        echo    '<div class="col-md-4 justify-content-between">';
                         echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo    '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo        $row['Date'];
-                        echo        ' Time: ';
-                        echo        $row['Time_Start'];
-                        echo        ' - ';
-                        echo        $row['Time_End'];
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</p>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo    '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo        $row['Date'];
-                        echo        ' Time: ';
-                        echo        $row['Time_Start'];
-                        echo        ' - ';
-                        echo        $row['Time_End'];
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</p>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
+                        echo        '<button class="btn btn-success" type="submit">Add</button>';
                         echo    '</div>';
                         echo '</div>';
                     }
@@ -418,7 +309,7 @@ include 'rsc/imports/php/components/admin_header.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'Crew'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = '3'";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -431,7 +322,6 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo            $row['Name'];
                         echo            '</strong>';
                         echo            '<button class="btn btn-success" type="submit">Edit</button>';
-
                         echo        '</div>';
                         echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
                         echo        $row['Date'];
@@ -447,60 +337,9 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo            '</p>';
                         echo        '</div>';
                         echo    '</div>';
-                        echo    '<div class="col-md-4">';
+                        echo    '<div class="col-md-4 justify-content-between">';
                         echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo    '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo        $row['Date'];
-                        echo        ' Time: ';
-                        echo        $row['Time_Start'];
-                        echo        ' - ';
-                        echo        $row['Time_End'];
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</p>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo    '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo        $row['Date'];
-                        echo        ' Time: ';
-                        echo        $row['Time_Start'];
-                        echo        ' - ';
-                        echo        $row['Time_End'];
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</p>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
+                        echo        '<button class="btn btn-success" type="submit">Add</button>';
                         echo    '</div>';
                         echo '</div>';
                     }
@@ -534,7 +373,7 @@ include 'rsc/imports/php/components/admin_header.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'Tech'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = '4'";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -547,7 +386,6 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo            $row['Name'];
                         echo            '</strong>';
                         echo            '<button class="btn btn-success" type="submit">Edit</button>';
-
                         echo        '</div>';
                         echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
                         echo        $row['Date'];
@@ -563,60 +401,13 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo            '</p>';
                         echo        '</div>';
                         echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo    '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo        $row['Date'];
-                        echo        ' Time: ';
-                        echo        $row['Time_Start'];
-                        echo        ' - ';
-                        echo        $row['Time_End'];
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</p>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo    '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo        $row['Date'];
-                        echo        ' Time: ';
-                        echo        $row['Time_Start'];
-                        echo        ' - ';
-                        echo        $row['Time_End'];
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</p>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
+                        echo    '<div class="col-md-4 justify-content-between">';
+                        //echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
+                        echo        '<table class="d-block text-gray-dark h2 border-bottom" id="TechLog">Frivillige </table>';
+                        echo            '<tr>';
+                        echo            '<td> </td>';
+                        echo            '</tr>';
+                        echo        '<button class="btn btn-success" type="submit">+</button>';
                         echo    '</div>';
                         echo '</div>';
                     }
