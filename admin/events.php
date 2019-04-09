@@ -36,7 +36,7 @@ include 'rsc/imports/modals/event_modal.php';
                     echo   '</div>';
                     echo   '<div class="card-body d-flex flex-column">';
                     echo        '<div class="text-center">';
-                    echo            '<p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>';
+                    echo            '<p class="card-text">'.$row['Event_text'].'</p>';
                     echo        '</div>';
                     echo        '<ul class="list-group-flush  volunteers_list">';
                     echo            '<li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>';

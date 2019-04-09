@@ -30,6 +30,16 @@ if(isset($_POST['id']))
                 <td><label>Event end</label></td>
                 <td>'.$row['Time_End'].'</td>
                 </tr>
+                
+                <tr>
+                <td><label>Event text</label></td>
+                <td>'.$row['Event_text'].'</td>
+                </tr>
+                
+                <tr>
+                <td><label>Event type</label></td>
+                <td>'.$row['Type'].'</td>
+                </tr>
             ';
         }
         $output .= "</table></div>";
