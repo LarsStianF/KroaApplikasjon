@@ -1,6 +1,9 @@
 <?php
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
+include 'dbcon.php';
+include 'rsc/imports/modals/event_modal.php';
+
 
 ?>
 
@@ -9,174 +12,78 @@ include 'rsc/imports/php/components/admin_header.php';
     ######################## ! DO NOT EDIT ABOVE THIS POINT ! ########################
     ##################################################################################
     -->
-    <main role="main" class="container">
-
-    <section class="pt-2">
-
-        <div class="row pt-3">
-            <div class="card card-custom mx-2 mb-3 border-light">
-
-                <div class="card-img-caption">
-                    <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                    <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                    <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                </div>
+    <main class="container">
 
 
-                <div class="card-body d-flex flex-column">
-                    <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                    <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
 
-                    <div class="text-left">
-                        <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                    </div>
-                    <ul class="list-group-flush  volunteers_list">
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                    </ul>
-                    <button class="btn btn-primary mt-2">Click me!</button>
-                </div>
-
-            </div>
-            <div class="card card-custom mx-2 mb-3 border-light">
-
-                <div class="card-img-caption">
-                    <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                    <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                    <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                </div>
+            <div class="row pt-3">
+                <?php
+                $query = "SELECT * FROM event ORDER BY Date DESC, ID DESC;";
+                $result = mysqli_query($con, $query);
+                $count = 1;
+                $numrow = mysqli_num_rows($result);
 
 
-                <div class="card-body d-flex flex-column">
-                    <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                    <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
-
-                    <div class="text-left">
-                        <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                    </div>
-                    <ul class="list-group-flush  volunteers_list">
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                    </ul>
-                    <button class="btn btn-primary mt-2">Click me!</button>
-                </div>
-
-            </div>
-            <div class="card card-custom mx-2 mb-3 border-light">
-
-                <div class="card-img-caption">
-                    <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                    <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                    <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                </div>
+                while ($row = mysqli_fetch_array($result)) {
 
 
-                <div class="card-body d-flex flex-column">
-                    <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                    <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
+                    echo  '<div class=" card card-custom justify-content mx-2 mb-3 border-light">';
 
-                    <div class="text-left">
-                        <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                    </div>
-                    <ul class="list-group-flush  volunteers_list">
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                    </ul>
-                    <button class="btn btn-primary mt-2">Click me!</button>
-                </div>
-
-            </div>
-
-        </div>
-        <div class="row pt-3">
-            <div class="card card-custom mx-2 mb-3 border-light">
-
-                <div class="card-img-caption">
-                    <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                    <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                    <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                </div>
+                    echo   '<div class="card-img-caption">';
+                    echo        '<p class="card-text-top">'.$row['Name'].'</p>';
+                    echo        '<p class="card-text-bottom">'.$row['Date'].'</p>';
+                    echo        '<img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">';
+                    echo   '</div>';
+                    echo   '<div class="card-body d-flex flex-column">';
+                    echo        '<div class="text-center">';
+                    echo            '<p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>';
+                    echo        '</div>';
+                    echo        '<ul class="list-group-flush  volunteers_list">';
+                    echo            '<li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>';
+                    echo            '<li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>';
+                    echo            '<li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>';
+                    echo            '<li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>';
+                    echo        '</ul>';
+                    echo    '<a href="#eventModal" value="view" type="button" name="view" class="btn btn-primary btn-small border-dark m-2 view_data" id="'.$row['ID'].'" data-toggle="modal" >Details</a>';
+                    echo   '</div>';
+                    echo  '</div>';
 
 
-                <div class="card-body d-flex flex-column">
-                    <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                    <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
+                    if ($count % 3 == 0) {
+                        echo '</div>';
+                        if ($count == $numrow) {
 
-                    <div class="text-left">
-                        <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                    </div>
-                    <ul class="list-group-flush  volunteers_list">
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                    </ul>
-                    <button class="btn btn-primary mt-2">Click me!</button>
-                </div>
-
-            </div>
-            <div class="card card-custom mx-2 mb-3 border-light">
-
-                <div class="card-img-caption">
-                    <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                    <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                    <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                </div>
+                        } else {
+                            echo '<div class="row pt-3">';
+                        }
 
 
-                <div class="card-body d-flex flex-column">
-                    <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                    <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
 
-                    <div class="text-left">
-                        <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                    </div>
-                    <ul class="list-group-flush  volunteers_list">
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                    </ul>
-                    <button class="btn btn-primary mt-2">Click me!</button>
-                </div>
-
-            </div>
-            <div class="card card-custom mx-2 mb-3 border-light">
-
-                <div class="card-img-caption">
-                    <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                    <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                    <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                </div>
+                    }
+                    $count++;
+                }
 
 
-                <div class="card-body d-flex flex-column">
-                    <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                    <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
+                ?>
+                <script>
+                    $(document).ready(function () {
+                        $('.view_data').click(function () {
+                            var id = $(this).attr('id');
 
-                    <div class="text-left">
-                        <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                    </div>
-                    <ul class="list-group-flush  volunteers_list">
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                    </ul>
-                    <button class="btn btn-primary mt-2">Click me!</button>
-                </div>
+                            $.ajax({
+                                url: "fetch_data.php",
+                                method: "post",
+                                data: {id:id},
+                                success:function (data) {
+                                    $('#event_detail').html(data);
+                                    $('#eventModal').modal("show");
+                                }
+                            });
 
-            </div>
 
-        </div>
-
-    </section>
+                        });
+                    });
+                </script>
 
 
     </main>
