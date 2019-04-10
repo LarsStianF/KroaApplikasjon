@@ -1,6 +1,7 @@
 <?php
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
+include 'dbcon.php';
 
 ?>
 
@@ -47,22 +48,57 @@ include 'rsc/imports/php/components/admin_header.php';
 
 
         <div class="list-group list-people">
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                        <ul class="list-inline ">
-                            <li class="list-inline-item "><h5 class="mb-1">Name Nameson - </h5></li>
-                            <li class="list-inline-item "><h6 class="mb-1">Volunteer</h6></li>
-                            <li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_black.png" alt=""> </li>
-                            <li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_red.png" alt=""> </li>
-                            <li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_blue.png" alt=""> </li>
-                            <li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_black.png" alt=""> </li>
-                        </ul>
-                        <button class="btn btn-primary" type="submit">Edit</button>
-                    </div>
-                    <p class="mb-1"><span class="h6">Email: </span>root@test.no       <span class="h6">Tlf: </span>22224444</p>
-                    <small>Last Volunteered: 27 January, 2019</small>
-                </a>
 
+
+
+            <?php
+
+            $sql = 'SELECT * FROM Volunteer';
+            $result = mysqli_query($con, $sql);
+            $numrow = mysqli_num_rows($result);
+
+            while ($row = mysqli_fetch_array($result)) {
+                $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
+                $tempRes = mysqli_query($con,$tempQuery);
+                $tempRow = mysqli_fetch_array($tempRes);
+
+                echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
+                echo '<div class="d-flex w-100 justify-content-between">';
+                echo '<ul class="list-inline ">';
+                echo '<li class="list-inline-item "><h5 class="mb-1">';
+                echo $row['Firstname'] . ' ' . $row['Lastname'];
+                echo '</h5></li>';
+                echo '<li class="list-inline-item "><h6 class="mb-1">';
+                if ($row['user_type'] == '5') {
+                    $tempQuery = "SELECT * FROM manager, crew_type WHERE " . $row['ID'] . " = vol_ID";
+                    $tempRes = mysqli_query($con,$tempQuery);
+                    $tempRow = mysqli_fetch_array($tempRes);
+
+                    echo $tempRow['type'] . ' Manager - ';
+
+
+                }else{
+                    echo $tempRow['user_type'];
+                }
+
+
+                echo '</h6></li>';
+                echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_black.png" alt=""> </li>';
+                echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_red.png" alt=""> </li>';
+                echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_blue.png" alt=""> </li>';
+                echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_black.png" alt=""> </li>';
+                echo '</ul>';
+                echo '<button class="btn btn-primary" type="submit">Edit</button>';
+                echo '</div>';
+                echo '<p class="mb-1"><span class="h6">Email: </span>root@test.no       <span class="h6">Tlf: </span>22224444</p>';
+                echo ' <small>Last Volunteered: 27 January, 2019</small>';
+                echo '</a>';
+            }
+
+
+?>
+
+            <!--
                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
                         <ul class="list-inline ">
@@ -90,6 +126,8 @@ include 'rsc/imports/php/components/admin_header.php';
                     <p class="mb-1"><span class="h6">Email: </span>root@test.no       <span class="h6">Tlf: </span>22224444</p>
                     <small>Last Volunteered: 27 January, 2019</small>
                 </a>
+
+                -->
             </div>
 
 
