@@ -28,6 +28,16 @@ SET FOREIGN_KEY_CHECKS=1;
 
 -- --------------------------------------------------------
 
+-- Table structure for table `user_type`
+
+CREATE TABLE user_type (
+  ID smallint(6) NOT NULL,
+  user_type varchar(20) NOT NULL,
+  CONSTRAINT user_type_PK PRIMARY KEY (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
 -- Table structure for table `volunteer`
 
 CREATE TABLE volunteer (
@@ -38,7 +48,9 @@ CREATE TABLE volunteer (
   Email varchar(30) NOT NULL,
   Password varchar(100) NOT NULL,
   Unit smallint(6) DEFAULT NULL,
-  CONSTRAINT volunteer_ID PRIMARY KEY (ID)
+  user_type smallint(6),
+  CONSTRAINT volunteer_ID PRIMARY KEY (ID),
+  CONSTRAINT user_type_FK FOREIGN KEY (user_type) REFERENCES user_type (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -87,7 +99,6 @@ CREATE TABLE manager (
 -- --------------------------------------------------------
 
 
-
 --
 -- Table structure for table `event_volunteer`
 --
@@ -123,6 +134,14 @@ CREATE TABLE logs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+INSERT INTO user_type (ID, user_type) VALUES
+(1, 'Root'),
+(2, 'Daglig Leder'),
+(3, 'Volunteer Coordinator'),
+(4, 'Event Manager'),
+(5, 'Manager'),
+(6, 'Volunteer');
+
 INSERT INTO event (Name, Date, Time_Start, Time_End, Type, Event_text) VALUES
 ('Quiz', '2019-01-22', '1900', '2300', 'D', 'Dette er Quiz'),
 ('Hellbillies', '2019-01-27', '2000', '0230', 'A', 'Hellbillies er gøy'),
@@ -133,11 +152,11 @@ INSERT INTO event (Name, Date, Time_Start, Time_End, Type, Event_text) VALUES
 ('Oktoberfest', '2020-10-02', '2000', '0130', 'C', 'Tysklands tradisjon kommer til å Kroa!'),
 ('Cezinando', '2020-10-23', '2130', '0100', 'B', 'Cezinando fremfører nytt album på storscena');
 
-INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit) VALUES
-('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0),
-('Kari', 'Øvrebø', 83839292, 'Kari@test.no', md5('Root123'), 3),
-('Kim', 'Possible', 77775555, 'Possible@test.no', md5('Root123'), 5),
-('Trym', 'Host', 88884444, 'Host@test.no', md5('Root123'), 1);
+INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type) VALUES
+('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0, 1),
+('Kari', 'Øvrebø', 83839292, 'Kari@test.no', md5('Root123'), 3, 5),
+('Kim', 'Possible', 77775555, 'Possible@test.no', md5('Root123'), 5, 5),
+('Trym', 'Host', 88884444, 'Host@test.no', md5('Root123'), 6, 5);
 
 INSERT INTO Crew_type (ID, type) VALUES
 (1, 'Bar'),
