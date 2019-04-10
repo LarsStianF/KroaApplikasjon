@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS manager;
 DROP TABLE IF EXISTS event;
 DROP TABLE IF EXISTS event_volunteer;
-DROP TABLE IF EXISTS crew;
+DROP TABLE IF EXISTS crew_type;
 DROP TABLE IF EXISTS volunteer;
 DROP TABLE IF EXISTS want_volunteer;
 DROP TABLE IF EXISTS logs;
@@ -62,35 +62,31 @@ CREATE TABLE event (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `manager`
-
-CREATE TABLE manager (
-  ID smallint(6) NOT NULL,
-  Bar tinyint(1) NOT NULL,
-  Security tinyint(1) NOT NULL,
-  Crew tinyint(1) NOT NULL,
-  Tech tinyint(1) NOT NULL,
-  CONSTRAINT man_ID PRIMARY KEY (ID),
-  CONSTRAINT volunt_ID FOREIGN KEY (ID) REFERENCES volunteer (ID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `crew`
 --
 
-CREATE TABLE crew (
+CREATE TABLE crew_type (
   ID smallint(6) NOT NULL,
-  Bar tinyint(1) NOT NULL,
-  Security tinyint(1) NOT NULL,
-  Crew tinyint(1) NOT NULL,
-  Tech tinyint(1) NOT NULL,
-  CONSTRAINT crew_ID PRIMARY KEY (ID),
-  CONSTRAINT manager_ID FOREIGN KEY (ID) REFERENCES volunteer (ID)
+  type varchar(20) NOT NULL,
+  CONSTRAINT crew_ID PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `manager`
+
+CREATE TABLE manager (
+  vol_ID smallint(6) NOT NULL,
+  crew_type_ID smallint(6) NOT NULL,
+  CONSTRAINT manager_PK PRIMARY KEY (vol_ID, crew_type_ID),
+  CONSTRAINT vol_ID FOREIGN KEY (vol_ID) REFERENCES volunteer (ID),
+  CONSTRAINT crew_type_FK FOREIGN KEY (crew_type_ID) REFERENCES crew_type (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+
 
 --
 -- Table structure for table `event_volunteer`
@@ -99,18 +95,23 @@ CREATE TABLE crew (
 CREATE TABLE event_volunteer (
   vol_ID smallint(6) NOT NULL,
   event_ID smallint(6) NOT NULL,
-  CONSTRAINT evevo_ID PRIMARY KEY (vol_ID, event_ID),
-  CONSTRAINT AF_eve_ID FOREIGN KEY (event_ID) REFERENCES event (ID),
-  CONSTRAINT AF_vol_ID FOREIGN KEY (vol_ID) REFERENCES volunteer (ID)
+  crew_type_ID smallint(6) NOT NULL,
+  manager tinyint(1) NOT NULL,
+  CONSTRAINT event_vol_PK PRIMARY KEY (vol_ID, event_ID, crew_type_ID),
+  CONSTRAINT event_vol_crew_type_FK FOREIGN KEY (crew_type_ID) REFERENCES crew_type (ID),
+  CONSTRAINT event_vol_event_FK FOREIGN KEY (event_ID) REFERENCES event (ID),
+  CONSTRAINT event_vol_vol_FK FOREIGN KEY (vol_ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE want_volunteer (
   vol_ID smallint(6) NOT NULL,
   event_ID smallint(6) NOT NULL,
-  CONSTRAINT evevo_ID PRIMARY KEY (vol_ID, event_ID),
-  CONSTRAINT WA_eve_ID FOREIGN KEY (event_ID) REFERENCES event (ID),
-  CONSTRAINT WA_vol_ID FOREIGN KEY (vol_ID) REFERENCES volunteer (ID)
+  crew_type_ID smallint(6) NOT NULL,
+  CONSTRAINT want_vol_PK PRIMARY KEY (vol_ID, event_ID, crew_type_ID),
+  CONSTRAINT want_vol_crew_type_FK FOREIGN KEY (crew_type_ID) REFERENCES crew_type (ID),
+  CONSTRAINT want_vol_event_FK FOREIGN KEY (event_ID) REFERENCES event (ID),
+  CONSTRAINT want_vol_vol_FK FOREIGN KEY (vol_ID) REFERENCES volunteer (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE logs (
@@ -138,28 +139,28 @@ INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit) VALUES
 ('Kim', 'Possible', 77775555, 'Possible@test.no', md5('Root123'), 5),
 ('Trym', 'Host', 88884444, 'Host@test.no', md5('Root123'), 1);
 
-INSERT INTO Crew (ID, Bar, Security, Crew, Tech) VALUES
-(1, 0, 1, 0, 1),
-(2, 1, 0, 1, 0),
-(3, 1, 0, 0, 1),
-(4, 0, 1, 1, 0);
+INSERT INTO Crew_type (ID, type) VALUES
+(1, 'Bar'),
+(2, 'Security'),
+(3, 'Crew'),
+(4, 'Technical');
 
-INSERT INTO Manager (ID, Bar, Security, Crew, Tech) VALUES
-(1, 0, 1, 0, 0),
-(2, 1, 0, 0, 0),
-(3, 0, 0, 0, 1),
-(4, 0, 0, 1, 0);
-
-INSERT INTO event_volunteer (vol_ID, event_ID) VALUES
+INSERT INTO Manager (vol_ID, crew_type_ID) VALUES
 (1, 1),
-(1, 2),
 (2, 2),
-(3, 1);
+(3, 3),
+(4, 4);
 
-INSERT INTO want_volunteer (vol_ID, event_ID) VALUES
-(1, 3),
-(2, 4),
-(3, 4);
+INSERT INTO event_volunteer (vol_ID, event_ID, crew_type_ID, manager) VALUES
+(1, 1, 1, 0),
+(1, 2, 2, 0),
+(2, 2, 3, 0),
+(3, 1, 4, 1);
+
+INSERT INTO want_volunteer (vol_ID, event_ID, crew_type_ID) VALUES
+(1, 3, 1),
+(2, 4, 2),
+(3, 4 ,3);
 
 INSERT INTO logs (event_ID, crew_type, logs) VALUES
 (1, 'Security', 'Dette arrangementet gikk fint'),
