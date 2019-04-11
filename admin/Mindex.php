@@ -140,7 +140,6 @@ include 'rsc/imports/php/components/admin_header.php';
                                         echo    '<strong class="d-block text-gray dark">Volunteers: 6/6 Bar, 4/5 Teknisk, 4/4 Crew, 10/14 Security</strong>';
                                         echo    '<strong class="d-block text-gray dark"> Managers: 1/1 Bar, 0/0 Teknisk, 1/1 Crew, 1/1 Security</strong>';
                                         echo    '<span class="text-gray dark h6">Additional Notes: </span>' , $row['Event_text'];
-                                        echo    '<button type="button" class="btn btn-primary btn-sm btn-outline-success" style="float: right;">Sign up</button>';
                                         echo    '</p>';
                                         echo '</div>';
                                     }
@@ -200,10 +199,10 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo        $row['Time_End'];
                         echo        '</strong>';
                         echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
+                        echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
                         echo            '<span class="text-gray dark h6">Bar logs: </span>';
                         echo            $row['logs'];
-                        echo            '</p>';
+                        echo            '</form>';
                         echo        '</div>';
                         echo    '</div>';
                         echo    '<div class="col-md-4 justify-content-between">';
@@ -266,10 +265,10 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo        $row['Time_End'];
                         echo        '</strong>';
                         echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
+                        echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
                         echo            '<span class="text-gray dark h6">Bar logs: </span>';
                         echo            $row['logs'];
-                        echo            '</p>';
+                        echo            '</form>';
                         echo        '</div>';
                         echo    '</div>';
                         echo    '<div class="col-md-4 justify-content-between">';
@@ -331,10 +330,10 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo        $row['Time_End'];
                         echo        '</strong>';
                         echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
+                        echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
                         echo            '<span class="text-gray dark h6">Bar logs: </span>';
                         echo            $row['logs'];
-                        echo            '</p>';
+                        echo            '</form>';
                         echo        '</div>';
                         echo    '</div>';
                         echo    '<div class="col-md-4 justify-content-between">';
@@ -395,18 +394,14 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo        $row['Time_End'];
                         echo        '</strong>';
                         echo        '<div class="media text-muted pt-3">';
-                        echo            '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
+                        echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
                         echo            '<span class="text-gray dark h6">Bar logs: </span>';
                         echo            $row['logs'];
-                        echo            '</p>';
+                        echo            '</form>';
                         echo        '</div>';
                         echo    '</div>';
                         echo    '<div class="col-md-4 justify-content-between">';
-                        //echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo        '<table class="d-block text-gray-dark h2 border-bottom" id="TechLog">Frivillige </table>';
-                        echo            '<tr>';
-                        echo            '<td> </td>';
-                        echo            '</tr>';
+                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
                         echo        '<button class="btn btn-success" type="submit">+</button>';
                         echo    '</div>';
                         echo '</div>';
@@ -428,6 +423,7 @@ include 'rsc/imports/php/components/admin_header.php';
 
     </main>
 
+    <script src="rsc/imports/php/functions/functions.php"></script>
     <script src="../rsc/imports/js/managerjs.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>

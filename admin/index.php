@@ -1,4 +1,5 @@
 <?php
+include 'dbcon.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
 
@@ -32,118 +33,208 @@ include 'rsc/imports/php/components/admin_header.php';
                     <div class="d-flex align-items-center p-3 text-white-50 bg-warning rounded shadow-sm ">
                         <img class="mr-3" src="../rsc/img/userpic.jpg" alt="" width="48" height="48">
                         <div class="lh-100">
-                            <h6 class="mb-0 text-white lh-100">Welcome, Name Nameson</h6>
-                            <small>Last login: 22 January, 2019</small>
+                            <h6 class="mb-0 text-white lh-100">Welcome, <?php echo $_SESSION['login_name'] ?></h6>
+                            <small>Last volunteered: </small>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
-                            <h6 class="border-bottom border-gray pb-2 mb-0">Your confirmed upcoming events</h6>
-                            <div class="media text-muted pt-3">
-                                <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>
-                                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                    <strong class="d-block text-gray-dark">Kroa valget 2019</strong>
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                </p>
-                            </div>
-                            <div class="media text-muted pt-3">
-                                <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#e83e8c" width="100%" height="100%"/><text fill="#e83e8c" dy=".3em" x="50%" y="50%">32x32</text></svg>
-                                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                    <strong class="d-block text-gray-dark h4">Loveshack</strong>
-                                    <strong class="d-block text-gray dark">Date: 26.2.2019 Time: 20.00 - 02.30</strong>
-                                    <strong class="d-block text-gray dark">Meetup: kl 18.00</strong>
-                                    <strong class="d-block text-gray dark">You are working as: Bar</strong>
-                                    <strong class="d-block text-gray dark">6/6 Bar, 4/5 Teknisk, 4/4 Crew, 10/14 Security</strong>
+                <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
+                        <h6 class="border-bottom border-gray pb-2 mb-0">Your confirmed upcoming events</h6>
 
-                                    <span class="text-gray dark h6">Additional Notes: </span>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                </p>
-                            </div>
-                            <div class="media text-muted pt-3">
-                                <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#6f42c1" width="100%" height="100%"/><text fill="#6f42c1" dy=".3em" x="50%" y="50%">32x32</text></svg>
-                                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                    <strong class="d-block text-gray-dark">Åpen Scene</strong>
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                </p>
-                            </div>
-                            <small class="d-block text-right mt-3">
-                                <a href="#">Sign up for more events!</a>
-                            </small>
-                        </div></div>
-                    <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
-                            <h6 class="border-bottom border-gray pb-2 mb-0">Your signed upcoming events</h6>
-                            <div class="media text-muted pt-3">
-                                <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>
-                                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                    <strong class="d-block text-gray-dark">Karpe</strong>
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                </p>
-                            </div>
-                            <div class="media text-muted pt-3">
-                                <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#e83e8c" width="100%" height="100%"/><text fill="#e83e8c" dy=".3em" x="50%" y="50%">32x32</text></svg>
-                                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                    <strong class="d-block text-gray-dark">Rotlaus</strong>
-                                    <strong class="d-block text-gray dark">Date: 26.2.2019 Time: 20.00 - 02.30</strong>
-                                    <strong class="d-block text-gray dark">Meetup: kl 18.00</strong>
-                                    <strong class="d-block text-gray dark">You are signed as: Teknisk, Security</strong>
-                                    <strong class="d-block text-gray dark">6/6 Bar, 4/5 Teknisk, 4/4 Crew, 10/14 Security</strong>
-                                    <span class="text-gray dark h6">Additional Notes: </span>
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                </p>
-                            </div>
-                            <div class="media text-muted pt-3">
-                                <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#6f42c1" width="100%" height="100%"/><text fill="#6f42c1" dy=".3em" x="50%" y="50%">32x32</text></svg>
-                                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                    <strong class="d-block text-gray-dark">X-RUSS</strong>
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                                </p>
-                            </div>
-                            <small class="d-block text-right mt-3">
-                                <a href="#">Sign up for more events!</a>
-                            </small>
-                        </div></div>
-                </div>
+                        <?php
+                        /* Attempt MySQL server connection. Assuming you are running MySQL
+                        server with default setting (user 'root' with no password) */
+                        $link = mysqli_connect("localhost", "root", "", "group11");
+
+                        // Check connection
+                        if($link === false){
+                            die("ERROR: Could not connect. " . mysqli_connect_error());
+                        }
+
+                        // Attempt select query execution
+                        $sql = "SELECT * FROM event LIMIT 3";
+                        if($result = mysqli_query($link, $sql)){
+                            if(mysqli_num_rows($result) > 0){
+                                while($row = mysqli_fetch_array($result)){
+
+
+                                    echo '<div class="media text-muted pt-3">';
+                                    echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
+                                    echo    '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
+                                    echo    '<strong class="d-block text-gray-dark h4">';
+                                    echo    $row['Name'];
+                                    echo    '</strong>';
+                                    echo    ' <strong class="d-block text-gray dark">Date: ';
+                                    echo    $row['Date'];
+                                    echo    ' Time: ';
+                                    echo    $row['Time_Start'];
+                                    echo    ' - ';
+                                    echo    $row['Time_End'];
+                                    echo    '</strong>';
+                                    echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
+                                    echo    '<strong class="d-block text-gray dark">You are working as: Bar</strong>';
+                                    echo    '<strong class="d-block text-gray dark">Volunteers: 10/14 Security, 6/6 Bar, 4/4 Crew, 4/5 Teknisk </strong>';
+                                    echo    '<span class="text-gray dark h6">Additional Notes: </span>' , $row['Event_text'];
+
+                                    echo    '</p>';
+                                    echo '</div>';
+                                }
+                                // Free result set
+                                mysqli_free_result($result);
+                            } else{
+                                echo "No records matching your query were found.";
+                            }
+                        } else{
+                            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+
+                        // Close connection
+                        mysqli_close($link);
+                        ?>
+                        <a href="events.php" class="d-block text-gray dark">Sign up for more events!</a>
+                    </div></div>
+                <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
+                        <h6 class="border-bottom border-gray pb-2 mb-0">Your signed upcoming events</h6>
+
+                        <?php
+                        /* Attempt MySQL server connection. Assuming you are running MySQL
+                        server with default setting (user 'root' with no password) */
+                        $link = mysqli_connect("localhost", "root", "", "group11");
+
+                        // Check connection
+                        if($link === false){
+                            die("ERROR: Could not connect. " . mysqli_connect_error());
+                        }
+
+                        // Attempt select query execution
+                        $sql = "SELECT * FROM event WHERE ID > 3 LIMIT 3";
+                        if($result = mysqli_query($link, $sql)){
+                            if(mysqli_num_rows($result) > 0){
+                                while($row = mysqli_fetch_array($result)){
+
+                                    echo '<div class="media text-muted pt-3">';
+                                    echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
+                                    echo    '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
+                                    echo    '<strong class="d-block text-gray-dark h4">';
+                                    echo    $row['Name'];
+                                    echo    '</strong>';
+                                    echo    ' <strong class="d-block text-gray dark">Date: ';
+                                    echo    $row['Date'];
+                                    echo    ' Time: ';
+                                    echo    $row['Time_Start'];
+                                    echo    ' - ';
+                                    echo    $row['Time_End'];
+                                    echo    '</strong>';
+                                    echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
+                                    echo    '<strong class="d-block text-gray dark">You are signed as: Security</strong>';
+                                    echo    '<strong class="d-block text-gray dark">Volunteers: 10/14 Security, 6/6 Bar, 4/4 Crew, 4/5 Teknisk</strong>';
+                                    echo    '<span class="text-gray dark h6">Additional Notes: </span>' , $row['Event_text'];
+                                    echo    '</p>';
+                                    echo '</div>';
+                                }
+                                // Free result set
+                                mysqli_free_result($result);
+                            } else{
+                                echo "No records matching your query were found.";
+                            }
+                        } else{
+                            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+
+                        // Close connection
+                        mysqli_close($link);
+                        ?>
+                        <a href="events.php" class="d-block text-gray dark">Sign up for more events!</a>
+                    </div></div>
             </div>
-            <div class="col-md-4 themed-grid-col">
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-enhet text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Your free units</div>
-                                <div class="stat-digit">4</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-total text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Times worked</div>
-                                <div class="stat-digit">42</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                    <?php
+                                    /* Attempt MySQL server connection. Assuming you are running MySQL
+                                    server with default setting (user 'root' with no password) */
+                                    $link = mysqli_connect("localhost", "root", "", "group11");
+
+                                    // Check connection
+                                    if($link === false){
+                                        die("ERROR: Could not connect. " . mysqli_connect_error());
+                                    }
+
+                                    // Attempt select query execution
+                                    $sql = "SELECT * FROM volunteer WHERE ID = 1";
+                                    if($result = mysqli_query($link, $sql)){
+                                        if(mysqli_num_rows($result) > 0){
+                                            while($row = mysqli_fetch_array($result)){
+
+                                                echo '<div class="col-md-4 themed-grid-col">';
+                                                echo    '<div class="card">';
+                                                echo        '<div class="card-body">';
+                                                echo            '<div class="stat-widget-one">';
+                                                echo                '<div class="stat-icon dib"><i class="ti-enhet text-success border-success"></i></div>';
+                                                echo                '<div class="stat-content dib">';
+                                                echo                    '<div class="stat-text">Spare units</div>';
+                                                echo                        '<div class="stat-digit">';
+                                                echo                            $_SESSION['login_unit'];
+                                                echo                        '</div>';
+                                                echo                    '</div>';
+                                                echo                '</div>';
+                                                echo            '</div>';
+                                                echo        '</div>';
+                                                echo    '<div class="card">';
+                                                echo        '<div class="card-body">';
+                                                echo            '<div class="stat-widget-one">';
+                                                echo                '<div class="stat-icon dib"><i class="ti-total text-success border-success"></i></div>';
+                                                echo                '<div class="stat-content dib">';
+                                                echo                    '<div class="stat-text">Times worked</div>';
+                                                echo                    '<div class="stat-digit">42</div>';
+                                                echo                '</div>';
+                                                echo            '</div>';
+                                                echo        '</div>';
+                                                echo    '</div>';
+                                                echo    '<div class="card">';
+                                                echo        '<div class="card-body">';
+                                                echo            '<div class="stat-widget-one">';
+                                                echo                '<div class="stat-icon dib"><i class="ti-month text-success border-success"></i></div>';
+                                                echo                '<div class="stat-content dib">';
+                                                echo                    '<div class="stat-text">Times worked this month</div>';
+                                                echo                    '<div class="stat-digit">5</div>';
+                                                echo                '</div>';
+                                                echo            '</div>';
+                                                echo        '</div>';
+                                                echo    '</div>';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+
+                                            }
+                                            // Free result set
+                                            mysqli_free_result($result);
+                                        } else{
+                                            echo "No records matching your query were found.";
+                                        }
+                                    } else{
+                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                                    }
+
+                                    // Close connection
+                                    mysqli_close($link);
+                                    ?>
 
 
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-month text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Times worked this month</div>
-                                <div class="stat-digit">5</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -354,7 +445,7 @@ include 'rsc/imports/php/components/admin_header.php';
         </div>
     </main>
 
-
+    <script src="rsc/imports/php/functions/functions.php"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
     <script src="offcanvas.js"></script></body>
