@@ -13,14 +13,14 @@ include 'rsc/imports/php/components/admin_header.php';
 
 
 <script>
-
+      /* ***** AJAX SCRIPT *****
     $(document).ready(function(){
-        $('#unitSearch input[type="text"]').on("keyup input", function(){
-            /* Get input value on change */
+        $('.unitSearch input[type="text"]').on("keyup input", function(){
+            // Get input value on change
             var inputVal = $(this).val();
             var resultDropdown = $(this).siblings(".result");
             if(inputVal.length){
-                $.get(this, {term: inputVal}).done(function(data){
+                $.get("fetch_unitlist_data.php", {term: inputVal}).done(function(data){
                     // Display the returned data in browser
                     resultDropdown.html(data);
                 });
@@ -30,24 +30,24 @@ include 'rsc/imports/php/components/admin_header.php';
         });
 
         // Set search input value on click of result item
-        $(document).on("click", ".result p", function(){
+        $(document).on("click", ".result a", function(){
             $(this).parents("#unitSearch").find('input[type="text"]').val($(this).text());
             $(this).parent(".result").empty();
         });
     });
+      */
 
 
-
-    /* *OLD SCRIPT *
+   //  /* *OLD SCRIPT *
     $(document).ready(function(){
         $("#unitSearch").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            $("#namerow *").filter(function() {
+            $("#namerow a").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
     });
-    /*
+  // */
 </script>
 
 
@@ -57,37 +57,27 @@ include 'rsc/imports/php/components/admin_header.php';
         <div class="bg-light p-3 m-0 card" >
             <h1 class="display-3 text-center"> Unitlist </h1>
 
-            <div class="input-group input-group-lg ">
-                <input type="text" class="form-control" placeholder="Search for volunteers" id="unitSearch" onkeyup="unitSearchFunction">
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button">
-                        <i>Search</i>
-                    </button>
-                </div>
+            <div class="input-group input-group-lg">
+                <input id="unitSearch" type="text" class="form-control" placeholder="Search for volunteers">
             </div>
+            <div class="result"></div>
 
         </div>
 
 
 <?php
-if(isset($_REQUEST["term"])) {
-    $sql = 'SELECT * FROM volunteer WHERE Firstname LIKE ?';
-    if ($stmt = mysqli_prepare($con, $sql)) {
-        mysqli_stmt_bind_param($stmt, "s", $param_term);
-        $param_term = $_REQUEST["term"] . '%';
-
-        if (mysqli_stmt_execute($stmt)) {
-            $result = mysqli_stmt_get_result($stmt);
-
-            if (mysqli_num_rows($result) > 0) {
 
 
-                echo '<div class="list-group" id="namerow">';
+    $sql = 'SELECT * FROM volunteer';
+    $result = mysqli_query($con, $sql);
+
+
+                echo '<div class="list-group">';
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-
+                    echo '<div id="namerow">';
                     echo '<a href="#url1" class="list-group-item list-group-item-action flex-column align-items-start">';
                     echo '<div class="d-flex w-100 justify-content-between">';
-                    echo '<h2 class="mb-1" id="nameblock">';
+                    echo '<h2 class="mb-1"  >';
                     echo $row['Firstname'] . ' ' . $row['Lastname'];
                     echo '</h2>';
                     echo '<h2 class="mb-1" >';
@@ -100,22 +90,39 @@ if(isset($_REQUEST["term"])) {
                     echo '</span> </h2>';
                     echo '</div>';
                     echo '</a>';
+                    echo '</div>';
                 }
-            } else{
-                    echo "<p>No matches found</p>";
-                }
-            } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
-            }
-        }
 
-    mysqli_stmt_close($stmt);
-}
-mysqli_close($con);
+             echo  ' </div>';
+
+
+
 
 
 ?>
-        </div>
+<!--
+        <script>
+
+
+            $(document).ready(function () {
+
+                $('.view_data').click(function () {
+                    var id = $(this).attr('id');
+
+                    $.ajax({
+                        url: "fetch_unitlist_data.php",
+                        method: "post",
+                        data: {id:id},
+                        success:function (data) {
+                            $('#event_detail').html(data);
+
+                        }
+                    });
+                });
+            });
+
+        </script>
+-->
 <!--
   <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
