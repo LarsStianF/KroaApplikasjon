@@ -49,6 +49,16 @@ include 'rsc/imports/php/components/admin_header.php';
                         if($result = mysqli_query($link, $sql)){
                             if(mysqli_num_rows($result) > 0){
                                 while($row = mysqli_fetch_array($result)){
+                                    // Gets date
+                                    $id = $row['ID'];
+                                    $d = new DateTime($row['Date']);
+                                    $date = $d->format('F jS o');
+
+                                    // Gets time
+                                    $sTime = new DateTime($row['Time_Start']);
+                                    $eTime = new DateTime($row['Time_End']);
+                                    $startTime = $sTime->format('H:i');
+                                    $endTime = $eTime->format('H:i');
 
                                     echo '<div class="media text-muted pt-3">';
                                     echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
@@ -57,11 +67,12 @@ include 'rsc/imports/php/components/admin_header.php';
                                     echo    $row['Name'];
                                     echo    '</strong>';
                                     echo    ' <strong class="d-block text-gray dark">Date: ';
-                                    echo    $row['Date'];
+                                    echo    $date;
+                                    echo    '<br>';
                                     echo    ' Time: ';
-                                    echo    $row['Time_Start'];
+                                    echo    $startTime;
                                     echo    ' - ';
-                                    echo    $row['Time_End'];
+                                    echo    $endTime;
                                     echo    '</strong>';
                                     echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
                                     echo    '<strong class="d-block text-gray dark">You are working as: Bar</strong>';
@@ -102,6 +113,16 @@ include 'rsc/imports/php/components/admin_header.php';
                         if($result = mysqli_query($link, $sql)){
                             if(mysqli_num_rows($result) > 0){
                                 while($row = mysqli_fetch_array($result)){
+                                    // Gets date
+                                    $id = $row['ID'];
+                                    $d = new DateTime($row['Date']);
+                                    $date = $d->format('F jS o');
+
+                                    // Gets time
+                                    $sTime = new DateTime($row['Time_Start']);
+                                    $eTime = new DateTime($row['Time_End']);
+                                    $startTime = $sTime->format('H:i');
+                                    $endTime = $eTime->format('H:i');
 
                                     echo '<div class="media text-muted pt-3">';
                                     echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
@@ -110,11 +131,12 @@ include 'rsc/imports/php/components/admin_header.php';
                                     echo    $row['Name'];
                                     echo    '</strong>';
                                     echo    ' <strong class="d-block text-gray dark">Date: ';
-                                    echo    $row['Date'];
+                                    echo    $date;
+                                    echo    '<br>';
                                     echo    ' Time: ';
-                                    echo    $row['Time_Start'];
+                                    echo    $startTime;
                                     echo    ' - ';
-                                    echo    $row['Time_End'];
+                                    echo    $endTime;
                                     echo    '</strong>';
                                     echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
                                     echo    '<strong class="d-block text-gray dark">You are signed as: Security</strong>';
