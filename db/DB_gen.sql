@@ -177,6 +177,7 @@ INSERT INTO event_volunteer (vol_ID, event_ID, crew_type_ID, manager) VALUES
 (1, 1, 1, 0),
 (1, 2, 2, 0),
 (2, 2, 3, 0),
+(2, 1, 1, 0),
 (3, 1, 4, 1);
 
 INSERT INTO want_volunteer (vol_ID, event_ID, crew_type_ID) VALUES

@@ -16,6 +16,109 @@ return false;
 
 }
 
+function populate_volunteers_all(){
+    global $con;
+
+    $sql = 'SELECT * FROM Volunteer';
+    $result = mysqli_query($con, $sql);
+    $numrow = mysqli_num_rows($result);
+
+
+    while ($row = mysqli_fetch_array($result)) {
+        $id = $row['ID'];
+
+        echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
+        echo '<div class="d-flex w-100 justify-content-between">';
+        echo '<ul class="list-inline ">';
+        echo '<li class="list-inline-item "><h5 class="mb-1">';
+        echo $row['Firstname'] . ' ' . $row['Lastname'];
+        echo '</h5></li>';
+        echo '<li class="list-inline-item "><h6 class="mb-1">';
+        if ($row['user_type'] == '5') {
+
+
+            populate_manager_row($id);
+
+        }else{
+            $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
+            $tempRes = mysqli_query($con,$tempQuery);
+            $tempRow = mysqli_fetch_array($tempRes);
+            echo $tempRow['user_type'];
+        }
+
+
+        echo '</h6></li>';
+        populate_little_men($id);
+
+        echo '</ul>';
+
+        // THIS SHOULD ONLY BE VISABLY TO DAGLIG LEDER / FRIVILLIGKOORDINATOR
+        echo '<button class="btn btn-primary" type="submit">Edit</button>';
+        //_____________________________________________________________________
+
+        echo '</div>';
+        echo '<p class="mb-1"><span class="h6">Email: </span>';
+        echo $row['Email'];
+        echo '<span class="h6"> - Tlf: </span>';
+        echo $row['nr'];
+        echo '</p>';
+        populate_last_volunteered($id);
+        echo '</a>';
+    }
+}
+
+function populate_volunteers_filter($crew_type_ID){
+    global $con;
+
+    $sql = 'SELECT * FROM Volunteer, event_volunteer 
+            WHERE Volunteer.ID = event_volunteer.Vol_ID 
+              AND  event_volunteer.crew_type_ID = ' . $crew_type_ID;
+    $result = mysqli_query($con, $sql);
+
+
+    while ($row = mysqli_fetch_array($result)) {
+        $id = $row['ID'];
+
+        echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
+        echo '<div class="d-flex w-100 justify-content-between">';
+        echo '<ul class="list-inline ">';
+        echo '<li class="list-inline-item "><h5 class="mb-1">';
+        echo $row['Firstname'] . ' ' . $row['Lastname'];
+        echo '</h5></li>';
+        echo '<li class="list-inline-item "><h6 class="mb-1">';
+        if ($row['user_type'] == '5') {
+
+
+            populate_manager_row($id);
+
+        }else{
+            $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
+            $tempRes = mysqli_query($con,$tempQuery);
+            $tempRow = mysqli_fetch_array($tempRes);
+            echo $tempRow['user_type'];
+        }
+
+
+        echo '</h6></li>';
+        populate_little_men($id);
+
+        echo '</ul>';
+
+        // THIS SHOULD ONLY BE VISABLY TO DAGLIG LEDER / FRIVILLIGKOORDINATOR
+        echo '<button class="btn btn-primary" type="submit">Edit</button>';
+        //_____________________________________________________________________
+
+        echo '</div>';
+        echo '<p class="mb-1"><span class="h6">Email: </span>';
+        echo $row['Email'];
+        echo '<span class="h6"> - Tlf: </span>';
+        echo $row['nr'];
+        echo '</p>';
+        populate_last_volunteered($id);
+        echo '</a>';
+    }
+}
+
 
 function populate_manager_row($id){
     global $con;
