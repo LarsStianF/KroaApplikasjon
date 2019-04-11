@@ -147,14 +147,14 @@ INSERT INTO user_type (ID, user_type) VALUES
 (6, 'Volunteer');
 
 INSERT INTO event (Name, Date, Time_Start, Time_End, Type, Event_text, Event_sec, Event_bar, Event_crew, Event_tech) VALUES
-('Quiz', '2019-01-22', '1900', '2300', 'D', 'Dette er Quiz', 15, 8, 5, 4),
-('Hellbillies', '2019-01-27', '2000', '0230', 'A', 'Hellbillies er gøy', 15, 8, 5, 4),
-('Afterski', '2019-03-14', '1900', '0130', 'B', 'DJ Dan høster opp afterski stemning', 15, 8, 5, 4),
+('Quiz', '2019-01-22', '1900', '2300', 'D', 'Dette er Quiz', 2, 3, 3, 2),
+('Hellbillies', '2019-01-27', '2000', '0230', 'A', 'Hellbillies er gøy', 12, 8, 5, 4),
+('Afterski', '2019-03-14', '1900', '0130', 'B', 'DJ Dan høster opp afterski stemning', 13, 8, 5, 2),
 ('X-russ', '2019-04-04', '1900', '0130', 'A', 'På med russebuksa!', 15, 8, 5, 4),
-('Aapen Scene', '2019-04-26', '2130', '0230', 'D', 'Fremfør det du vil', 15, 8, 5, 4),
-('Sondre Justad', '2019-05-05', '2130', '0100', 'B', 'Sondre Justad kommer til Kroa og det blir gøy!', 15, 8, 5, 4),
+('Aapen Scene', '2019-04-26', '2130', '0230', 'D', 'Fremfør det du vil', 5, 4, 2, 2),
+('Sondre Justad', '2019-05-05', '2130', '0100', 'B', 'Sondre Justad kommer til Kroa og det blir gøy!', 11, 8, 4, 3),
 ('Oktoberfest', '2020-10-02', '2000', '0130', 'C', 'Tysklands tradisjon kommer til å Kroa!', 15, 8, 5, 4),
-('Cezinando', '2020-10-23', '2130', '0100', 'B', 'Cezinando fremfører nytt album på storscena', 15, 8, 5, 4);
+('Cezinando', '2020-10-23', '2130', '0100', 'B', 'Cezinando fremfører nytt album på storscena', 16, 9, 6, 5);
 
 INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type) VALUES
 ('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0, 1),
