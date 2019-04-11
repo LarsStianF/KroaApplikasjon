@@ -35,6 +35,7 @@ include 'rsc/imports/php/components/admin_header.php';
                         </div>
                     </div>
                 </div>
+            <div class="row">
                 <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
                         <h6 class="border-bottom border-gray pb-2 mb-0">Your confirmed upcoming events</h6>
 
@@ -77,7 +78,7 @@ include 'rsc/imports/php/components/admin_header.php';
                                     echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
                                     echo    '<strong class="d-block text-gray dark">You are working as: Bar</strong>';
                                     echo    '<strong class="d-block text-gray dark">Volunteers: 10/14 Security, 6/6 Bar, 4/4 Crew, 4/5 Teknisk </strong>';
-                                    echo    '<span class="text-gray dark h6">Additional Notes: </span>' , $row['Event_text'];
+                                    echo    '<span class="text-gray dark h6">Additional Notes: </span>' . $row['Event_text'];
                                     echo    '</p>';
                                     echo '</div>';
                                 }
@@ -93,7 +94,9 @@ include 'rsc/imports/php/components/admin_header.php';
                         // Close connection
                         mysqli_close($link);
                         ?>
+                        <small class="d-block text-right mt-3">
                         <a href="events.php" class="d-block text-gray dark">Sign up for more events!</a>
+                        </small>
                     </div></div>
                 <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
                         <h6 class="border-bottom border-gray pb-2 mb-0">Your signed upcoming events</h6>
@@ -157,8 +160,11 @@ include 'rsc/imports/php/components/admin_header.php';
                         // Close connection
                         mysqli_close($link);
                         ?>
+                        <small class="d-block text-right mt-3">
                         <a href="events.php" class="d-block text-gray dark">Sign up for more events!</a>
+                        </small>
                     </div></div>
+                </div>
             </div>
 
 
