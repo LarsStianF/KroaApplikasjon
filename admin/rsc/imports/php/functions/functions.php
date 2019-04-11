@@ -131,11 +131,11 @@ function populate_manager_row($id){
 
 function check_if_worked_crew($id, $crew_type){
     global $con;
-    $sql = "SELECT COUNT(*) FROM event_volunteer WHERE " . $id . " = vol_ID AND crew_type_ID = " . $crew_type ;
+    $sql = "SELECT COUNT(*) AS has_worked FROM event_volunteer WHERE " . $id . " = vol_ID AND crew_type_ID = " . $crew_type ;
     $result = mysqli_query($con, $sql);
     $row = mysqli_fetch_assoc($result);
 
-     if($row['COUNT(*)'] !== '0'){
+     if($row['has_worked'] !== '0'){
          return true;
      } else {
          return false;
