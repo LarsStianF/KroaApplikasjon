@@ -1,6 +1,6 @@
 <?php
 include 'dbcon.php';
-include '../rsc/imports/php/functions/functions.php';
+include 'rsc/imports/php/functions/functions.php';
 
 
 if(isset($_POST['id']))
