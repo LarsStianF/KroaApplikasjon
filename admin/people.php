@@ -1,8 +1,9 @@
 <?php
+include 'dbcon.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
 include 'rsc/imports/php/functions/functions.php';
-include 'dbcon.php';
+
 
 ?>
 
@@ -17,15 +18,15 @@ include 'dbcon.php';
 
         <div class="bg-light p-3 m-0 card" >
             <h1 class="display-3 text-center"> Volunteers </h1>
-            <form class="form-inline " action="#">
+            <form class="form-inline " name="filter" method="POST" action="">
                 <div>
-                    <button class="btn btn-dark filter-button" data-filter="#">All</button>
-                    <button class="btn btn-light filter-button" data-filter="#">Crew</button>
-                    <button class="btn btn-light filter-button" data-filter="#">Security</button>
-                    <button class="btn btn-light filter-button" data-filter="#">Bar</button>
-                    <button class="btn btn-light filter-button" data-filter="#">Technical</button>
+                    <button class="btn btn-primary filter-button" name="all" data-filter="">All</button>
+                    <button class="btn btn-dark filter-button" name="3" data-filter="">Crew</button>
+                    <button class="btn btn-dark filter-button" name="2" data-filter="">Security</button>
+                    <button class="btn btn-dark filter-button" name="1" data-filter="">Bar</button>
+                    <button class="btn btn-dark filter-button" name="4" data-filter="">Technical</button>
                 </div>
-                <div class="input-group form-inline">
+                <div class=" ml-2 input-group form-inline">
                     <input type="text" class="form-control" placeholder="Search for volunteers">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button">
@@ -34,15 +35,7 @@ include 'dbcon.php';
                     </div>
 
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Sort
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Name</a>
-                        <a class="dropdown-item" href="#">Last Volunteered</a>
-                    </div>
-                </div>
+
 
             </form>
         </div>
@@ -53,54 +46,27 @@ include 'dbcon.php';
 
 
             <?php
-
-            $sql = 'SELECT * FROM Volunteer';
-            $result = mysqli_query($con, $sql);
-            $numrow = mysqli_num_rows($result);
-
-
-            while ($row = mysqli_fetch_array($result)) {
-                $id = $row['ID'];
-
-                echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
-                echo '<div class="d-flex w-100 justify-content-between">';
-                echo '<ul class="list-inline ">';
-                echo '<li class="list-inline-item "><h5 class="mb-1">';
-                echo $row['Firstname'] . ' ' . $row['Lastname'];
-                echo '</h5></li>';
-                echo '<li class="list-inline-item "><h6 class="mb-1">';
-                if ($row['user_type'] == '5') {
-
-
-                populate_manager_row($id);
-
-                }else{
-                    $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
-                    $tempRes = mysqli_query($con,$tempQuery);
-                    $tempRow = mysqli_fetch_array($tempRes);
-                    echo $tempRow['user_type'];
+            if (isset($_POST['1']) || isset($_POST['2']) || isset($_POST['3']) || isset($_POST['4']))  {
+                foreach($_POST as $key => $value){
+                    $crew_type = $key;
                 }
-
-
-                echo '</h6></li>';
-                populate_little_men($id);
-
-                echo '</ul>';
-
-                // THIS SHOULD ONLY BE VISABLY TO DAGLIG LEDER / FRIVILLIGKOORDINATOR
-                echo '<button class="btn btn-primary" type="submit">Edit</button>';
-                //_____________________________________________________________________
-
-                echo '</div>';
-                echo '<p class="mb-1"><span class="h6">Email: </span>';
-                echo $row['Email'];
-                echo '<span class="h6"> - Tlf: </span>';
-                echo $row['nr'];
-                echo '</p>';
-                populate_last_volunteered($id);
-                echo '</a>';
+                populate_volunteers_filter($crew_type);
+            } else {
+                populate_volunteers_all();
             }
 
+/*
+             if(isset($_POST['all'])) {
+                populate_volunteers_all();
+            }elseif (!isset($_POST['all'])) {
+                foreach($_POST as $key => $value){
+                    $crew_type = $key;
+                }
+                populate_volunteers_filter($crew_type);
+            } else {
+                 populate_volunteers_all();
+             }
+*/
 
 ?>
 

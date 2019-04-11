@@ -1,7 +1,8 @@
 <?php
+include 'dbcon.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
-include 'dbcon.php';
+
 ?>
 
     <!--
