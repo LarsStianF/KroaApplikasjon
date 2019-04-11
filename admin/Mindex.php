@@ -177,7 +177,7 @@ include 'rsc/imports/php/components/admin_header.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = '1'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'Bar'";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -243,7 +243,7 @@ include 'rsc/imports/php/components/admin_header.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = '2'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'Security'";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -266,7 +266,7 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo        '</strong>';
                         echo        '<div class="media text-muted pt-3">';
                         echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
+                        echo            '<span class="text-gray dark h6">Security logs: </span>';
                         echo            $row['logs'];
                         echo            '</form>';
                         echo        '</div>';
@@ -308,7 +308,7 @@ include 'rsc/imports/php/components/admin_header.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = '3'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'crew'";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -331,7 +331,7 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo        '</strong>';
                         echo        '<div class="media text-muted pt-3">';
                         echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
+                        echo            '<span class="text-gray dark h6">Crew logs: </span>';
                         echo            $row['logs'];
                         echo            '</form>';
                         echo        '</div>';
@@ -372,7 +372,7 @@ include 'rsc/imports/php/components/admin_header.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = '4'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND Crew_type = 'tech'";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -395,7 +395,7 @@ include 'rsc/imports/php/components/admin_header.php';
                         echo        '</strong>';
                         echo        '<div class="media text-muted pt-3">';
                         echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
+                        echo            '<span class="text-gray dark h6">Tech logs: </span>';
                         echo            $row['logs'];
                         echo            '</form>';
                         echo        '</div>';

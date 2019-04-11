@@ -15,13 +15,10 @@ include 'rsc/imports/php/components/admin_header.php';
 
 
 
-
-
-
     <main role="main" class="container">
 
 
-<div class=" ">
+    <div class=" ">
         <div class="bg-light p-3 m-0 card" >
             <h1 class="display-3 text-center"> Your Page </h1>
 
@@ -42,21 +39,16 @@ include 'rsc/imports/php/components/admin_header.php';
                         <h6 class="border-bottom border-gray pb-2 mb-0">Your confirmed upcoming events</h6>
 
                         <?php
-                        /* Attempt MySQL server connection. Assuming you are running MySQL
-                        server with default setting (user 'root' with no password) */
                         $link = mysqli_connect("localhost", "root", "", "group11");
 
-                        // Check connection
                         if($link === false){
                             die("ERROR: Could not connect. " . mysqli_connect_error());
                         }
 
-                        // Attempt select query execution
                         $sql = "SELECT * FROM event LIMIT 3";
                         if($result = mysqli_query($link, $sql)){
                             if(mysqli_num_rows($result) > 0){
                                 while($row = mysqli_fetch_array($result)){
-
 
                                     echo '<div class="media text-muted pt-3">';
                                     echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
@@ -75,7 +67,6 @@ include 'rsc/imports/php/components/admin_header.php';
                                     echo    '<strong class="d-block text-gray dark">You are working as: Bar</strong>';
                                     echo    '<strong class="d-block text-gray dark">Volunteers: 10/14 Security, 6/6 Bar, 4/4 Crew, 4/5 Teknisk </strong>';
                                     echo    '<span class="text-gray dark h6">Additional Notes: </span>' , $row['Event_text'];
-
                                     echo    '</p>';
                                     echo '</div>';
                                 }
@@ -179,38 +170,6 @@ include 'rsc/imports/php/components/admin_header.php';
                                                 echo                '</div>';
                                                 echo            '</div>';
                                                 echo        '</div>';
-                                                echo    '<div class="card">';
-                                                echo        '<div class="card-body">';
-                                                echo            '<div class="stat-widget-one">';
-                                                echo                '<div class="stat-icon dib"><i class="ti-total text-success border-success"></i></div>';
-                                                echo                '<div class="stat-content dib">';
-                                                echo                    '<div class="stat-text">Times worked</div>';
-                                                echo                    '<div class="stat-digit">42</div>';
-                                                echo                '</div>';
-                                                echo            '</div>';
-                                                echo        '</div>';
-                                                echo    '</div>';
-                                                echo    '<div class="card">';
-                                                echo        '<div class="card-body">';
-                                                echo            '<div class="stat-widget-one">';
-                                                echo                '<div class="stat-icon dib"><i class="ti-month text-success border-success"></i></div>';
-                                                echo                '<div class="stat-content dib">';
-                                                echo                    '<div class="stat-text">Times worked this month</div>';
-                                                echo                    '<div class="stat-digit">5</div>';
-                                                echo                '</div>';
-                                                echo            '</div>';
-                                                echo        '</div>';
-                                                echo    '</div>';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-
                                             }
                                             // Free result set
                                             mysqli_free_result($result);
@@ -224,224 +183,122 @@ include 'rsc/imports/php/components/admin_header.php';
                                     // Close connection
                                     mysqli_close($link);
                                     ?>
+                                    <?php
+                                    $link = mysqli_connect("localhost", "root", "", "group11");
 
+                                    if($link === false){
+                                        die("ERROR: Could not connect. " . mysqli_connect_error());
+                                    }
 
+                                    $sql = "SELECT COUNT(*) AS times FROM event_volunteer WHERE " . $_SESSION['login_id'] . " = vol_ID";
+                                    if($result = mysqli_query($link, $sql)){
+                                        if(mysqli_num_rows($result) > 0){
+                                            while($row = mysqli_fetch_array($result)){
 
+                                                echo    '<div class="card">';
+                                                echo        '<div class="card-body">';
+                                                echo            '<div class="stat-widget-one">';
+                                                echo                '<div class="stat-icon dib"><i class="ti-total text-success border-success"></i></div>';
+                                                echo                '<div class="stat-content dib">';
+                                                echo                    '<div class="stat-text">Times worked</div>';
+                                                echo                    '<div class="stat-digit">';
+                                                echo                    $row['times'];
+                                                echo                    '</div>';
+                                                echo                '</div>';
+                                                echo            '</div>';
+                                                echo        '</div>';
+                                                echo    '</div>';
+                                            }
+                                            // Free result set
+                                            mysqli_free_result($result);
+                                        } else{
+                                            echo "No records matching your query were found.";
+                                        }
+                                    } else{
+                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                                    }
 
+                                    // Close connection
+                                    mysqli_close($link);
+                                    ?>
+                                    <?php
+                                    $link = mysqli_connect("localhost", "root", "", "group11");
 
+                                    if($link === false){
+                                        die("ERROR: Could not connect. " . mysqli_connect_error());
+                                    }
 
+                                    $sql = "SELECT COUNT(*) AS time FROM event_volunteer AS ev, event WHERE " . $_SESSION['login_id'] . " = vol_ID AND event.ID = ev.event_ID AND MONTH(CURDATE()) = MONTH(Date)";
+                                    if($result = mysqli_query($link, $sql)){
+                                        if(mysqli_num_rows($result) > 0){
+                                            while($row = mysqli_fetch_array($result)){
 
+                                                echo    '<div class="card">';
+                                                echo        '<div class="card-body">';
+                                                echo            '<div class="stat-widget-one">';
+                                                echo                '<div class="stat-icon dib"><i class="ti-month text-success border-success"></i></div>';
+                                                echo                '<div class="stat-content dib">';
+                                                echo                    '<div class="stat-text">Times worked this month</div>';
+                                                echo                    '<div class="stat-digit">';
+                                                echo                        $row['time'];
+                                                echo                    '</div>';
+                                                echo                '</div>';
+                                                echo            '</div>';
+                                                echo        '</div>';
+                                                echo    '</div>';
+                                            }
+                                            // Free result set
+                                            mysqli_free_result($result);
+                                        } else{
+                                            echo "No records matching your query were found.";
+                                        }
+                                    } else{
+                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                                    }
 
+                                    // Close connection
+                                    mysqli_close($link);
+                                    ?>
+                                    <?php
+                                    $link = mysqli_connect("localhost", "root", "", "group11");
 
+                                    if($link === false){
+                                        die("ERROR: Could not connect. " . mysqli_connect_error());
+                                    }
 
+                                    $sql = "SELECT COUNT(*) AS times FROM event_volunteer WHERE " . $_SESSION['login_id'] . " = vol_ID";
+                                    if($result = mysqli_query($link, $sql)){
+                                        if(mysqli_num_rows($result) > 0){
+                                           while($row = mysqli_fetch_array($result)){
+                                                echo '<div class="card">';
+                                                echo '<div class="card-body">';
+                                                echo '<div class="stat-widget-one">';
+                                                echo '<div class="stat-icon dib"><i class="ti-jippi text-success border-success"></i></div>';
+                                                echo '<div class="stat-content dib">';
+                                                echo '<div class="stat-text">You have JIPPI until</div>';
+                                                echo '<div class="stat-digit">31 February</div>';
+                                                echo '</div>';
+                                                echo '</div>';
+                                                echo '</div>';
+                                                echo '</div>';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+                                                echo '';
+                                            }
+                                            // Free result set
+                                            mysqli_free_result($result);
+                                        } else{
+                                            echo "No records matching your query were found.";
+                                        }
+                                    } else{
+                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                                    }
 
-
-
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-jippi text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">You have JIPPI until</div>
-                                <div class="stat-digit">31 February</div>
-                            </div>
-                        </div>
-                    </div>
+                                    // Close connection
+                                    mysqli_close($link);
+                                    ?>
                 </div>
-
-
-
-                </div>
-
-        </div>
-
-        <!-- Completed events-->
-        <section class="container py-5">
-            <div class="row">
-                <div class="col text-center">
-                    <p>
-                        <a class="btn btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            View completed events
-                        </a>
-                    </p>
-                    <div class="collapse" id="collapseExample">
-
-
-
-                            <section class="pt-2">
-
-                                <div class="row pt-3">
-                                    <div class="card card-custom mx-2 mb-3 border-light">
-
-                                        <div class="card-img-caption">
-                                            <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                                            <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                                            <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                                        </div>
-
-
-                                        <div class="card-body d-flex flex-column">
-                                            <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                                            <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
-
-                                            <div class="text-left">
-                                                <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                                            </div>
-                                            <ul class="list-group-flush  volunteers_list">
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                            </ul>
-                                            <button class="btn btn-primary mt-2">Click me!</button>
-                                        </div>
-
-                                    </div>
-                                    <div class="card card-custom mx-2 mb-3 border-light">
-
-                                        <div class="card-img-caption">
-                                            <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                                            <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                                            <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                                        </div>
-
-
-                                        <div class="card-body d-flex flex-column">
-                                            <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                                            <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
-
-                                            <div class="text-left">
-                                                <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                                            </div>
-                                            <ul class="list-group-flush  volunteers_list">
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                            </ul>
-                                            <button class="btn btn-primary mt-2">Click me!</button>
-                                        </div>
-
-                                    </div>
-                                    <div class="card card-custom mx-2 mb-3 border-light">
-
-                                        <div class="card-img-caption">
-                                            <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                                            <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                                            <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                                        </div>
-
-
-                                        <div class="card-body d-flex flex-column">
-                                            <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                                            <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
-
-                                            <div class="text-left">
-                                                <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                                            </div>
-                                            <ul class="list-group-flush  volunteers_list">
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                            </ul>
-                                            <button class="btn btn-primary mt-2">Click me!</button>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <div class="row pt-3">
-                                    <div class="card card-custom mx-2 mb-3 border-light">
-
-                                        <div class="card-img-caption">
-                                            <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                                            <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                                            <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                                        </div>
-
-
-                                        <div class="card-body d-flex flex-column">
-                                            <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                                            <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
-
-                                            <div class="text-left">
-                                                <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                                            </div>
-                                            <ul class="list-group-flush  volunteers_list">
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                            </ul>
-                                            <button class="btn btn-primary mt-2">Click me!</button>
-                                        </div>
-
-                                    </div>
-                                    <div class="card card-custom mx-2 mb-3 border-light">
-
-                                        <div class="card-img-caption">
-                                            <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                                            <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                                            <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                                        </div>
-
-
-                                        <div class="card-body d-flex flex-column">
-                                            <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                                            <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
-
-                                            <div class="text-left">
-                                                <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                                            </div>
-                                            <ul class="list-group-flush  volunteers_list">
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                            </ul>
-                                            <button class="btn btn-primary mt-2">Click me!</button>
-                                        </div>
-
-                                    </div>
-                                    <div class="card card-custom mx-2 mb-3 border-light">
-
-                                        <div class="card-img-caption">
-                                            <p class="card-text-top">ARRANGEMENT TITTEL</p>
-                                            <p class="card-text-bottom">ARRANGEMENT DATO</p>
-                                            <img class="card-img-top" src="../rsc/img/eventbackground.png" alt="">
-                                        </div>
-
-
-                                        <div class="card-body d-flex flex-column">
-                                            <h6 class="card-subtitle text-left pt-2">Gripende undertekst</h6>
-                                            <h6 class="card-subtitle my-2 text-muted text-left">test</h6>
-
-                                            <div class="text-left">
-                                                <p class="card-text">Her kan det stå litt infomarjon, kanskje et utdrag who knows? test deg frem eller..</p>
-                                            </div>
-                                            <ul class="list-group-flush  volunteers_list">
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                                                <li class="list-group-item volunteers_item"><p>6/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                                            </ul>
-                                            <button class="btn btn-primary mt-2">Click me!</button>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-                        <!-- Completed events end... to be appended -->
-
         </div>
     </main>
 
