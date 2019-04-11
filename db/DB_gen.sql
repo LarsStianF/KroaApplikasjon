@@ -63,10 +63,14 @@ CREATE TABLE event (
   ID smallint(6) NOT NULL AUTO_INCREMENT,
   Name varchar(50) NOT NULL,
   Date date NOT NULL,
-  Time_Start varchar(10) NOT NULL,
-  Time_End varchar(10) NOT NULL,
+  Time_start varchar(10) NOT NULL,
+  Time_end varchar(10) NOT NULL,
   Type char(1) NOT NULL,
   Event_text varchar(100) NOT NULL,
+  Event_sec tinyint(1) NOT NULL,
+  Event_bar tinyint(1) NOT NULL,
+  Event_crew tinyint(1) NOT NULL,
+  Event_tech tinyint(1) NOT NULL,
   CONSTRAINT eve_ID PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -142,15 +146,15 @@ INSERT INTO user_type (ID, user_type) VALUES
 (5, 'Manager'),
 (6, 'Volunteer');
 
-INSERT INTO event (Name, Date, Time_Start, Time_End, Type, Event_text) VALUES
-('Quiz', '2019-01-22', '1900', '2300', 'D', 'Dette er Quiz'),
-('Hellbillies', '2019-01-27', '2000', '0230', 'A', 'Hellbillies er gøy'),
-('Afterski', '2019-03-14', '1900', '0130', 'B', 'DJ Dan høster opp afterski stemning'),
-('X-russ', '2019-04-04', '1900', '0130', 'A', 'På med russebuksa!'),
-('Aapen Scene', '2019-04-26', '2130', '0230', 'D', 'Fremfør det du vil'),
-('Sondre Justad', '2019-05-05', '2130', '0100', 'B', 'Sondre Justad kommer til Kroa og det blir gøy!'),
-('Oktoberfest', '2020-10-02', '2000', '0130', 'C', 'Tysklands tradisjon kommer til å Kroa!'),
-('Cezinando', '2020-10-23', '2130', '0100', 'B', 'Cezinando fremfører nytt album på storscena');
+INSERT INTO event (Name, Date, Time_Start, Time_End, Type, Event_text, Event_sec, Event_bar, Event_crew, Event_tech) VALUES
+('Quiz', '2019-01-22', '1900', '2300', 'D', 'Dette er Quiz', 15, 8, 5, 4),
+('Hellbillies', '2019-01-27', '2000', '0230', 'A', 'Hellbillies er gøy', 15, 8, 5, 4),
+('Afterski', '2019-03-14', '1900', '0130', 'B', 'DJ Dan høster opp afterski stemning', 15, 8, 5, 4),
+('X-russ', '2019-04-04', '1900', '0130', 'A', 'På med russebuksa!', 15, 8, 5, 4),
+('Aapen Scene', '2019-04-26', '2130', '0230', 'D', 'Fremfør det du vil', 15, 8, 5, 4),
+('Sondre Justad', '2019-05-05', '2130', '0100', 'B', 'Sondre Justad kommer til Kroa og det blir gøy!', 15, 8, 5, 4),
+('Oktoberfest', '2020-10-02', '2000', '0130', 'C', 'Tysklands tradisjon kommer til å Kroa!', 15, 8, 5, 4),
+('Cezinando', '2020-10-23', '2130', '0100', 'B', 'Cezinando fremfører nytt album på storscena', 15, 8, 5, 4);
 
 INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type) VALUES
 ('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0, 1),
