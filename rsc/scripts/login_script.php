@@ -2,7 +2,7 @@
 <?php
 
 require_once ("../../admin/dbcon.php");
-require("../imports/php/functions/functions.php");
+require("../../admin/rsc/imports/php/functions/functions.php");
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -28,21 +28,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($count == 1) {
 
-            $sql = "SELECT * FROM volunteer WHERE Email = '$myemail'";
+            $sql = "SELECT * FROM volunteer WHERE Email = '$login_email'";
             $result = mysqli_query($con, $sql);
             $row = mysqli_fetch_array($result);
 
-            $myfullname = $row['Firstname'] . " " . $row['Lastname'] ;
-            $myenhet = $row['Enhet'];
-            $myphone = $row['Tel'];
             $myid = $row['ID'];
+            $myfullname = $row['Firstname'] . " " . $row['Lastname'] ;
+            $myunits = $row['Unit'];
+            $mytel = $row['nr'];
+            $myuser_type = $row['user_type'];
 
 
             $_SESSION['login'] = true;
-            $_SESSION['user_id'] = $myid;
-            $_SESSION['login_email'] = $myemail;
+            $_SESSION['login_id'] = $myid;
+            $_SESSION['login_email'] = $login_email;
             $_SESSION['login_name'] = $myfullname;
-            $_SESSION['user_phone'] = $myphone;
+            $_SESSION['login_phone'] = $mytel;
+            $_SESSION['login_type'] = $myuser_type;
+            $_SESSION['login_unit'] = $myunits;
 
 
 
