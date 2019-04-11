@@ -166,8 +166,11 @@ INSERT INTO Crew_type (ID, type) VALUES
 
 INSERT INTO Manager (vol_ID, crew_type_ID) VALUES
 (1, 1),
+(1, 2),
 (2, 2),
+(2, 3),
 (3, 3),
+(3, 4),
 (4, 4);
 
 INSERT INTO event_volunteer (vol_ID, event_ID, crew_type_ID, manager) VALUES

@@ -1,6 +1,7 @@
 <?php
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
+include 'rsc/imports/php/functions/functions.php';
 include 'dbcon.php';
 
 ?>
@@ -56,11 +57,10 @@ include 'dbcon.php';
             $sql = 'SELECT * FROM Volunteer';
             $result = mysqli_query($con, $sql);
             $numrow = mysqli_num_rows($result);
+            $counter;
 
             while ($row = mysqli_fetch_array($result)) {
-                $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
-                $tempRes = mysqli_query($con,$tempQuery);
-                $tempRow = mysqli_fetch_array($tempRes);
+                $id = $row['ID'];
 
                 echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
                 echo '<div class="d-flex w-100 justify-content-between">';
@@ -70,23 +70,21 @@ include 'dbcon.php';
                 echo '</h5></li>';
                 echo '<li class="list-inline-item "><h6 class="mb-1">';
                 if ($row['user_type'] == '5') {
-                    $tempQuery = "SELECT * FROM manager, crew_type WHERE " . $row['ID'] . " = vol_ID";
-                    $tempRes = mysqli_query($con,$tempQuery);
-                    $tempRow = mysqli_fetch_array($tempRes);
 
-                    echo $tempRow['type'] . ' Manager - ';
 
+                populate_manager_row($id);
 
                 }else{
+                    $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
+                    $tempRes = mysqli_query($con,$tempQuery);
+                    $tempRow = mysqli_fetch_array($tempRes);
                     echo $tempRow['user_type'];
                 }
 
 
                 echo '</h6></li>';
-                echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_black.png" alt=""> </li>';
-                echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_red.png" alt=""> </li>';
-                echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_blue.png" alt=""> </li>';
-                echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_black.png" alt=""> </li>';
+                populate_little_men($id);
+
                 echo '</ul>';
                 echo '<button class="btn btn-primary" type="submit">Edit</button>';
                 echo '</div>';
