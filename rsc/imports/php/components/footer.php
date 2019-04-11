@@ -17,7 +17,7 @@
 
                 <div class="col">
                     <h5 class="mb-3">Der Führer</h5>
-                    <p class="mb-2">Kine Kronkvist</p>
+                    <p class="mb-2">Tor Lønnestad</p>
                     <ul class="mb-4" style="list-style-type: none; padding-left: 0;">
                         <li><i class="material-icons">phone</i>&nbsp;&nbsp;+47 66 66 66 66 66</li>
                         <li><i class="material-icons">mail_outline</i>&nbsp;&nbsp;sieg-heil@kroa.no</li>

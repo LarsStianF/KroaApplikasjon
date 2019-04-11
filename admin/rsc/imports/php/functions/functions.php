@@ -26,7 +26,7 @@ function populate_volunteers_all(){
 
     while ($row = mysqli_fetch_array($result)) {
         $id = $row['ID'];
-
+        echo '<div id="namerow">';
         echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
         echo '<div class="d-flex w-100 justify-content-between">';
         echo '<ul class="list-inline ">';
@@ -64,6 +64,7 @@ function populate_volunteers_all(){
         echo '</p>';
         populate_last_volunteered($id);
         echo '</a>';
+        echo '</div>';
     }
 }
 
@@ -78,7 +79,7 @@ function populate_volunteers_filter($crew_type_ID){
 
     while ($row = mysqli_fetch_array($result)) {
         $id = $row['ID'];
-
+        echo '<div id="namerow">';
         echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
         echo '<div class="d-flex w-100 justify-content-between">';
         echo '<ul class="list-inline ">';
@@ -116,6 +117,7 @@ function populate_volunteers_filter($crew_type_ID){
         echo '</p>';
         populate_last_volunteered($id);
         echo '</a>';
+        echo '</div>';
     }
 }
 

@@ -7,6 +7,21 @@ include 'rsc/imports/php/functions/functions.php';
 
 ?>
 
+<script>
+    $(document).ready(function(){
+        $("#peopleSearch").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#namerow a").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    // */
+</script>
+
+
+
+
     <!--
     ##################################################################################
     ######################## ! DO NOT EDIT ABOVE THIS POINT ! ########################
@@ -27,7 +42,7 @@ include 'rsc/imports/php/functions/functions.php';
                     <button class="btn btn-dark filter-button" name="4" data-filter="">Technical</button>
                 </div>
                 <div class=" ml-2 input-group form-inline">
-                    <input type="text" class="form-control" placeholder="Search for volunteers">
+                    <input id="peopleSearch" type="text" class="form-control" placeholder="Search for volunteers">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button">
                             <i>Search</i>
