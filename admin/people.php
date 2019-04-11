@@ -57,7 +57,7 @@ include 'dbcon.php';
             $sql = 'SELECT * FROM Volunteer';
             $result = mysqli_query($con, $sql);
             $numrow = mysqli_num_rows($result);
-            $counter;
+
 
             while ($row = mysqli_fetch_array($result)) {
                 $id = $row['ID'];
@@ -86,10 +86,18 @@ include 'dbcon.php';
                 populate_little_men($id);
 
                 echo '</ul>';
+
+                // THIS SHOULD ONLY BE VISABLY TO DAGLIG LEDER / FRIVILLIGKOORDINATOR
                 echo '<button class="btn btn-primary" type="submit">Edit</button>';
+                //_____________________________________________________________________
+
                 echo '</div>';
-                echo '<p class="mb-1"><span class="h6">Email: </span>root@test.no       <span class="h6">Tlf: </span>22224444</p>';
-                echo ' <small>Last Volunteered: 27 January, 2019</small>';
+                echo '<p class="mb-1"><span class="h6">Email: </span>';
+                echo $row['Email'];
+                echo '<span class="h6"> - Tlf: </span>';
+                echo $row['nr'];
+                echo '</p>';
+                populate_last_volunteered($id);
                 echo '</a>';
             }
 

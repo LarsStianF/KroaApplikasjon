@@ -68,4 +68,25 @@ function populate_little_men($id){
         }
 
 }
+
+function populate_last_volunteered($id){
+    global $con;
+    $sql = "SELECT event.Date 
+            FROM event, event_volunteer 
+            WHERE event.Date < CURDATE()
+                AND " . $id . " = event_volunteer.vol_ID 
+                AND event_volunteer.event_ID = event.ID 
+            LIMIT 1";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    echo '<small>Last Volunteered: ';
+
+    if($row['Date'] !== NULL) {
+        echo $row['Date'];
+    } else{
+        echo 'Never';
+    }
+                echo '</small>';
+}
 ?>
