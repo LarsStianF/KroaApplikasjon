@@ -3,6 +3,7 @@ include 'dbcon.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
 include 'rsc/imports/modals/event_modal.php';
+include 'rsc/imports/modals/new_event_modal.php';
 include 'rsc/imports/php/functions/functions.php';
 ?>
 
@@ -10,6 +11,10 @@ include 'rsc/imports/php/functions/functions.php';
 
             <div class="bg-light p-3 m-0 card" >
                 <h1 class="display-3 text-center"> Event Page </h1>
+                <div>
+                    <a href="#newmodal" class="btn btn-dark" id="newevent" data-toggle="modal" >New Event</a>
+                </div>
+
             </div>
 
 
@@ -26,13 +31,12 @@ include 'rsc/imports/php/functions/functions.php';
                     ';
 
 
-        while ( $row = mysqli_fetch_array( $result ) ){
+        while ( $row = mysqli_fetch_array( $result ) ) {
 
             //fix event substring
             $event_text = substr($row['Event_text'], 0, 40).'..';
 
-            // event type
-            $type = $row['Type'];
+
             // Gets date
             $id = $row['ID'];
             $d = new DateTime($row['Date']);
@@ -44,6 +48,12 @@ include 'rsc/imports/php/functions/functions.php';
             $startTime = $sTime->format('H:i');
             $endTime = $eTime->format('H:i');
 
+            // get event volunteers
+            $volunteers = get_event_volunteers($id);
+            $bar        = $volunteers[0];
+            $security   = $volunteers[1];
+            $crew       = $volunteers[2];
+            $technical  = $volunteers[3];
 
             $output .= '
                 <div class="card card-custom border-light ml-2">
@@ -55,10 +65,10 @@ include 'rsc/imports/php/functions/functions.php';
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title text-center">'.$startTime.' - ' . $endTime.'</h5>
                     <ul class="list-group list-group-flush volunteers_list ml-5">
-                        <li class="list-group-item volunteers_item"><p>3/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>4/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>5/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-                        <li class="list-group-item volunteers_item"><p>3/15</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
+                        <li class="list-group-item volunteers_item"><p>'.$bar.'/'.$row['Event_bar'].'</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
+                        <li class="list-group-item volunteers_item"><p>'.$security.'/'.$row['Event_sec'].'</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
+                        <li class="list-group-item volunteers_item"><p>'.$crew.'/'.$row['Event_crew'].'</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
+                        <li class="list-group-item volunteers_item"><p>'.$technical.'/'.$row['Event_tech'].'</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
                     </ul>
                     <p class="card-text text-center">'.$event_text.'</p>
                     <a href="#eventModal" class="btn btn-primary btn-small border-dark m-2 view_data" id="'.$id.'" data-toggle="modal" >Details</a>
@@ -80,6 +90,8 @@ include 'rsc/imports/php/functions/functions.php';
         ?>
 
         <script src="../rsc/imports/js/event_modal_script.js">
+        </script>
+        <script src="../rsc/imports/js/new_event_modal_script.js">
         </script>
 
     </main>

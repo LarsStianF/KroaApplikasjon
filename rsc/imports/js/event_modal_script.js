@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    $('#newevent').click(function () {
+        $('#newmodal').modal("show");
+
+    });
+
     $('.view_data').click(function () {
         var id = $(this).attr('id');
 

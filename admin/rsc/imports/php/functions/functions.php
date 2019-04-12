@@ -196,7 +196,7 @@ function populate_last_volunteered($id){
                 echo '</small>';
 
   }
-  
+
 
 function get_event_volunteers($id) {
     global $con;
@@ -206,7 +206,8 @@ function get_event_volunteers($id) {
     $numSec = 0;
     $numCrew = 0;
     $numTech = 0;
-    $output = "";
+
+
 
     $query = "SELECT * FROM event_volunteer WHERE event_ID = '$id' ";
     $result = mysqli_query($con, $query);
@@ -220,79 +221,8 @@ function get_event_volunteers($id) {
         else if ($row['crew_type_ID'] == 4)
             $numTech++;
     }
-
-    $output .= '
-    <ul class="list-group list-group-flush volunteers_list ml-5">
-        <li class="list-group-item volunteers_item"><p>'.$numBar.'/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-        <li class="list-group-item volunteers_item"><p>'.$numSec.'/10</p><img class="man-icon" src="../rsc/img/man_red.png" alt=""></li>
-        <li class="list-group-item volunteers_item"><p>'.$numCrew.'/10</p><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></li>
-        <li class="list-group-item volunteers_item"><p>'.$numTech.'/10</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
-    </ul>
-    ';
-
-    echo $output;
-}
-
-function get_event_modal_volunteers($id) {
-    global $con;
-
-    $numBar = 0;
-    $numSec = 0;
-    $numCrew = 0;
-    $numTech = 0;
-    $output = "";
-
-    $query = "SELECT * FROM event_volunteer WHERE event_ID = '$id'";
-    $result = mysqli_query($con, $query);
-    $rows = mysqli_num_rows($result);
-
-    while($row = mysqli_fetch_array($result)) {
-        if($row['crew_type_ID'] == 1)
-            $numBar++;
-        else if ($row['crew_type_ID'] == 2)
-            $numSec++;
-        else if ($row['crew_type_ID'] == 3)
-            $numCrew++;
-        else if ($row['crew_type_ID'] == 4)
-            $numTech++;
-    }
-
-    $output .= '
-    <div class="table-responsive">
-        <table class="table table-striped text-center ">
-            <tr>
-                <td><img class="man-icon" src="../rsc/img/man_black.png" alt=""></td>
-                <td><label>Bar</label></td>
-                <td><p>'.$numBar.'/10</p></td>
-                <td><a href="index.php?signup=true&name=bar" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>
-            </tr>
-            <tr>
-                <td><img class="man-icon" src="../rsc/img/man_red.png" alt=""></td>
-                <td><label>Security</label></td>
-                <td><p>'.$numSec.'/10</p></td>
-                <td><a href="index.php?signup=true&name=sec" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a></td>
-            </tr>
-            <tr>
-                <td class="man-icon"><img class="man-icon" src="../rsc/img/man_blue.png" alt=""></td>
-                <td><label>Crew</label></td>
-                <td><p>'.$numCrew.'/10</p></td>
-                <td><a href="index.php?signup=true&name=crew" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a></td>
-            </tr>
-             <tr>
-                <td><img class="man-icon" src="../rsc/img/man_black.png" alt=""></td>
-                <td><label>Technical</label></td>
-                <td><p>'.$numTech.'/10</p></td>
-                <td><a href="index.php?signup=true&name=tech" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a></td>
-                
-            </tr>
-            </table>
-           
-           
-            
-
-    ';
-    echo $output;
-
+    $volunteers = array($numBar,$numSec,$numCrew,$numTech);
+    return $volunteers;
 
 }
 ?>
