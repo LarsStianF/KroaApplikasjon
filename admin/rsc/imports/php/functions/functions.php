@@ -225,4 +225,22 @@ function get_event_volunteers($id) {
     return $volunteers;
 
 }
+
+
+function volUnitUpdate($vol_id, $name){
+    global $con;
+
+
+
+    $units = $_POST['unitRemove'];
+
+    $sql  = 'UPDATE volunteer SET ';
+    $sql .= 'Unit = Unit - '.$units.' ';
+    $sql .= 'WHERE ID = '.$vol_id.';';
+    mysqli_query($con,$sql);
+
+    header('Refresh: 0; URL=unitlist.php');
+
+
+}
 ?>

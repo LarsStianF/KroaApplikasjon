@@ -3,6 +3,11 @@ include 'dbcon.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
 
+
+include 'rsc/imports/modals/unitlist_modal.php';
+
+include 'rsc/imports/php/functions/functions.php';
+
 ?>
 
     <!--
@@ -74,8 +79,10 @@ include 'rsc/imports/php/components/admin_header.php';
 
                 echo '<div class="list-group">';
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $id = $row['ID'];
+
                     echo '<div id="namerow">';
-                    echo '<a href="#url1" class="list-group-item list-group-item-action flex-column align-items-start">';
+                    echo '<a href="#unitlistModal" class="list-group-item list-group-item-action flex-column align-items-start view_data" data-toggle="modal" id="'.$id.'">';
                     echo '<div class="d-flex w-100 justify-content-between">';
                     echo '<h2 class="mb-1"  >';
                     echo $row['Firstname'] . ' ' . $row['Lastname'];
@@ -146,12 +153,18 @@ include 'rsc/imports/php/components/admin_header.php';
             </a>
         </div>
     -->
+
+
+        <script src="../rsc/imports/js/unitlist_modal_script.js">
+        </script>
     </main>
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
-    <script src="offcanvas.js"></script></body>
+
+
+
+
+
 
 
 
