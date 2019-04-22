@@ -44,7 +44,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="events.php">Event</a>
+                        <a class="nav-link" href="event_grid.php">Event</a>
                     </li>
 
                     <li class="nav-item">
