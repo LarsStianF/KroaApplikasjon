@@ -243,4 +243,57 @@ function volUnitUpdate($vol_id, $name){
 
 
 }
+
+function create_new_event($name_attribute) {
+    global $con;
+
+    if(isset($_POST[$name_attribute])) {
+
+        // Extract variables from fields
+        $event_name = $_POST['event_name'];
+        $event_type = $_POST['event_type'];
+        $event_date = $_POST['date'];
+        $event_start = $_POST['start_time'];
+        $event_end = $_POST['end_time'];
+        $event_text = $_POST['event_text'];
+        $event_sec_vol = $_POST['sec_volunteers'];
+        $event_bar_vol = $_POST['bar_volunteers'];
+        $event_crew_vol = $_POST['crew_volunteers'];
+        $event_tech_vol = $_POST['tech_volunteers'];
+
+        //Create insert
+        $sql = "INSERT INTO event(Name, Date, Time_Start, Time_End, Type, Event_Text, Event_sec, Event_bar, Event_crew, Event_tech) 
+                     VALUES ('$event_name', '$event_date', '$event_start', '$event_end', '$event_type', '$event_text', '$event_sec_vol', '$event_bar_vol', '$event_crew_vol', '$event_tech_vol');";
+
+        mysqli_query($con, $sql);
+
+
+        // Check if event was created in DB:
+        $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
+        $sql_exist .= 'Name = "' . $event_name . '" AND ';
+        $sql_exist .= 'Event_text = "' . $event_text . '" AND ';
+        $sql_exist .= 'Date = "' . $event_date . '" AND ';
+        $sql_exist .= 'Time_Start = "' . $event_start . '" AND ';
+        $sql_exist .= 'Time_End = "' . $event_end . '" AND ';
+        $sql_exist .= 'Type = "' . $event_type . '";';
+        $result = mysqli_query($con, $sql_exist);
+        $row = mysqli_fetch_array($result);
+
+        if ($row['Existence'] == 1) {
+
+            // event was created in DB:
+            $status_db = 1;
+
+        } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
+
+            // event was not created in DB:
+            $status_db = 0;
+
+        }
+
+        header('Refresh: 0; URL=event_grid.php?created=event&status=' . $status_db);
+
+
+    }
+}
 ?>

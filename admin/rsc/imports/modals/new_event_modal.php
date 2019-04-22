@@ -2,41 +2,91 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Need to fix</h4>
+                <h4 class="modal-title">Create new event</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="../../../events.php?object=created&type=event" method="post">
+                    <form method="POST" action="create_handler.php?object=newevent&name=submit" enctype="multipart/form-data">
 
-                    <!-- First name: -->
-                    <div class="form-group">
-                        <label for="inputNameFirst">Event name</label>
-                        <input id="inputNameFirst" name="firstname" class="form-control" type="text" placeholder="Event name" autofocus required>
-                    </div>
+                        <!-- Event name: -->
+                        <div class="form-group">
+                            <label>Event name</label>
+                            <input type="text" name="event_name" class="form-control form-text" placeholder="What's the name of your event?">
+                        </div>
 
-                    <!-- Last name: -->
-                    <div class="form-group">
-                        <label for="inputNameLast">Date:</label>
+                        <!-- Event type: -->
+                        <div class="form-group">
+                            <label>Event type</label>
+                            <select name="event_type" class="form-control">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                        </div>
 
-                    </div>
+                        <!-- Event Date: -->
+                        <div class="form-group">
+                            <label>Event Date</label>
+                            <input type="date" name="date" class="form-control form-text" placeholder="What date is the event?">
+                        </div>
 
-                    <!-- Email address: -->
+                        <!-- Event Time: -->
+                        <div class="form-group">
+                            <label>Event Time</label>
+                            <div class="form-row">
+                                <label>From:</label>
+                                <div class="col">
+                                    <input type="time" name="start_time" class="form-control form-inline" placeholder="What time does the event start?">
+                                </div>
+                                <label>To:</label>
+                                <div class="col">
+                                    <input type="time" name="end_time" class="form-control form-inline" placeholder="What time does the event end?">
+                                </div>
+                            </div>
+                        </div>
 
 
-                    <!-- Wanted Crew:
+                        <!-- event text: -->
+                        <div class="form-group mt-4">
+                            <label>Event text</label>
+                            <textarea name="event_text" class="form-control" placeholder="Give a short description of the event (maximum 255 characters)" maxlength="255" style="height: 80px"></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="inputCompany">Crew</label>
-                        <select id="inputCrew" name="crew" class="form-control">
 
 
+                        <div class="form-group d-flex justify-content-around">
+                            <div class="d-flex justify-content-between">
+                                <img class="man-icon d-flex" src="../rsc/img/man_black.png" alt="">
+                                <label>Security</label>
+                                <input class="form-control d-flex" style="width 60px; max-width: 60px" type="number" name="sec_volunteers" value="1" min="1" max="20">
+                            </div>
 
-                        </select>
-                    </div>
-                    -->
-                    <button type="submit" name="submit_user" class="btn btn-success my-3">Submit</button>
-                    <button type="button" class="btn btn-secondary abortbtn">Return</button>
-                </form>
+                           <div class="d-flex justify-content-around">
+                               <img class="man-icon d-flex" src="../rsc/img/man_red.png" alt=""><label>Bar</label>
+                               <input class="form-control d-flex" style="width 60px; max-width: 60px" type="number" name="bar_volunteers" value="1" min="1" max="20">
+                           </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-around">
+                            <div class="d-flex justify-content-between">
+                                <img class="man-icon" src="../rsc/img/man_blue.png" alt=""><label>Crew</label>
+                                <input class="form-control form-inline" style="width 60px; max-width: 60px" type="number" name="crew_volunteers" value="1" min="1" max="20">
+                            </div>
+
+                            <div class="d-flex justify-content-around">
+                                <img class="man-icon" src="../rsc/img/man_black.png" alt=""><label>Technical</label>
+                                <input class="form-control form-inline" style="width 60px; max-width: 60px" type="number" name="tech_volunteers" value="1" min="1" max="20">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group mt-2">
+                            <button type="submit" class="btn btn-success" name="submit">Create event</button>
+                        </div>
+
+
+                    </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

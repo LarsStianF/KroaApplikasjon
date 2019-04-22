@@ -1,10 +1,11 @@
 <?php
 include 'dbcon.php';
+include 'rsc/imports/php/functions/functions.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
 include 'rsc/imports/modals/event_modal.php';
 include 'rsc/imports/modals/new_event_modal.php';
-include 'rsc/imports/php/functions/functions.php';
+
 ?>
 
     <main class="container">
@@ -71,7 +72,19 @@ include 'rsc/imports/php/functions/functions.php';
                         <li class="list-group-item volunteers_item"><p>'.$technical.'/'.$row['Event_tech'].'</p><img class="man-icon" src="../rsc/img/man_black.png" alt=""></li>
                     </ul>
                     <p class="card-text text-center">'.$event_text.'</p>
-                    <a href="#eventModal" class="btn btn-primary btn-small border-dark m-2 view_data" id="'.$id.'" data-toggle="modal" >Details</a>
+                    
+                    
+                    <div class="btn-group justify-content-center">
+                        <a href="#eventModal" class="btn btn-block btn-primary border-dark view_data" id="'.$id.'" data-toggle="modal" >Details</a>
+                        <a class="btn btn-primary dropdown-toggle dropdown-toggle-split border-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Edit event</a>
+                             <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Delete event</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             ';
@@ -91,9 +104,11 @@ include 'rsc/imports/php/functions/functions.php';
 
         <script src="../rsc/imports/js/event_modal_script.js">
         </script>
-        <script src="../rsc/imports/js/new_event_modal_script.js">
-        </script>
+
 
     </main>
 
-<?php include '../rsc/imports/php/components/footer.php'; ?>
+<?php
+include 'rsc/imports/modals/created_modal.php';
+include '../rsc/imports/php/components/footer.php';
+?>
