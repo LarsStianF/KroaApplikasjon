@@ -73,7 +73,7 @@ include 'rsc/imports/php/functions/functions.php';
 <?php
 
 
-    $sql = 'SELECT * FROM volunteer';
+    $sql = 'SELECT * FROM volunteer WHERE user_type > 1';
     $result = mysqli_query($con, $sql);
 
 

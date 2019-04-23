@@ -19,7 +19,7 @@ return false;
 function populate_volunteers_all(){
     global $con;
 
-    $sql = 'SELECT * FROM Volunteer';
+    $sql = 'SELECT * FROM Volunteer where user_type > 1';
     $result = mysqli_query($con, $sql);
     volunteers_content($result);
 }
@@ -28,7 +28,7 @@ function populate_volunteers_filter($crew_type_ID){
     global $con;
 
     $sql = 'SELECT * FROM Volunteer, event_volunteer 
-            WHERE Volunteer.ID = event_volunteer.Vol_ID 
+            WHERE Volunteer.ID = event_volunteer.Vol_ID AND user_type > 1 
               AND  event_volunteer.crew_type_ID = ' . $crew_type_ID;
     $result = mysqli_query($con, $sql);
 
@@ -74,6 +74,77 @@ function volunteers_content($result){
         echo '</div>';
     }
 }
+
+function populate_people_edit_user_type($id, $row){
+        global $con;
+        $output = "";
+        $cur_user = $_SESSION['login_type'];
+        $root = 1; $dag_leder = 2; $vol_cord = 3; $event_man = 4; $manager = 5; $volunteer = 6;
+
+        // If User is root. Get all user types
+        if ($cur_user == $root){
+            $user_type_sql = "SELECT * FROM user_type WHERE ID > 1";
+
+
+            // If User is Daglig Leder, get all user types except root
+        }elseif ($cur_user == $dag_leder){
+            $user_type_sql = "SELECT * FROM user_type WHERE ID > 2";
+        }else{
+            $user_type_sql ="";
+        }
+        $user_type_result = mysqli_query($con, $user_type_sql);
+
+        $user_query = 'SELECT user_type FROM volunteer WHERE ID = '.$id;
+        $user_result = mysqli_query($con,$user_query);
+        $user_array = mysqli_fetch_array($user_result);
+        $user_type_id = $user_array['user_type'];
+
+        $output .= '
+                                             <select class="form-control" id="selRole">';
+
+        while ( $row = mysqli_fetch_array($user_type_result) ) {
+
+            if ( $row['ID'] == $user_type_id ){
+                $output .='
+            
+                <option value="' . $row['ID'] . '" selected>' . $row['user_type'] . '</option>';
+            }
+            else {
+                $output .= '<option value="' . $row['ID'] . '">' . $row['user_type'] . '</option>';
+            }
+
+        }
+        $output .= '
+                                             </select>';
+    return $output;
+    }
+
+    function populate_user_edit_crew_checkbox($id, $crew_id){
+    global $con;
+    $checked="";
+
+        $sql = 'SELECT * FROM manager WHERE vol_ID = '.$id.' AND crew_type_ID = '.$crew_id;
+        $result = mysqli_query($con,$sql);
+        $row = mysqli_fetch_array($result);
+
+            if($row['crew_type_ID'] == 1){
+                $checked='checked';
+
+            }if($row['crew_type_ID'] == 2){
+                $checked='checked';
+
+            }if($row['crew_type_ID'] == 3){
+                $checked='checked';
+
+            }if($row['crew_type_ID'] == 4){
+                $checked='checked';
+
+            }
+
+
+        return $checked;
+    }
+
 
 function manager_check($row, $id, $output){
     global $con;

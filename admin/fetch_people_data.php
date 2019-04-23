@@ -7,6 +7,7 @@ if(isset($_POST['id']))
 {
     $id = $_POST['id'];
 
+
     $query = "SELECT * FROM volunteer WHERE ID = '".$id."'";
     $result =  mysqli_query($con, $query);
 
@@ -31,7 +32,7 @@ $output = "";
 
 
 
-    if($row['Unit'] > 0){
+
 
         $output.=
 
@@ -44,13 +45,7 @@ $output = "";
                                
                                  <div class="form-group">
                                      
-                                        <select class="form-control" id="selRole">
-                                             <option value="Volunteer">Volunteer</option>
-                                                 <option value="Manager">Manager</option>
-                                                 <option value="Volunteer Coordinator">Volunteer Coordinator</option>
-                                               <option value="Event Manager">Event Manager</option>
-                                               <option value="Daglig Leder">Daglig Leder</option>
-                                                 </select>
+                                        '.populate_people_edit_user_type($id, $row).'
                                                 </div>
                                  
                                  <a class="btn btn-primary" id="numUnitsBtn" href="#unitConfimation" role="button">Change</a>
@@ -70,33 +65,27 @@ $output = "";
                         
                        
                         ';
-    } else{
-
-
-        $output.=
-            '
-                        <div class="bg-danger">
-                        <h4> This person cannot take out any more units</h4>
-                        </div>
-                        </div>';
-    }
 
 
 
-    // Make this only visable to Bar-ansvarlig
 
+
+    $bar = 1; $sec = 2; $crew = 3; $tech = 4;
     $output.=
         '
                         <hr> 
                          <form method="POST" action="update_handler.php?object=unitlist&name=submit&id='.$id.'">
                         <div class="d-flex justify-content-around">
-                                <h4>Units to add: </h4>
-                               <div class="input-group-append ml-2 form-inline"> 
+                                <h5>Manager of: </h5>
+                               <div class="checkbox"> 
                                
-                               
-                                 <input type="number" id="numUnitsAdd" class="form-control" name="unitAdd" value="1" min="1" max="99">
+                                
+                                <label><input type="checkbox" value="" '.populate_user_edit_crew_checkbox($id, $bar).'>Bar</label>
+                                <label><input type="checkbox" value="" '.populate_user_edit_crew_checkbox($id, $sec).'>Security</label>
+                                <label><input type="checkbox" value="" '.populate_user_edit_crew_checkbox($id, $crew).'>Crew</label>
+                                <label><input type="checkbox" value="" '.populate_user_edit_crew_checkbox($id, $tech).'>Technical</label>
                                  
-                                 <a class="btn btn-primary" id="selRoleBtn"  href="#unitConfimationAdd" role="button">Add</a>
+                                 <a class="btn btn-primary" id="selRoleBtn"  href="#unitConfimationAdd" role="button">Update</a>
                               
                                </div>
                          </div>
