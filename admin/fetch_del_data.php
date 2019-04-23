@@ -33,7 +33,7 @@ if(isset($_POST['id'])) {
                 </div>
                 
                 
-                <h2><label class="mr-2">Event type:</label>'.$row['Type'].'</h2>
+                
                 <hr>
                 <h6>Info</h6>
                 <p>'.$row['Event_text'].'</p>

@@ -8,12 +8,7 @@ if(isset($_POST['id'])) {
 
     $query = "SELECT * FROM event WHERE ID = '".$id."'";
     $result =  mysqli_query($con, $query);
-
-
     $row = mysqli_fetch_array($result);
-
-    // event type
-    $type = $row['Type'];
 
     //gets time
     $sTime = new DateTime($row['Time_Start']);
@@ -33,19 +28,6 @@ if(isset($_POST['id'])) {
     <div class="form-group">
         <label>Event name</label>
         <input type="text" name="event_name" class="form-control form-text" value="'.$row['Name'].'">
-    </div>
-
-    <!-- Event type: -->
-    <div class="form-group">
-        <label>Event type</label>
-        <select name="event_type" class="form-control">
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-            <option value="'.$type.'" selected>'.$type.' current type</option>
-        </select>
     </div>
 
     <!-- Event Date: -->

@@ -65,7 +65,6 @@ CREATE TABLE event (
   Date date NOT NULL,
   Time_Start varchar(10) NOT NULL,
   Time_End varchar(10) NOT NULL,
-  Type char(1) NOT NULL,
   Event_text varchar(100) NOT NULL,
   Event_sec tinyint(1) NOT NULL,
   Event_bar tinyint(1) NOT NULL,
@@ -131,10 +130,11 @@ CREATE TABLE want_volunteer (
 
 CREATE TABLE logs (
   event_ID smallint(6) NOT NULL,
-  crew_type varchar(30) NOT NULL,
+  crew_type_ID smallint(6) NOT NULL,
   logs varchar(250) NOT NULL,
-  CONSTRAINT log_PK PRIMARY KEY (event_ID, crew_type),
-  CONSTRAINT log_FK FOREIGN KEY (event_ID) REFERENCES event (ID)
+  CONSTRAINT log_PK PRIMARY KEY (event_ID, crew_type_ID),
+  CONSTRAINT log_event_id_FK FOREIGN KEY (event_ID) REFERENCES  event (ID),
+  CONSTRAINT log_crew_type_id_FK FOREIGN KEY (crew_type_ID) REFERENCES crew_type (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -146,15 +146,15 @@ INSERT INTO user_type (ID, user_type) VALUES
 (5, 'Manager'),
 (6, 'Volunteer');
 
-INSERT INTO event (Name, Date, Time_Start, Time_End, Type, Event_text, Event_sec, Event_bar, Event_crew, Event_tech) VALUES
-('Quiz', '2019-01-22', '1900', '2300', 'D', 'Dette er Quiz', 2, 3, 3, 2),
-('Hellbillies', '2019-01-27', '2000', '0230', 'A', 'Hellbillies er gøy', 12, 8, 5, 4),
-('Afterski', '2019-03-14', '1900', '0130', 'B', 'DJ Dan høster opp afterski stemning', 13, 8, 5, 2),
-('X-russ', '2019-04-04', '1900', '0130', 'A', 'På med russebuksa!', 15, 8, 5, 4),
-('Aapen Scene', '2019-04-26', '2130', '0230', 'D', 'Fremfør det du vil', 5, 4, 2, 2),
-('Sondre Justad', '2019-05-05', '2130', '0100', 'B', 'Sondre Justad kommer til Kroa og det blir gøy!', 11, 8, 4, 3),
-('Oktoberfest', '2020-10-02', '2000', '0130', 'C', 'Tysklands tradisjon kommer til å Kroa!', 15, 8, 5, 4),
-('Cezinando', '2020-10-23', '2130', '0100', 'B', 'Cezinando fremfører nytt album på storscena', 16, 9, 6, 5);
+INSERT INTO event (Name, Date, Time_Start, Time_End, Event_text, Event_sec, Event_bar, Event_crew, Event_tech) VALUES
+('Quiz', '2019-01-22', '1900', '2300', 'Dette er Quiz', 2, 3, 3, 2),
+('Hellbillies', '2019-01-27', '2000', '0230', 'Hellbillies er gøy', 12, 8, 5, 4),
+('Afterski', '2019-02-14', '1900', '0130', 'DJ Dan høster opp afterski stemning', 13, 8, 5, 2),
+('X-russ', '2019-02-24', '1900', '0130', 'På med russebuksa!', 15, 8, 5, 4),
+('Aapen Scene', '2019-02-26', '2130', '0230', 'Fremfør det du vil', 5, 4, 2, 2),
+('Sondre Justad', '2019-03-02', '2130', '0100', 'Sondre Justad kommer til Kroa og det blir gøy!', 11, 8, 4, 3),
+('Oktoberfest', '2019-03-20', '2000', '0130', 'Tysklands tradisjon kommer til å Kroa!', 15, 8, 5, 4),
+('Cezinando', '2019-4-23', '2130', '0100', 'Cezinando fremfører nytt album på storscena', 16, 9, 6, 5);
 
 INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type) VALUES
 ('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0, 1),
@@ -189,12 +189,36 @@ INSERT INTO want_volunteer (vol_ID, event_ID, crew_type_ID) VALUES
 (2, 4, 2),
 (3, 4 ,3);
 
-INSERT INTO logs (event_ID, crew_type, logs) VALUES
-(1, 'Security', 'Dette arrangementet gikk fint'),
-(1, 'Bar', 'Vi hadde masse trøbbel'),
-(2, 'Crew', 'Garderoben suger'),
-(2, 'Security', 'Crew er dårlige i garderobe'),
-(3, 'Bar', 'Solgte masse sprit'),
-(3, 'Security', 'Folk sloss'),
-(4, 'Tech', 'De nye høytalerne funka glimrende! Alt vell!'),
-(5, 'Tech', 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?');
+INSERT INTO logs (event_ID, crew_type_ID, logs) VALUES
+(1, 1, 'Vi hadde masse trøbbel'),
+(1, 2, 'Dette arrangementet gikk fint'),
+(1, 3, 'alt bra'),
+(1, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(2, 1, 'Vi hadde masse trøbbel'),
+(2, 2, 'Dette arrangementet gikk fint'),
+(2, 3, 'alt bra'),
+(2, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(3, 1, 'Vi hadde masse trøbbel'),
+(3, 2, 'Dette arrangementet gikk fint'),
+(3, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
+(3, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(4, 1, 'Vi hadde masse trøbbel'),
+(4, 2, 'Dette arrangementet gikk fint'),
+(4, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
+(4, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(5, 1, 'Vi hadde masse trøbbel'),
+(5, 2, 'Dette arrangementet gikk fint'),
+(5, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
+(5, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(6, 1, 'Vi hadde masse trøbbel'),
+(6, 2, 'Dette arrangementet gikk fint'),
+(6, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
+(6, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(7, 1, 'Vi hadde masse trøbbel'),
+(7, 2, 'Dette arrangementet gikk fint'),
+(7, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
+(7, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(8, 1, 'Vi hadde masse trøbbel'),
+(8, 2, 'Dette arrangementet gikk fint'),
+(8, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
+(8, 4, 'De nye høytalerne funka glimrende! Alt vell!');
