@@ -344,4 +344,7 @@ include 'rsc/imports/php/components/admin_header.php';
 ##################################################################################
 -->
 
-<?php include '../rsc/imports/php/components/footer.php'; ?>
+<?php
+include 'rsc/imports/modals/created_modal.php';
+include '../rsc/imports/php/components/footer.php';
+?>

@@ -14,18 +14,6 @@
                             <input type="text" name="event_name" class="form-control form-text" placeholder="What's the name of your event?">
                         </div>
 
-                        <!-- Event type: -->
-                        <div class="form-group">
-                            <label>Event type</label>
-                            <select name="event_type" class="form-control">
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                            </select>
-                        </div>
-
                         <!-- Event Date: -->
                         <div class="form-group">
                             <label>Event Date</label>

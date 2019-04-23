@@ -21,6 +21,7 @@ body {
 
 }
 
+
 main{
     /*
     box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
@@ -35,6 +36,13 @@ main{
 body, html {
     height: 100%;
 
+}
+body.modal-open {
+    overflow:hidden;
+
+}
+.modal-open .modal {
+    overflow-y: scroll;
 }
 
 section.landing-page {
@@ -243,11 +251,7 @@ div[class*="col-"] {
     max-height: 50px;
 
 }
-.man-icon {
-    height: 100%;
-    margin-left: 2px;
 
-}
 .volunteers_item {
     display: flex;
     justify-content: space-evenly;
@@ -256,10 +260,7 @@ div[class*="col-"] {
     border:0;
 }
 
-.modal-open .modal {
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
+
 
 
 
