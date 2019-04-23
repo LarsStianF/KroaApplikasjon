@@ -31,8 +31,10 @@ main{
 
 }
 
+
 body, html {
     height: 100%;
+
 }
 
 section.landing-page {
@@ -240,8 +242,6 @@ div[class*="col-"] {
     flex-direction: row;
     max-height: 50px;
 
-
-
 }
 .man-icon {
     height: 100%;
@@ -255,6 +255,13 @@ div[class*="col-"] {
     max-width: 60px;
     border:0;
 }
+
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+
 
 /*//////////////////////////////////////////
 /////////////////Events////////////////////
