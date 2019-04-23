@@ -22,7 +22,7 @@ if(isset($_POST['id'])) {
 
 
     $output = '
-    <form method="POST" action="????" enctype="multipart/form-data">
+    <form method="POST" action="update_handler.php?object=event&name=submit&id='.$id.'" enctype="multipart/form-data">
 
     <!-- Event name: -->
     <div class="form-group">

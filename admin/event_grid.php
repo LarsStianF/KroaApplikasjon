@@ -227,6 +227,7 @@ include 'rsc/imports/modals/edit_event_modal.php';
 
 <?php
 include 'rsc/imports/modals/created_modal.php';
+include 'rsc/imports/modals/updated_modal.php';
 include 'rsc/imports/modals/deleted_modal.php';
 include '../rsc/imports/php/components/footer.php';
 ?>

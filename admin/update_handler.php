@@ -19,5 +19,17 @@ if (isset($_GET['object'])){
 
         volUnitUpdate($vol_id, $name);
     }
+    // check if object is event
+    if ($_GET['object'] == 'event') {
+
+        $object = $_GET['object'];
+
+        //get variables
+        $name_attribute = $_GET['name'];
+        $id = $_GET['id'];
+
+        edit_event($id, $name_attribute);
+
+    }
 
 }
