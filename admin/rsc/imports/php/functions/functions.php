@@ -21,51 +21,7 @@ function populate_volunteers_all(){
 
     $sql = 'SELECT * FROM Volunteer';
     $result = mysqli_query($con, $sql);
-    $numrow = mysqli_num_rows($result);
-
-
-    while ($row = mysqli_fetch_array($result)) {
-        $id = $row['ID'];
-        echo '<div id="namerow">';
-        echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
-        echo '<div class="d-flex w-100 justify-content-between">';
-        echo '<ul class="list-inline ">';
-        echo '<li class="list-inline-item "><h5 class="mb-1">';
-        echo $row['Firstname'] . ' ' . $row['Lastname'];
-        echo '</h5></li>';
-        echo '<li class="list-inline-item "><h6 class="mb-1">';
-        if ($row['user_type'] == '5') {
-
-
-            populate_manager_row($id);
-
-        }else{
-            $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
-            $tempRes = mysqli_query($con,$tempQuery);
-            $tempRow = mysqli_fetch_array($tempRes);
-            echo $tempRow['user_type'];
-        }
-
-
-        echo '</h6></li>';
-        populate_little_men($id);
-
-        echo '</ul>';
-
-        // THIS SHOULD ONLY BE VISABLY TO DAGLIG LEDER / FRIVILLIGKOORDINATOR
-        echo '<button class="btn btn-primary" type="submit">Edit</button>';
-        //_____________________________________________________________________
-
-        echo '</div>';
-        echo '<p class="mb-1"><span class="h6">Email: </span>';
-        echo $row['Email'];
-        echo '<span class="h6"> - Tlf: </span>';
-        echo $row['nr'];
-        echo '</p>';
-        populate_last_volunteered($id);
-        echo '</a>';
-        echo '</div>';
-    }
+    volunteers_content($result);
 }
 
 function populate_volunteers_filter($crew_type_ID){
@@ -76,29 +32,27 @@ function populate_volunteers_filter($crew_type_ID){
               AND  event_volunteer.crew_type_ID = ' . $crew_type_ID;
     $result = mysqli_query($con, $sql);
 
+        volunteers_content($result);
+
+}
+
+function volunteers_content($result){
+
 
     while ($row = mysqli_fetch_array($result)) {
+        $output = "";
         $id = $row['ID'];
         echo '<div id="namerow">';
-        echo '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">';
+        echo '<a href="#peopleModal" class="list-group-item list-group-item-action flex-column align-items-start view_data" data-toggle="modal" id="'.$id.'">';
         echo '<div class="d-flex w-100 justify-content-between">';
         echo '<ul class="list-inline ">';
         echo '<li class="list-inline-item "><h5 class="mb-1">';
         echo $row['Firstname'] . ' ' . $row['Lastname'];
         echo '</h5></li>';
         echo '<li class="list-inline-item "><h6 class="mb-1">';
-        if ($row['user_type'] == '5') {
 
-
-            populate_manager_row($id);
-
-        }else{
-            $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
-            $tempRes = mysqli_query($con,$tempQuery);
-            $tempRow = mysqli_fetch_array($tempRes);
-            echo $tempRow['user_type'];
-        }
-
+        manager_check($row, $id, $output);
+        echo $output;
 
         echo '</h6></li>';
         populate_little_men($id);
@@ -121,14 +75,33 @@ function populate_volunteers_filter($crew_type_ID){
     }
 }
 
+function manager_check($row, $id, $output){
+    global $con;
+    if ($row['user_type'] == '5') {
 
-function populate_manager_row($id){
+
+        populate_manager_row($id, $output);
+
+    }else{
+        $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
+        $tempRes = mysqli_query($con,$tempQuery);
+        $tempRow = mysqli_fetch_array($tempRes);
+        $output = $tempRow['user_type'];
+
+        echo $output;
+    }
+}
+
+
+function populate_manager_row($id, $output){
     global $con;
     $sql = "SELECT * FROM manager, crew_type WHERE " . $id . " = manager.vol_ID AND crew_type.ID = manager.crew_type_ID";
     $result = mysqli_query($con, $sql);
     while ($row = mysqli_fetch_array($result)) {
-        echo $row['type'] . ' Manager - ';
-    }
+        $output.= $row['type'] . ' Manager - ';
+
+    }echo $output;
+
 }
 
 function check_if_worked_crew($id, $crew_type){
@@ -231,12 +204,23 @@ function volUnitUpdate($vol_id, $name){
     global $con;
 
 
+    if (isset($_POST['unitRemove'])){
+        $units = $_POST['unitRemove'];
 
-    $units = $_POST['unitRemove'];
+        $sql  = 'UPDATE volunteer SET ';
+        $sql .= 'Unit = Unit - '.$units.' ';
+        $sql .= 'WHERE ID = '.$vol_id.';';
+    }
+    if (isset($_POST['unitAdd'])){
+        $units = $_POST['unitAdd'];
 
-    $sql  = 'UPDATE volunteer SET ';
-    $sql .= 'Unit = Unit - '.$units.' ';
-    $sql .= 'WHERE ID = '.$vol_id.';';
+        $sql  = 'UPDATE volunteer SET ';
+        $sql .= 'Unit = Unit + '.$units.' ';
+        $sql .= 'WHERE ID = '.$vol_id.';';
+    }
+
+
+
     mysqli_query($con,$sql);
 
     header('Refresh: 0; URL=unitlist.php');
