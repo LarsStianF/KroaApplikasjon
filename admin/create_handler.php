@@ -13,8 +13,12 @@ if(isset($_GET['object'])) {
         create_new_event($name_attribute);
     }
 
-    if ($_GET['object'] == '') {
+    if ($_GET['object'] == 'application') {
+        $sign_job = $_GET['job'];
+        $event_id = $_GET['id'];
+        $vol_id = $_SESSION['login_id'];
 
+        add_to_want_volunteer($sign_job, $event_id, $vol_id);
     }
 }
 

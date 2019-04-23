@@ -1,54 +1,36 @@
 <?php
-
-if ( isset($_GET['created']) ) {
+if ( isset($_GET['deleted']) ) {
 
 
     // Check if request is for a file:
-    if ($_GET['created'] == 'event') {
+    if ($_GET['deleted'] == 'event') {
         $object = 'event';
 
         // Analyze the status codes:
         $status_code = $_GET['status'];
 
         // Generate status feedback in accordance with status codes:
-        if ( $status_code == '1' ){
+        if ($status_code == '1') {
 
             // post created from DB:
             $status_adjective = 'successfully';
-            $title_text = 'Event Created';
+            $title_text = 'Event Deleted';
             $title_color = 'text-success';
 
-        } elseif ( $status_code == '0' ){
+        } elseif ($status_code == '0') {
 
             // post not created from DB:
             $status_adjective = 'unsuccessfully';
-            $title_text = 'Nothing Created';
+            $title_text = 'Event could not be deleted';
             $title_color = 'text-danger';
 
-        }
-
-    }
-    elseif ($_GET['created'] == 'application') {
-
-        $object = $_GET['created'];
-        $status_code = $_GET['status'];
-
-        if ($status_code == 1) {
-            // user signed up in DB:
-            $status_adjective = 'successfully';
-            $title_text = 'Application Created';
-            $title_color = 'text-success';
-        } else if ($status_code == 0) {
-            // user not signed in DB:
+        } elseif ($status_code == '2') {
             $status_adjective = 'unsuccessfully';
-            $title_text = 'You have already applied for this';
+            $title_text = 'You cant delete old events';
             $title_color = 'text-danger';
         }
+
     }
-
-
-
-
 
     $modal = '
     <!-- Executable link for modal window: -->
@@ -59,13 +41,13 @@ if ( isset($_GET['created']) ) {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title '.$title_color.'"> '.$title_text.'!</h5>
+                    <h5 class="modal-title ' . $title_color . '"> ' . $title_text . '!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body text-secondary">
-                    <p>The '.$object.' was '.$status_adjective.' created.</p>
+                    <p>The ' . $object . ' was ' . $status_adjective . ' deleted.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -83,16 +65,16 @@ if ( isset($_GET['created']) ) {
         }
     <!-- Redirect page on modal close: -->
     $(".modal").on("hidden.bs.modal", function () {
-    window.location = "'.$object.'_grid.php";
+    window.location = "' . $object . '_grid.php";
     });
     </script>
     ';
 
 
-
-
     // Echo modal:
     echo $modal;
 }
+
+
 
 ?>

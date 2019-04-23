@@ -4,7 +4,9 @@ include 'rsc/imports/php/functions/functions.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
 include 'rsc/imports/modals/event_modal.php';
+include 'rsc/imports/modals/delete_event_modal.php';
 include 'rsc/imports/modals/new_event_modal.php';
+include 'rsc/imports/modals/edit_event_modal.php';
 
 ?>
 
@@ -80,9 +82,9 @@ include 'rsc/imports/modals/new_event_modal.php';
                             <span class="sr-only">Toggle Dropdown</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Edit event</a>
+                           <a href="#editEventModal" class="dropdown-item view_edit_data" data-toggle="modal" id="'.$id.'" >Edit event</a>
                              <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Delete event</a>
+                           <a href="#delEventModal" class="dropdown-item view_delete_data" data-toggle="modal" id="'.$id.'" >Delete event</a>
                         </div>
                     </div>
                 </div>
@@ -110,5 +112,6 @@ include 'rsc/imports/modals/new_event_modal.php';
 
 <?php
 include 'rsc/imports/modals/created_modal.php';
+include 'rsc/imports/modals/deleted_modal.php';
 include '../rsc/imports/php/components/footer.php';
 ?>
