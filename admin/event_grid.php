@@ -23,7 +23,7 @@ include 'rsc/imports/modals/edit_event_modal.php';
 
         <?php
 
-        $sql = 'SELECT * FROM event WHERE DATE > Curdate() ORDER BY Date ASC, Time_Start ASC';
+        $sql = 'SELECT * FROM event WHERE DATE >= Curdate() ORDER BY Date ASC, Time_Start ASC';
         $result = mysqli_query($con, $sql);
         $numrow = mysqli_num_rows($result);
         $counter = 1;

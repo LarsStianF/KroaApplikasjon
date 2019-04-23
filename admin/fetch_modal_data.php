@@ -57,7 +57,7 @@ if(isset($_POST['id']))
                         <div class="d-flex justify-content-around">
                          ';
 
-                        if ($compare_date > $date_today) {
+                        if ($compare_date >= $date_today) {
                             $output .= '<a href="create_handler.php?object=application&job=crew&id=\'.$id.\'" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
 
                         }
@@ -81,7 +81,7 @@ if(isset($_POST['id']))
                         <div class="d-flex justify-content-around">
                         ';
 
-                        if ($compare_date > $date_today) {
+                        if ($compare_date >= $date_today) {
                             $output .= '<a href="create_handler.php?object=application&job=sec&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
 
                         }
@@ -105,7 +105,7 @@ if(isset($_POST['id']))
                         <div class="d-flex justify-content-around">
                         ';
 
-                        if ($compare_date > $date_today) {
+                        if ($compare_date >= $date_today) {
                             $output .= '<a href="create_handler.php?object=application&job=crew&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
 
                         }
@@ -126,7 +126,7 @@ if(isset($_POST['id']))
                         <div class="d-flex justify-content-around">
                          ';
 
-                        if ($compare_date > $date_today) {
+                        if ($compare_date >= $date_today) {
                             $output .= '<a href="create_handler.php?object=application&job==tech&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
 
                         }
