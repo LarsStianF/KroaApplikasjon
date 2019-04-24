@@ -471,48 +471,110 @@ function delete_event($id)  {
         header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
         exit();
     } else {
-        // Remove volunteers on waiting list for the event.
-        $sql1 = "DELETE FROM want_volunteer WHERE Event_ID = $id;";
-        mysqli_query($con,$sql1);
 
-        // Remove accepted volunteers from event volunteers .
-        $sql2 = "DELETE FROM event_volunteer WHERE Event_ID = $id;";
-        mysqli_query($con,$sql2);
+        $sqllog = "SELECT COUNT(*) AS Existence FROM logs WHERE event_ID = '$id';";
+        $resultlog = mysqli_query($con, $sqllog);
+        $rowlog = mysqli_fetch_array($resultlog);
+        if ($rowlog['Existence'] == 0) {
+            // Remove volunteers on waiting list for the event.
+            $sql1 = "DELETE FROM want_volunteer WHERE Event_ID = $id;";
+            mysqli_query($con,$sql1);
 
-        $sql3 = "DELETE FROM event WHERE ID = $id;";
-        mysqli_query($con, $sql3);
-        mysqli_commit($con);
-        // Check if event was created in DB:
-        $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
-        $sql_exist .= 'ID = ' . $id . ';';
+            // Remove accepted volunteers from event volunteers .
+            $sql2 = "DELETE FROM event_volunteer WHERE Event_ID = $id;";
+            mysqli_query($con,$sql2);
 
-        $result = mysqli_query($con, $sql_exist);
-        $row = mysqli_fetch_array($result);
+            $sql3 = "DELETE FROM event WHERE ID = $id;";
+            mysqli_query($con, $sql3);
+            mysqli_commit($con);
 
-        if($row['Existence'] == 0) {
+            // Check if event was deleted in DB:
+            $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
+            $sql_exist .= 'ID = ' . $id . ';';
 
-            //event deleted
-            $status_db = 1;
-            echo "<h1> finner ikke </h1>";
-            header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
+            $result = mysqli_query($con, $sql_exist);
+            $row = mysqli_fetch_array($result);
 
-        } else if ($row['Existence'] == 1) {
+            if($row['Existence'] == 0) {
 
-            echo "<h1> finner </h1>";
-            // echo $event_date;
-            // echo $today;
-            // echo $sql_exist;
-            // echo "\n";
-            // echo $sql1;
-            // echo "\n";
-            //  echo $sql2;
-            //  echo "\n";
-            // echo $sql3;
-            //event not deleted
-            $status_db = 0;
+                //event deleted
+                $status_db = 1;
+                header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
 
+            } else if ($row['Existence'] == 1) {
+
+
+                $status_db = 0;
+
+                header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
+            }
+        } elseif($rowlog['Existence'] > 0) {
+
+            $status_db = 3;
             header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
         }
     }
+}
+
+Function edit_event($id, $name_attribute) {
+
+    global $con;
+
+    if(isset($_POST[$name_attribute])) {
+
+        // Extract variables from fields
+        $event_name     = $_POST['event_name'];
+        $event_date     = $_POST['date'];
+        $event_start    = $_POST['start_time'];
+        $event_end      = $_POST['end_time'];
+        $event_text     = $_POST['event_text'];
+        $event_sec_vol  = $_POST['sec_volunteers'];
+        $event_bar_vol  = $_POST['bar_volunteers'];
+        $event_crew_vol = $_POST['crew_volunteers'];
+        $event_tech_vol = $_POST['tech_volunteers'];
+
+        //Create insert
+        $sql = "UPDATE event SET 
+                Name        = '$event_name', 
+                Date        = '$event_date', 
+                Time_Start  = '$event_start', 
+                Time_End    = '$event_end',
+                Event_text  = '$event_text',
+                Event_sec   = '$event_sec_vol',
+                Event_bar   = '$event_bar_vol',
+                Event_crew  = '$event_crew_vol',
+                Event_tech  = '$event_tech_vol'  WHERE
+                ID ='$id';";
+
+        mysqli_query($con, $sql);
+
+
+        // Check if event was created in DB:
+        $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
+        $sql_exist .= 'Name = "' . $event_name . '" AND ';
+        $sql_exist .= 'Event_text = "' . $event_text . '" AND ';
+        $sql_exist .= 'Date = "' . $event_date . '" AND ';
+        $sql_exist .= 'Time_Start = "' . $event_start . '" AND ';
+        $sql_exist .= 'Time_End = "' . $event_end . '";';
+        $result = mysqli_query($con, $sql_exist);
+        $row = mysqli_fetch_array($result);
+
+        if ($row['Existence'] == 1) {
+
+            // event was created in DB:
+            $status_db = 1;
+
+        } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
+
+            // event was not created in DB:
+            $status_db = 0;
+
+        }
+        //echo $sql;
+        header('Refresh: 0; URL=event_grid.php?updated=event&status=' . $status_db);
+
+
+    }
+
 }
 ?>
