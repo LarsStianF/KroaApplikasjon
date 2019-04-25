@@ -66,17 +66,18 @@ include 'rsc/imports/php/components/head.php';
                         <input id="inputEmail" name="email" class="form-control" type="email" placeholder="Email address" required>
                     </div>
 
+
                     <!-- Password: -->
                     <div class="form-group">
                         <label for="inputPassword">Password:</label>
-                        <input id="inputPassword" name="password" class="form-control" type="password" placeholder="Password" required>
+                        <input id="inputPassword" name="password" class="form-control" type="password" placeholder="Password" minlength="8"  required>
                     </div>
 
 
                     <!-- Phone number: -->
                     <div class="form-group">
                         <label for="inputPhone">Phone number:</label>
-                        <input id="inputPhone" name="telephone" class="form-control" type="telephone" placeholder="Phone number">
+                        <input id="inputPhone" name="telephone" class="form-control" type="telephone" placeholder="Phone number" required>
                     </div>
 
                     <!-- Wanted Crew:
@@ -112,4 +113,7 @@ include 'rsc/imports/php/components/head.php';
     ##################################################################################
     -->
 
-<?php include 'rsc/imports/php/components/footer.php'; ?>
+<?php
+include 'admin/rsc/imports/modals/signup_modal.php';
+include 'rsc/imports/php/components/footer.php';
+?>

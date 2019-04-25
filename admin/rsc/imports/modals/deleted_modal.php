@@ -1,5 +1,5 @@
 <?php
-if ( isset($_GET['deleted']) ) {
+if ( isset($_GET['deleted'])) {
 
 
     // Check if request is for a file:
