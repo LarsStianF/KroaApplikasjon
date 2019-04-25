@@ -1,9 +1,9 @@
 <?php
-if ( isset($_GET['signup']) ) {
+if ( isset($_GET['signup'])|| isset($_GET['login']) ) {
 
 
         $object = "user";
-
+        $created = "created";
     // Check if request is for a file:
 
     if ($_GET['signup'] == 'invalid') {
@@ -29,6 +29,15 @@ if ( isset($_GET['signup']) ) {
         $status_adjective = 'successfully';
         $title_text = 'User created';
         $title_color = 'text-success';
+
+
+    } elseif($_GET['login'] == 'fail') {
+
+        $created = "";
+        $object = "login attempt";
+        $status_adjective = 'unsuccessfull';
+        $title_text = 'Wrong username or password';
+        $title_color = 'text-danger';
     }
 
     $modal = '
@@ -46,7 +55,7 @@ if ( isset($_GET['signup']) ) {
                     </button>
                 </div>
                 <div class="modal-body text-secondary">
-                    <p>The ' . $object . ' was ' . $status_adjective . ' Created.</p>
+                    <p>The ' . $object . ' was ' . $status_adjective .  $created .'</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
