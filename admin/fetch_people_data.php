@@ -48,17 +48,17 @@ $output = "";
                                         '.populate_people_edit_user_type($id, $row).'
                                                 </div>
                                  
-                                 <a class="btn btn-primary" id="numUnitsBtn" href="#unitConfimation" role="button">Change</a>
+                                 <a class="btn btn-primary d-none" id="roleBtn" href="#roleConfimation" role="button">Change</a>
                                 </div>
                                
                          </div>
                          
-                          <div class="collapse" id="unitConfirmation">
+                          <div class="collapse" id="roleConfirmation">
                         <hr>
-                        <h4>Change role of ' .$row['Firstname'] . ' ' . $row['Lastname'] . '  from ROLE to <span id="newRole"></span>?</h4>
+                        <h4>Change role of ' .$row['Firstname'] . ' ' . $row['Lastname'] . '  from <span class="text-danger">'.get_volunteer_user_type($id).' </span>to <span id="newRole" class="text-success"></span>?</h4>
                         <button class="btn btn-success fa fa-check fa-3x" type="submit"></button>
                         </form>
-                        <a class="btn btn-danger text-white fa fa-ban fa-3x ml-5" data-toggle="collapse" data-target="#unitConfirmation"></a>
+                        <a class="btn btn-danger text-white fa fa-ban fa-3x ml-5" data-toggle="collapse" data-target="#roleConfirmation"></a>
 
                         </div>
                         
@@ -71,8 +71,12 @@ $output = "";
 
 
     $bar = 1; $sec = 2; $crew = 3; $tech = 4;
+
+
+
     $output.=
         '
+                        <div id="managerShow" class="collapse">
                         <hr> 
                          <form method="POST" action="update_handler.php?object=unitlist&name=submit&id='.$id.'">
                         <div class="d-flex justify-content-around">
@@ -80,25 +84,25 @@ $output = "";
                                <div class="checkbox"> 
                                
                                 
-                                <label><input type="checkbox" value="" '.populate_user_edit_crew_checkbox($id, $bar).'>Bar</label>
-                                <label><input type="checkbox" value="" '.populate_user_edit_crew_checkbox($id, $sec).'>Security</label>
-                                <label><input type="checkbox" value="" '.populate_user_edit_crew_checkbox($id, $crew).'>Crew</label>
-                                <label><input type="checkbox" value="" '.populate_user_edit_crew_checkbox($id, $tech).'>Technical</label>
+                                <label><input type="checkbox" value="Bar" '.populate_user_edit_crew_checkbox($id, $bar).'>Bar</label>
+                                <label><input type="checkbox" value="Security" '.populate_user_edit_crew_checkbox($id, $sec).'>Security</label>
+                                <label><input type="checkbox" value="Crew" '.populate_user_edit_crew_checkbox($id, $crew).'>Crew</label>
+                                <label><input type="checkbox" value="Technical" '.populate_user_edit_crew_checkbox($id, $tech).'>Technical</label>
                                  
-                                 <a class="btn btn-primary" id="selRoleBtn"  href="#unitConfimationAdd" role="button">Update</a>
+                                 <a class="btn btn-primary" id="manRoleBtn"  href="#manConfimation" role="button">Update</a>
                               
                                </div>
                          </div>
                          
-                          <div class="collapse" id="unitConfirmationAdd">
+                          <div class="collapse" id="manConfirmation">
                         <hr>
-                        <h4>Add <span id="confNumUnitsAdd"> </span> units to ' .$row['Firstname'] . ' ' . $row['Lastname'] . '?</h4>
+                        <h4>Set managing role of ' .$row['Firstname'] . ' ' . $row['Lastname'] . ' to: <span id="manCrewList"></span>?</h4>
                         <button class="btn btn-success fa fa-check fa-3x" type="submit"></button>
                         </form>
-                        <a class="btn btn-danger text-white fa fa-ban fa-3x ml-5" data-toggle="collapse" data-target="#unitConfirmationAdd"></a>
+                        <a class="btn btn-danger text-white fa fa-ban fa-3x ml-5" data-toggle="collapse" data-target="#manConfirmation"></a>
 
                         </div>
-                         
+                        </div>
                          
                         
                         
@@ -123,30 +127,73 @@ $output = "";
 ?>
 
 <script>
-    $(function(){
+
+
+
+
+
+    //prepares and executes display of collapsable content and hiding of buttons
+    $(document).ready(function(){
+        var cur_role = $(this).find('option:selected').text();
+        var manager = "Manager";
+
+        //Shows the manager selectables if the role is manager upon loading the page
+        if (cur_role === manager){
+            $("#managerShow").collapse('show');
+        }
         $('#selRole').change(function () {
+
+            //sets the name of the role in which to change to
+            $("#roleConfirmation").collapse('hide');
             var role = $(this).find("option:selected").text();
             $("#newRole").text(role);
+
+            //Hides the change button if the selected role is the same as the selected user currently has
+            if ($(this).find('option:selected').text() === cur_role && cur_role !== manager){
+                $("#roleBtn").addClass('d-none');
+                $("#managerShow").collapse('hide');
+                //Checks if the selected role is manager, if so hides the button and shows the selectables
+            }else if ($(this).find('option:selected').text() === manager){
+                $("#managerShow").collapse('show');
+                $("#roleBtn").addClass('d-none');
+
+                //hides the selectables and shows the change button if the above statements are not true.
+            }else {
+                $("#managerShow").collapse('hide');
+                $("#roleBtn").removeClass('d-none');
+            }
+
         });
     });
 
-    $(function(){
-        $('#numUnitsBtnAdd').click(function () {
-            var units = $('#numUnitsAdd').val();
-            $('#confNumUnitsAdd').html(units);
-        });
-    });
-
+    // Governs hiding and showing content of manager collapsable content
     $(document).ready(function(){
 
-        $("#numUnitsBtnAdd").click(function(){
-            $("#unitConfirmationAdd").collapse('show');
-            $("#unitConfirmation").collapse('hide');
+        $("#manRoleBtn").click(function(){
+            //Upon click hides the role confirmation content
+            $("#roleConfirmation").collapse('hide');
+
+            // Fills in what manager roles have been selected in confirmation box
+            var checkValue = $(".checkbox input:checkbox:checked").map(function(){
+                return $(this).val();
+            }).toArray().join(", ");
+            $('#manCrewList').html(checkValue);
+
+
+            // Prevents opening of confirmation collapsable if no manager roles have been selected.
+            if(checkValue.length === 0) {
+                $("#manConfirmation").collapse('hide');
+            }
+            else{
+                $("#manConfirmation").collapse('show');
+            }
+
+
         });
 
-        $("#numUnitsBtn").click(function(){
-            $("#unitConfirmation").collapse('show');
-            $("#unitConfirmationAdd").collapse('hide');
+        $("#roleBtn").click(function(){
+            $("#roleConfirmation").collapse('show');
+            $("#manConfirmation").collapse('hide');
         });
 
     });

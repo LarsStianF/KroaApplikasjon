@@ -16,10 +16,27 @@ return false;
 
 }
 
+function get_volunteer_user_type($vol_id){
+    global $con;
+
+    $user_query= 'SELECT * FROM volunteer WHERE ID = '.$vol_id.';';
+    $user_result = mysqli_query($con, $user_query);
+    $user_row = mysqli_fetch_array($user_result);
+
+    $sql = 'SELECT * FROM user_type WHERE ID = ' .$user_row['user_type'].';';
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+
+    $user_type = $row['user_type'];
+
+    return $user_type;
+}
+
+
 function populate_volunteers_all(){
     global $con;
 
-    $sql = 'SELECT * FROM Volunteer where user_type > 1';
+    $sql = 'SELECT * FROM Volunteer where user_type > 1;';
     $result = mysqli_query($con, $sql);
     volunteers_content($result);
 }
@@ -29,7 +46,7 @@ function populate_volunteers_filter($crew_type_ID){
 
     $sql = 'SELECT * FROM Volunteer, event_volunteer 
             WHERE Volunteer.ID = event_volunteer.Vol_ID AND user_type > 1 
-              AND  event_volunteer.crew_type_ID = ' . $crew_type_ID;
+              AND  event_volunteer.crew_type_ID = ' . $crew_type_ID.';';
     $result = mysqli_query($con, $sql);
 
         volunteers_content($result);
@@ -83,18 +100,18 @@ function populate_people_edit_user_type($id, $row){
 
         // If User is root. Get all user types
         if ($cur_user == $root){
-            $user_type_sql = "SELECT * FROM user_type WHERE ID > 1";
+            $user_type_sql = "SELECT * FROM user_type WHERE ID > 1;";
 
 
             // If User is Daglig Leder, get all user types except root
         }elseif ($cur_user == $dag_leder){
-            $user_type_sql = "SELECT * FROM user_type WHERE ID > 2";
+            $user_type_sql = "SELECT * FROM user_type WHERE ID > 2;";
         }else{
             $user_type_sql ="";
         }
         $user_type_result = mysqli_query($con, $user_type_sql);
 
-        $user_query = 'SELECT user_type FROM volunteer WHERE ID = '.$id;
+        $user_query = 'SELECT user_type FROM volunteer WHERE ID = '.$id.';';
         $user_result = mysqli_query($con,$user_query);
         $user_array = mysqli_fetch_array($user_result);
         $user_type_id = $user_array['user_type'];
@@ -107,10 +124,10 @@ function populate_people_edit_user_type($id, $row){
             if ( $row['ID'] == $user_type_id ){
                 $output .='
             
-                <option value="' . $row['ID'] . '" selected>' . $row['user_type'] . '</option>';
+                <option value="' . $row['ID'] . '" name="'.$row['user_type'].'" selected >' . $row['user_type'] . '</option>';
             }
             else {
-                $output .= '<option value="' . $row['ID'] . '">' . $row['user_type'] . '</option>';
+                $output .= '<option value="' . $row['ID'] . '" name="'.$row['user_type'].'">' . $row['user_type'] . '</option>';
             }
 
         }
@@ -154,7 +171,7 @@ function manager_check($row, $id, $output){
         populate_manager_row($id, $output);
 
     }else{
-        $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID";
+        $tempQuery = "SELECT * FROM user_type WHERE " . $row['user_type'] . " = ID;";
         $tempRes = mysqli_query($con,$tempQuery);
         $tempRow = mysqli_fetch_array($tempRes);
         $output = $tempRow['user_type'];
@@ -166,7 +183,7 @@ function manager_check($row, $id, $output){
 
 function populate_manager_row($id, $output){
     global $con;
-    $sql = "SELECT * FROM manager, crew_type WHERE " . $id . " = manager.vol_ID AND crew_type.ID = manager.crew_type_ID";
+    $sql = "SELECT * FROM manager, crew_type WHERE " . $id . " = manager.vol_ID AND crew_type.ID = manager.crew_type_ID;";
     $result = mysqli_query($con, $sql);
     while ($row = mysqli_fetch_array($result)) {
         $output.= $row['type'] . ' Manager - ';
@@ -177,7 +194,7 @@ function populate_manager_row($id, $output){
 
 function check_if_worked_crew($id, $crew_type){
     global $con;
-    $sql = "SELECT COUNT(*) AS has_worked FROM event_volunteer WHERE " . $id . " = vol_ID AND crew_type_ID = " . $crew_type ;
+    $sql = "SELECT COUNT(*) AS has_worked FROM event_volunteer WHERE " . $id . " = vol_ID AND crew_type_ID = " . $crew_type.';' ;
     $result = mysqli_query($con, $sql);
     $row = mysqli_fetch_assoc($result);
 
@@ -226,7 +243,7 @@ function populate_last_volunteered($id){
             WHERE event.Date < CURDATE()
                 AND " . $id . " = event_volunteer.vol_ID 
                 AND event_volunteer.event_ID = event.ID 
-            LIMIT 1";
+            LIMIT 1;";
     $result = mysqli_query($con, $sql);
     $row = mysqli_fetch_assoc($result);
 
@@ -253,7 +270,7 @@ function get_event_volunteers($id) {
 
 
 
-    $query = "SELECT * FROM event_volunteer WHERE event_ID = '$id' ";
+    $query = "SELECT * FROM event_volunteer WHERE event_ID = '.$id.';";
     $result = mysqli_query($con, $query);
     while($row = mysqli_fetch_array($result)) {
         if($row['crew_type_ID'] == 1)
