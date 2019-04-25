@@ -37,18 +37,15 @@ include 'rsc/imports/modals/people_modal.php';
             <h1 class="display-3 text-center"> Volunteers </h1>
             <form class="form-inline " name="filter" method="POST" action="">
                 <div>
-                    <button class="btn btn-primary filter-button" name="all" data-filter="">All</button>
-                    <button class="btn btn-dark filter-button" name="3" data-filter="">Crew</button>
-                    <button class="btn btn-dark filter-button" name="2" data-filter="">Security</button>
-                    <button class="btn btn-dark filter-button" name="1" data-filter="">Bar</button>
-                    <button class="btn btn-dark filter-button" name="4" data-filter="">Technical</button>
+                    <button class="btn btn-dark filter-button" id="all" name="all" data-filter="">All</button>
+                    <button class="btn btn-dark filter-button" id="crew" name="3" data-filter="">Crew</button>
+                    <button class="btn btn-dark filter-button" id="sec" name="2" data-filter="">Security</button>
+                    <button class="btn btn-dark filter-button" id="bar" name="1" data-filter="">Bar</button>
+                    <button class="btn btn-dark filter-button" id="tech" name="4" data-filter="">Technical</button>
                 </div>
                 <div class=" ml-2 input-group form-inline">
                     <input id="peopleSearch" type="text" class="form-control" placeholder="Search for volunteers">
                     <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button">
-                            <i>Search</i>
-                        </button>
                     </div>
 
                 </div>
@@ -67,7 +64,9 @@ include 'rsc/imports/modals/people_modal.php';
                 foreach($_POST as $key => $value){
                     $crew_type = $key;
                 }
+
                 populate_volunteers_filter($crew_type);
+
             } else {
                 populate_volunteers_all();
             }
@@ -86,9 +85,8 @@ include 'rsc/imports/modals/people_modal.php';
 */
 
 ?>
-
-
             </div>
+
 
 
 

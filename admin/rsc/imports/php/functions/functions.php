@@ -212,26 +212,26 @@ function populate_little_men($id){
     $crew = 3;
     $tech = 4;
 
-        if (check_if_worked_crew($id, $bar) == true){
-            echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_black.png" alt=""> </li>';
-        } else{
+    if (check_if_worked_crew($id, $bar) == true){
+        echo '<li class="list-inline-item fa fa-user fa-lg" style="color: Orange" > </li>';
+    } else{
 
-        }
-        if (check_if_worked_crew($id, $security) == true) {
-            echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_red.png" alt=""> </li>';
-        } else{
+    }
+    if (check_if_worked_crew($id, $security) == true) {
+        echo '<li class="list-inline-item fa fa-user fa-lg" style="color: Red" > </li>';
+    } else{
 
-        }
-        if (check_if_worked_crew($id, $crew) == true) {
-            echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_blue.png" alt=""> </li>';
-        } else{
+    }
+    if (check_if_worked_crew($id, $crew) == true) {
+        echo '<li class="list-inline-item fa fa-user fa-lg" style="color: Black" > </li>';
+    } else{
 
-        }
-        if (check_if_worked_crew($id, $tech) == true) {
-            echo '<li class="list-inline-item " ><img class="man-icon" src="../rsc/img/man_black.png" alt=""> </li>';
-        } else{
+    }
+    if (check_if_worked_crew($id, $tech) == true) {
+        echo '<li class="list-inline-item  fa fa-user fa-lg" style="color: Blue" > </li>';
+    } else{
 
-        }
+    }
 
 }
 

@@ -12,55 +12,54 @@
 
 <!-- Navigation -->
 <div class="">
-    <header class="topbar">
+    <header class="topnav bg-dark">
         <div class="container">
             <div class="row">
                 <!-- social icon-->
                 <div class="col-sm-12">
-                    <ul class="social-network">
-                        <li><a class="waves-effect waves-dark" href="index.php"><i class="fa fa-home"></i></a></li>
-                        <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-sign-out"></i></a></li>
-
+                    <ul class="topbuttons">
+                        <li><a class="hover-effect" href="index.php"><i class="fa fa-home"></i></a></li>
+                        <li><a class="hover-effect" href="#"><i class="fa fa-sign-out"></i></a></li>
                     </ul>
                 </div>
-
             </div>
         </div>
     </header>
-    <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
+    <nav class="navbar navbar-expand-lg navbar-dark gradient-background pb-0">
         <div class="container">
             <a class="navbar-brand" href="index.php"><img class="" src="../rsc/img/kroa-logo-text.png" alt=""></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+
+
+            <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
 
                 <ul class="navbar-nav ml-auto">
 
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
+                    <li class="nav-item ">
+                        <a class="nav-link bg-dark py-2 px-3 rounded-top" id="home_nav" href="index.php">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="event_grid.php">Event</a>
+                        <a class="nav-link bg-dark py-2 px-3" id="event_nav" href="event_grid.php">Event</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="people.php">People</a>
+                        <a class="nav-link bg-dark py-2 px-3" id="people_nav" href="people.php">Volunteers</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="mindex.php">Manage</a>
+                        <a class="nav-link bg-dark py-2 px-3" id="man_nav" href="mindex.php">Manage</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="unitlist.php">Unitlist</a>
+                        <a class="nav-link bg-dark py-2 px-3 rounded-bottom" id="unit_nav" href="unitlist.php">Unitlist</a>
                     </li>
 
                 </ul>
             </div>
+
         </div>
     </nav>
 </div>

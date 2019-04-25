@@ -84,10 +84,10 @@ $output = "";
                                <div class="checkbox"> 
                                
                                 
-                                <label><input type="checkbox" value="Bar" '.populate_user_edit_crew_checkbox($id, $bar).'>Bar</label>
-                                <label><input type="checkbox" value="Security" '.populate_user_edit_crew_checkbox($id, $sec).'>Security</label>
-                                <label><input type="checkbox" value="Crew" '.populate_user_edit_crew_checkbox($id, $crew).'>Crew</label>
-                                <label><input type="checkbox" value="Technical" '.populate_user_edit_crew_checkbox($id, $tech).'>Technical</label>
+                                <label><input class="manCheckbox" type="checkbox" value="Bar" '.populate_user_edit_crew_checkbox($id, $bar).'>Bar</label>
+                                <label><input class="manCheckbox" type="checkbox" value="Security" '.populate_user_edit_crew_checkbox($id, $sec).'>Security</label>
+                                <label><input class="manCheckbox" type="checkbox" value="Crew" '.populate_user_edit_crew_checkbox($id, $crew).'>Crew</label>
+                                <label><input class="manCheckbox" type="checkbox" value="Technical" '.populate_user_edit_crew_checkbox($id, $tech).'>Technical</label>
                                  
                                  <a class="btn btn-primary" id="manRoleBtn"  href="#manConfimation" role="button">Update</a>
                               
@@ -193,6 +193,10 @@ $output = "";
 
         $("#roleBtn").click(function(){
             $("#roleConfirmation").collapse('show');
+            $("#manConfirmation").collapse('hide');
+        });
+
+        $(".manCheckbox").click(function(){
             $("#manConfirmation").collapse('hide');
         });
 
