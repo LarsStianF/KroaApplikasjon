@@ -46,24 +46,24 @@
 
                         <div class="form-group d-flex justify-content-around">
                             <div class="d-flex justify-content-between">
-                                <img class="man-icon d-flex" src="../rsc/img/man_black.png" alt="">
+                                <i class="man-icons-modal fa fa-user" style="color:orange;font-size:40px;"></i>
                                 <label>Security</label>
                                 <input class="form-control d-flex" style="width 60px; max-width: 60px" type="number" name="sec_volunteers" value="1" min="1" max="20">
                             </div>
 
                            <div class="d-flex justify-content-around">
-                               <img class="man-icon d-flex" src="../rsc/img/man_red.png" alt=""><label>Bar</label>
+                               <i class="man-icons-modal fa fa-user" style="color:red;font-size:40px;"></i><label>Bar</label>
                                <input class="form-control d-flex" style="width 60px; max-width: 60px" type="number" name="bar_volunteers" value="1" min="1" max="20">
                            </div>
                         </div>
                         <div class="form-group d-flex justify-content-around">
                             <div class="d-flex justify-content-between">
-                                <img class="man-icon" src="../rsc/img/man_blue.png" alt=""><label>Crew</label>
+                                <i class="man-icons-modal fa fa-user" style="color:black;font-size:40px;"></i><label>Crew</label>
                                 <input class="form-control form-inline" style="width 60px; max-width: 60px" type="number" name="crew_volunteers" value="1" min="1" max="20">
                             </div>
 
                             <div class="d-flex justify-content-around">
-                                <img class="man-icon" src="../rsc/img/man_black.png" alt=""><label>Technical</label>
+                                <i class="man-icons-modal fa fa-user" style="color:blue;font-size:40px;"></i><label>Technical</label>
                                 <input class="form-control form-inline" style="width 60px; max-width: 60px" type="number" name="tech_volunteers" value="1" min="1" max="20">
                             </div>
                         </div>
