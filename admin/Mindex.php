@@ -14,6 +14,11 @@ include 'rsc/imports/php/components/admin_header.php';
 
     <main role="main" class="container">
 
+        <div class="bg-light p-3 m-0 card" >
+            <h1 class="display-3 text-center"> Manage </h1>
+
+        </div>
+
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-dark active btn-lg filter-button" data-filter="Manager">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> Manager
@@ -30,10 +35,10 @@ include 'rsc/imports/php/components/admin_header.php';
             <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Tech-log">
                 <input type="radio" name="options" id="option6" autocomplete="off"> Tech log
             </label>
-            <div class="input-group form-inline col-md-8">
+            <div class="input-group input-group-lg form-inline col-md-7">
                 <input type="text" class="form-control" placeholder="Search for logs">
                 <div class="input-group-append">
-                    <button class="btn btn-dark" type="button">
+                    <button class="btn btn-secondary btn-dark" type="button">
                         <i>Search</i>
                     </button>
                 </div>
