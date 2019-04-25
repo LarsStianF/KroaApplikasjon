@@ -28,6 +28,11 @@ if ( isset($_GET['deleted']) ) {
             $status_adjective = 'unsuccessfully';
             $title_text = 'You cant delete old events';
             $title_color = 'text-danger';
+
+        } elseif ($status_code == '3' ) {
+            $status_adjective = 'unsuccessfully';
+            $title_text = 'You cant delete events containing logs';
+            $title_color = 'text-danger';
         }
 
     }
