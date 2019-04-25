@@ -1,40 +1,43 @@
 <?php
-if ( isset($_GET['deleted'])) {
+if ( isset($_GET['signup'])|| isset($_GET['login']) ) {
 
 
+        $object = "user";
+        $created = "created";
     // Check if request is for a file:
-    if ($_GET['deleted'] == 'event') {
-        $object = 'event';
 
-        // Analyze the status codes:
-        $status_code = $_GET['status'];
+    if ($_GET['signup'] == 'invalid') {
 
-        // Generate status feedback in accordance with status codes:
-        if ($status_code == '1') {
 
-            // post created from DB:
-            $status_adjective = 'successfully';
-            $title_text = 'Event Deleted';
-            $title_color = 'text-success';
+        $title_color = 'text-danger';
+        $status_adjective = 'unsuccessfully';
+        $title_text = 'Use of invalid characters';
 
-        } elseif ($status_code == '0') {
 
-            // post not created from DB:
-            $status_adjective = 'unsuccessfully';
-            $title_text = 'Event could not be deleted';
-            $title_color = 'text-danger';
+    } elseif ($_GET['signup'] == 'email') {
+        $title_color = 'text-danger';
+        $status_adjective = 'unsuccessfully';
+        $title_text = 'Email not entered correctly';
 
-        } elseif ($status_code == '2') {
-            $status_adjective = 'unsuccessfully';
-            $title_text = 'You cant delete old events';
-            $title_color = 'text-danger';
 
-        } elseif ($status_code == '3' ) {
-            $status_adjective = 'unsuccessfully';
-            $title_text = 'You cant delete events containing logs';
-            $title_color = 'text-danger';
-        }
+    } elseif($_GET['signup'] == 'usertaken') {
+        $title_color = 'text-danger';
+        $status_adjective = 'unsuccessfully';
+        $title_text = 'User with that email exists';
 
+    } elseif($_GET['signup'] == 'success') {
+        $status_adjective = 'successfully';
+        $title_text = 'User created';
+        $title_color = 'text-success';
+
+
+    } elseif($_GET['login'] == 'fail') {
+
+        $created = "";
+        $object = "login attempt";
+        $status_adjective = 'unsuccessfull';
+        $title_text = 'Wrong username or password';
+        $title_color = 'text-danger';
     }
 
     $modal = '
@@ -52,7 +55,7 @@ if ( isset($_GET['deleted'])) {
                     </button>
                 </div>
                 <div class="modal-body text-secondary">
-                    <p>The ' . $object . ' was ' . $status_adjective . ' deleted.</p>
+                    <p>The ' . $object . ' was ' . $status_adjective .  $created .'</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -70,7 +73,7 @@ if ( isset($_GET['deleted'])) {
         }
     <!-- Redirect page on modal close: -->
     $(".modal").on("hidden.bs.modal", function () {
-    window.location = "' . $object . '_grid.php";
+    window.location = "index.php";
     });
     </script>
     ';

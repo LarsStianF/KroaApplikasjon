@@ -8,8 +8,14 @@ require("../../admin/rsc/imports/php/functions/functions.php");
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
-    $login_email = mysqli_real_escape_string($con,$_POST['login_email']);
     $login_password = mysqli_real_escape_string($con,$_POST['login_password']);
+    $login_email = mysqli_real_escape_string($con,$_POST['login_email']);
+
+    if (!filter_var($login_email, FILTER_VALIDATE_EMAIL)) {
+        header("Location: ../../index.php?signup=email");
+        exit();
+    }
+
 
     $pwhash = md5($login_password);
     $pwverify = PwCheck($login_email, $pwhash);
@@ -24,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         echo $count;
 
 
-        // If result matched $myusername and $mypassword, table row must be 1 row
+
 
         if ($count == 1) {
 
@@ -55,15 +61,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         } else {
-            $error = "Your Login Name or Password is invalid!";
-            echo "<div style='text-align: center;'><h1 style='color: black'>{$error}</h1></div>";
-         //   header('Refresh: 3; URL=../../index.php');
+
+
+         header('Refresh: 0; URL=../../index.php?login=fail');
         }
     }
     else {
-        $error = "Your Login Name or Password is invalid!";
-        echo "<div style='text-align: center;'><h1 style='color: black'>{$error}</h1></div>";
-       // header('Refresh: 3; URL=../../index.php');
+        header('Refresh: 0; URL=../../index.php?login=fail');
+
     }
 }
 

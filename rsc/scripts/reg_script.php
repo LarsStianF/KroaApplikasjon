@@ -12,11 +12,7 @@ if(isset($_POST['submit_user'])) {
     $phone      = mysqli_real_escape_string($con, $_POST['telephone']);
 
 
-    if (empty($fname) || empty($lname) ||  empty($email) || empty($passw) || empty($phone)) {
-        header("Location: ../../index.php");
-        exit();
-
-    } elseif (!preg_match("/^[a-zA-Z]*$/", $fname) || !preg_match("/^[a-zA-Z]*$/", $lname)) {
+    if (!preg_match("/^[a-zA-Z]*$/", $fname) || !preg_match("/^[a-zA-Z]*$/", $lname)) {
         header("Location: ../../index.php?signup=invalid");
         exit();
 
@@ -39,14 +35,14 @@ if(isset($_POST['submit_user'])) {
             // password hash
             $pwhash = md5($_POST['password']);
 
-            $sqql = "INSERT INTO `volunteer`(Firstname, Lastname, Tel, Email, Password, Unit)
-                     VALUES ('$fname', '$lname', '$phone', '$email', '$pwhash', 0);";
+            $sqql = "INSERT INTO volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type)
+                     VALUES ('$fname', '$lname', '$phone', '$email', '$pwhash', 0, 6);";
         }
     }
     if (mysqli_query($con, $sqql)) {
 
-        echo "<div style='text-align: center;'><h1 style='color: black'>User creation successful!</h1></div>";
-        header("Refresh:3; url=../../index.php");
+
+        header("Refresh:0; url=../../index.php?signup=success");
     } else {
         die("Error: " . mysqli_sqlstate($con));
     }
@@ -54,7 +50,6 @@ if(isset($_POST['submit_user'])) {
     mysqli_close($con);
 
 } else {
-
 
     exit();
 }
