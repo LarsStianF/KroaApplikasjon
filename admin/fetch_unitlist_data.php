@@ -136,6 +136,14 @@ if(isset($_POST['id']))
 
     $(document).ready(function(){
 
+        $('#numUnits').change(function () {
+            $("#unitConfirmation").collapse('hide');
+        });
+
+        $('#numUnitsAdd').change(function () {
+            $("#unitConfirmationAdd").collapse('hide');
+        });
+
         $("#numUnitsBtnAdd").click(function(){
             $("#unitConfirmationAdd").collapse('show');
             $("#unitConfirmation").collapse('hide');
