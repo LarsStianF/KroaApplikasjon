@@ -474,6 +474,7 @@ function populate_volunteers($id, $crew_id) {
 function delete_event($id)  {
 
     global $con;
+
     // get preliminary data:
     $sql = "SELECT Date FROM event WHERE ID = $id;";
     $result = mysqli_query($con,$sql);
@@ -487,7 +488,7 @@ function delete_event($id)  {
         exit();
     } else {
 
-        $sqllog = "SELECT COUNT(*) AS Existence FROM logs WHERE event_ID = '$id';";
+        $sqllog = "SELECT COUNT(*) AS Existence FROM logs WHERE event_ID = $id;";
         $resultlog = mysqli_query($con, $sqllog);
         $rowlog = mysqli_fetch_array($resultlog);
         if ($rowlog['Existence'] == 0) {
@@ -501,12 +502,10 @@ function delete_event($id)  {
 
             $sql3 = "DELETE FROM event WHERE ID = $id;";
             mysqli_query($con, $sql3);
-            mysqli_commit($con);
+
 
             // Check if event was deleted in DB:
-            $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
-            $sql_exist .= 'ID = ' . $id . ';';
-
+            $sql_exist = "SELECT COUNT(*) AS Existence FROM event WHERE ID = $id;";
             $result = mysqli_query($con, $sql_exist);
             $row = mysqli_fetch_array($result);
 
@@ -538,15 +537,17 @@ Function edit_event($id, $name_attribute) {
     if(isset($_POST[$name_attribute])) {
 
         // Extract variables from fields
-        $event_name     = $_POST['event_name'];
-        $event_date     = $_POST['date'];
-        $event_start    = $_POST['start_time'];
-        $event_end      = $_POST['end_time'];
-        $event_text     = $_POST['event_text'];
-        $event_sec_vol  = $_POST['sec_volunteers'];
-        $event_bar_vol  = $_POST['bar_volunteers'];
-        $event_crew_vol = $_POST['crew_volunteers'];
-        $event_tech_vol = $_POST['tech_volunteers'];
+        $event_name     = mysqli_real_escape_string($con, $_POST['event_name']);
+        $event_date     = mysqli_real_escape_string($con, $_POST['date']);
+        $event_start    = mysqli_real_escape_string($con, $_POST['start_time']);
+        $event_end      = mysqli_real_escape_string($con, $_POST['end_time']);
+        $event_text     = mysqli_real_escape_string($con, $_POST['event_text']);
+        $event_sec_vol  = mysqli_real_escape_string($con, $_POST['sec_volunteers']);
+        $event_bar_vol  = mysqli_real_escape_string($con, $_POST['bar_volunteers']);
+        $event_crew_vol = mysqli_real_escape_string($con, $_POST['crew_volunteers']);
+        $event_tech_vol = mysqli_real_escape_string($con, $_POST['tech_volunteers']);
+
+
 
         //Create insert
         $sql = "UPDATE event SET 
