@@ -115,7 +115,7 @@ function populate_people_edit_user_type($id, $row){
         $user_type_id = $user_array['user_type'];
 
         $output .= '
-                                             <select class="form-control" id="selRole">';
+                                             <select class="form-control" id="selRole" name="selRole">';
 
         while ( $row = mysqli_fetch_array($user_type_result) ) {
 
@@ -285,128 +285,195 @@ function get_event_volunteers($id) {
 
 }
 
-
-function volUnitUpdate($vol_id, $name){
+function admin_set_user_role($vol_id)
+{
     global $con;
 
+    $stmt = $con->prepare("UPDATE volunteer SET user_type = ? WHERE ID = ?");
+    $newUserType = $_POST['selRole'];
 
-    if (isset($_POST['unitRemove'])){
-        $units = $_POST['unitRemove'];
+    $stmt->bind_param("ii", $newUserType, $vol_id);
+    $stmt->execute();
+    $stmt->close();
 
-        $sql  = 'UPDATE volunteer SET ';
-        $sql .= 'Unit = Unit - '.$units.' ';
-        $sql .= 'WHERE ID = '.$vol_id.';';
-    }
-    if (isset($_POST['unitAdd'])){
-        $units = $_POST['unitAdd'];
+    $stmtDel = $con->prepare("DELETE FROM manager WHERE vol_id = ?");
+    $stmtDel->bind_param("i", $vol_id);
+    $stmtDel->execute();
+    $stmtDel->close();
 
-        $sql  = 'UPDATE volunteer SET ';
-        $sql .= 'Unit = Unit + '.$units.' ';
-        $sql .= 'WHERE ID = '.$vol_id.';';
-    }
-
+echo $newUserType;
+    if ($newUserType === '5'){
 
 
-    mysqli_query($con,$sql);
+        if (!empty($_POST['manRole_list'])) {
 
-    header('Refresh: 0; URL=unitlist.php');
+            $stmt = $con->prepare("INSERT INTO manager(vol_id, crew_type_ID) VALUES(?, ?)");
+            foreach ($_POST['manRole_list'] as $crew_name) {
+                if ($crew_name === 'Bar'){
+                    $crew_type = 1;
+                }elseif ($crew_name === 'Security'){
+                    $crew_type = 2;
+                }elseif ($crew_name === 'Crew'){
+                    $crew_type = 3;
+                }elseif ($crew_name === 'Technical'){
+                    $crew_type = 4;
+                }else{
+                    $stmt->close();
+                    header('Refresh: 0; URL=people.php');
 
+                }
 
-}
+                $stmt->bind_param("ii", $vol_id, $crew_type);
+                $stmt->execute();
 
-function create_new_event($name_attribute) {
-    global $con;
-
-    if(isset($_POST[$name_attribute])) {
-
-        // Extract variables from fields
-        $event_name = $_POST['event_name'];
-        $event_date = $_POST['date'];
-        $event_start = $_POST['start_time'];
-        $event_end = $_POST['end_time'];
-        $event_text = $_POST['event_text'];
-        $event_sec_vol = $_POST['sec_volunteers'];
-        $event_bar_vol = $_POST['bar_volunteers'];
-        $event_crew_vol = $_POST['crew_volunteers'];
-        $event_tech_vol = $_POST['tech_volunteers'];
-
-        //Create insert
-        $sql = "INSERT INTO event(Name, Date, Time_Start, Time_End, Event_Text, Event_sec, Event_bar, Event_crew, Event_tech) 
-                     VALUES ('$event_name', '$event_date', '$event_start', '$event_end', '$event_text', '$event_sec_vol', '$event_bar_vol', '$event_crew_vol', '$event_tech_vol');";
-
-        mysqli_query($con, $sql);
-
-
-        // Check if event was created in DB:
-        $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
-        $sql_exist .= 'Name = "' . $event_name . '" AND ';
-        $sql_exist .= 'Event_text = "' . $event_text . '" AND ';
-        $sql_exist .= 'Date = "' . $event_date . '" AND ';
-        $sql_exist .= 'Time_Start = "' . $event_start . '" AND ';
-        $sql_exist .= 'Time_End = "' . $event_end . '";';
-        $result = mysqli_query($con, $sql_exist);
-        $row = mysqli_fetch_array($result);
-
-        if ($row['Existence'] == 1) {
-
-            // event was created in DB:
-            $status_db = 1;
-
-        } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
-
-            // event was not created in DB:
-            $status_db = 0;
-
+            }
+            $stmt->close();
         }
 
-        header('Refresh: 0; URL=event_grid.php?created=event&status=' . $status_db);
+/*
+        $stmt = $con->prepare("INSERT INTO manager(vol_id, crew_type_ID) VALUES(?, ?)");
+        $stmtDel = $con->prepare("DELETE FROM manager WHERE vol_id = ? AND crew_type_ID = ?");
+            foreach ($_POST['manRole_list'] as $crew_name) {
+                if ($crew_name === 'Bar'){
+                    $crew_type = 1;
+                }else{
+                    $delete_crew_type = 1;
+                }
+                if ($crew_name === 'Security'){
+                    $crew_type = 2;
+                }else{
+                    $delete_crew_type = 2;
+                }
+                if ($crew_name === 'Crew'){
+                    $crew_type = 3;
+                }else{
+                    $delete_crew_type = 3;
+                }
+                if ($crew_name === 'Technical'){
+                    $crew_type = 4;
+                }else{
+                    $delete_crew_type = 4;
+                }
 
+                $stmtDel->bind_param("ii", $vol_id, $delete_crew_type);
+                $stmtDel->execute();
+                $stmt->bind_param("ii", $vol_id, $crew_type);
+                $stmt->execute();
+
+
+            }
+            $stmtDel->close();
+        $stmt->close();
+*/
 
     }
+
+    header('Refresh: 0; URL=people.php');
+
 }
 
-function add_to_want_volunteer($sign_job, $event_id, $vol_id) {
+    function volUnitUpdate($vol_id, $name)
+    {
+        global $con;
 
-    global $con;
 
-    switch ($sign_job) {
-        case "bar":
-            $job = 1;
-            break;
-        case "sec";
-            $job = 2;
-            break;
-        case "crew";
-            $job = 3;
-            break;
-        case "tech";
-            $job = 4;
-            break;
-        default:
-            $job = 1;
-    }
+        if (isset($_POST['unitRemove'])) {
+            $units = $_POST['unitRemove'];
 
-    $sql_exist = 'SELECT COUNT(*) AS Existence FROM want_volunteer WHERE ';
-    $sql_exist .= 'vol_ID = "' . $vol_id . '" AND ';
-    $sql_exist .= 'event_ID = "' . $event_id . '" AND ';
-    $sql_exist .= 'crew_type_ID = "' . $job . '";';
+            $sql = 'UPDATE volunteer SET ';
+            $sql .= 'Unit = Unit - ' . $units . ' ';
+            $sql .= 'WHERE ID = ' . $vol_id . ';';
+        }
+        if (isset($_POST['unitAdd'])) {
+            $units = $_POST['unitAdd'];
 
-    $result = mysqli_query($con, $sql_exist);
-    $row = mysqli_fetch_array($result);
+            $sql = 'UPDATE volunteer SET ';
+            $sql .= 'Unit = Unit + ' . $units . ' ';
+            $sql .= 'WHERE ID = ' . $vol_id . ';';
+        }
 
-    if ($row['Existence'] == 1) {
-        // application exists
-        $status_db = 0;
-        header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
-
-    } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
-
-        $sql = "INSERT INTO want_volunteer(vol_ID, event_ID, crew_type_ID)
-                              VALUES ('$vol_id', '$event_id', '$job');";
 
         mysqli_query($con, $sql);
 
-        // Check if event was created in DB:
+        header('Refresh: 0; URL=unitlist.php');
+
+
+    }
+
+    function create_new_event($name_attribute)
+    {
+        global $con;
+
+        if (isset($_POST[$name_attribute])) {
+
+            // Extract variables from fields
+            $event_name = $_POST['event_name'];
+            $event_date = $_POST['date'];
+            $event_start = $_POST['start_time'];
+            $event_end = $_POST['end_time'];
+            $event_text = $_POST['event_text'];
+            $event_sec_vol = $_POST['sec_volunteers'];
+            $event_bar_vol = $_POST['bar_volunteers'];
+            $event_crew_vol = $_POST['crew_volunteers'];
+            $event_tech_vol = $_POST['tech_volunteers'];
+
+            //Create insert
+            $sql = "INSERT INTO event(Name, Date, Time_Start, Time_End, Event_Text, Event_sec, Event_bar, Event_crew, Event_tech) 
+                     VALUES ('$event_name', '$event_date', '$event_start', '$event_end', '$event_text', '$event_sec_vol', '$event_bar_vol', '$event_crew_vol', '$event_tech_vol');";
+
+            mysqli_query($con, $sql);
+
+
+            // Check if event was created in DB:
+            $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
+            $sql_exist .= 'Name = "' . $event_name . '" AND ';
+            $sql_exist .= 'Event_text = "' . $event_text . '" AND ';
+            $sql_exist .= 'Date = "' . $event_date . '" AND ';
+            $sql_exist .= 'Time_Start = "' . $event_start . '" AND ';
+            $sql_exist .= 'Time_End = "' . $event_end . '";';
+            $result = mysqli_query($con, $sql_exist);
+            $row = mysqli_fetch_array($result);
+
+            if ($row['Existence'] == 1) {
+
+                // event was created in DB:
+                $status_db = 1;
+
+            } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
+
+                // event was not created in DB:
+                $status_db = 0;
+
+            }
+
+            header('Refresh: 0; URL=event_grid.php?created=event&status=' . $status_db);
+
+
+        }
+    }
+
+    function add_to_want_volunteer($sign_job, $event_id, $vol_id)
+    {
+
+        global $con;
+
+        switch ($sign_job) {
+            case "bar":
+                $job = 1;
+                break;
+            case "sec";
+                $job = 2;
+                break;
+            case "crew";
+                $job = 3;
+                break;
+            case "tech";
+                $job = 4;
+                break;
+            default:
+                $job = 1;
+        }
+
         $sql_exist = 'SELECT COUNT(*) AS Existence FROM want_volunteer WHERE ';
         $sql_exist .= 'vol_ID = "' . $vol_id . '" AND ';
         $sql_exist .= 'event_ID = "' . $event_id . '" AND ';
@@ -416,35 +483,56 @@ function add_to_want_volunteer($sign_job, $event_id, $vol_id) {
         $row = mysqli_fetch_array($result);
 
         if ($row['Existence'] == 1) {
-
-            // event was created in DB:
-            $status_db = 1;
+            // application exists
+            $status_db = 0;
+            header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
 
         } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
 
-            // event was not created in DB:
-            $status_db = 0;
+            $sql = "INSERT INTO want_volunteer(vol_ID, event_ID, crew_type_ID)
+                              VALUES ('$vol_id', '$event_id', '$job');";
 
+            mysqli_query($con, $sql);
+
+            // Check if event was created in DB:
+            $sql_exist = 'SELECT COUNT(*) AS Existence FROM want_volunteer WHERE ';
+            $sql_exist .= 'vol_ID = "' . $vol_id . '" AND ';
+            $sql_exist .= 'event_ID = "' . $event_id . '" AND ';
+            $sql_exist .= 'crew_type_ID = "' . $job . '";';
+
+            $result = mysqli_query($con, $sql_exist);
+            $row = mysqli_fetch_array($result);
+
+            if ($row['Existence'] == 1) {
+
+                // event was created in DB:
+                $status_db = 1;
+
+            } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
+
+                // event was not created in DB:
+                $status_db = 0;
+
+            }
         }
-        header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
 
     }
-}
 
-function populate_volunteers($id, $crew_id) {
-    global $con;
+    function populate_volunteers($id, $crew_id)
+    {
+        global $con;
 
-    $sql = "SELECT volunteer.Firstname, volunteer.Lastname, event_volunteer.manager
+        $sql = "SELECT volunteer.Firstname, volunteer.Lastname, event_volunteer.manager
             FROM event_volunteer
             INNER JOIN volunteer
             ON volunteer.ID = event_volunteer.vol_ID 
             AND event_volunteer.crew_type_ID = $crew_id
             AND event_volunteer.event_ID = $id;";
 
-    $result = mysqli_query($con, $sql);
+        $result = mysqli_query($con, $sql);
 
 
-    $output = '<div class="table-responsive">
+        $output = '<div class="table-responsive">
                     <table class="table">
                         <thead>
                         <tr><td><b>First name</b></td><td><b>Last name</b></td><td><b>Manager</b></td></tr>
@@ -455,101 +543,103 @@ function populate_volunteers($id, $crew_id) {
     ';
 
 
-    while($row = mysqli_fetch_array($result)) {
-        if($row['manager'] == 1) {
-            $output .= "<tr><td>".$row['Firstname']."</td><td>".$row['Lastname']."</td><td>Yes</td></tr>";
-        } else
-            $output .= "<tr><td>".$row['Firstname']."</td><td>".$row['Lastname']."</td><td>No</td></tr>";
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row['manager'] == 1) {
+                $output .= "<tr><td>" . $row['Firstname'] . "</td><td>" . $row['Lastname'] . "</td><td>Yes</td></tr>";
+            } else
+                $output .= "<tr><td>" . $row['Firstname'] . "</td><td>" . $row['Lastname'] . "</td><td>No</td></tr>";
+
+
+        }
+
+        $output .= "</table>
+              </div>";
+        return $output;
 
 
     }
 
-    $output .= "</table>
-              </div>";
-    return $output;
+    function delete_event($id)
+    {
+
+        global $con;
+        // get preliminary data:
+        $sql = "SELECT Date FROM event WHERE ID = $id;";
+        $result = mysqli_query($con, $sql);
+        $row = mysqli_fetch_array($result);
+        $event_date = $row['Date'];
+        $today = date("Y-m-d");
+
+        if ($event_date <= $today) {
+            $status_db = 2;
+            header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
+            exit();
+        } else {
+
+            $sqllog = "SELECT COUNT(*) AS Existence FROM logs WHERE event_ID = '$id';";
+            $resultlog = mysqli_query($con, $sqllog);
+            $rowlog = mysqli_fetch_array($resultlog);
+            if ($rowlog['Existence'] == 0) {
+                // Remove volunteers on waiting list for the event.
+                $sql1 = "DELETE FROM want_volunteer WHERE Event_ID = $id;";
+                mysqli_query($con, $sql1);
+
+                // Remove accepted volunteers from event volunteers .
+                $sql2 = "DELETE FROM event_volunteer WHERE Event_ID = $id;";
+                mysqli_query($con, $sql2);
+
+                $sql3 = "DELETE FROM event WHERE ID = $id;";
+                mysqli_query($con, $sql3);
+                mysqli_commit($con);
+
+                // Check if event was deleted in DB:
+                $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
+                $sql_exist .= 'ID = ' . $id . ';';
+
+                $result = mysqli_query($con, $sql_exist);
+                $row = mysqli_fetch_array($result);
+
+                if ($row['Existence'] == 0) {
+
+                    //event deleted
+                    $status_db = 1;
+                    header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
+
+                } else if ($row['Existence'] == 1) {
 
 
-}
+                    $status_db = 0;
 
-function delete_event($id)  {
+                    header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
+                }
+            } elseif ($rowlog['Existence'] > 0) {
 
-    global $con;
-    // get preliminary data:
-    $sql = "SELECT Date FROM event WHERE ID = $id;";
-    $result = mysqli_query($con,$sql);
-    $row = mysqli_fetch_array($result);
-    $event_date = $row['Date'];
-    $today = date("Y-m-d");
-
-    if ($event_date <= $today) {
-        $status_db = 2;
-        header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
-        exit();
-    } else {
-
-        $sqllog = "SELECT COUNT(*) AS Existence FROM logs WHERE event_ID = '$id';";
-        $resultlog = mysqli_query($con, $sqllog);
-        $rowlog = mysqli_fetch_array($resultlog);
-        if ($rowlog['Existence'] == 0) {
-            // Remove volunteers on waiting list for the event.
-            $sql1 = "DELETE FROM want_volunteer WHERE Event_ID = $id;";
-            mysqli_query($con,$sql1);
-
-            // Remove accepted volunteers from event volunteers .
-            $sql2 = "DELETE FROM event_volunteer WHERE Event_ID = $id;";
-            mysqli_query($con,$sql2);
-
-            $sql3 = "DELETE FROM event WHERE ID = $id;";
-            mysqli_query($con, $sql3);
-            mysqli_commit($con);
-
-            // Check if event was deleted in DB:
-            $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
-            $sql_exist .= 'ID = ' . $id . ';';
-
-            $result = mysqli_query($con, $sql_exist);
-            $row = mysqli_fetch_array($result);
-
-            if($row['Existence'] == 0) {
-
-                //event deleted
-                $status_db = 1;
-                header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
-
-            } else if ($row['Existence'] == 1) {
-
-
-                $status_db = 0;
-
+                $status_db = 3;
                 header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
             }
-        } elseif($rowlog['Existence'] > 0) {
-
-            $status_db = 3;
-            header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
         }
     }
-}
 
-Function edit_event($id, $name_attribute) {
+    Function edit_event($id, $name_attribute)
+    {
 
-    global $con;
+        global $con;
 
-    if(isset($_POST[$name_attribute])) {
+        if (isset($_POST[$name_attribute])) {
 
-        // Extract variables from fields
-        $event_name     = $_POST['event_name'];
-        $event_date     = $_POST['date'];
-        $event_start    = $_POST['start_time'];
-        $event_end      = $_POST['end_time'];
-        $event_text     = $_POST['event_text'];
-        $event_sec_vol  = $_POST['sec_volunteers'];
-        $event_bar_vol  = $_POST['bar_volunteers'];
-        $event_crew_vol = $_POST['crew_volunteers'];
-        $event_tech_vol = $_POST['tech_volunteers'];
+            // Extract variables from fields
+            $event_name = $_POST['event_name'];
+            $event_date = $_POST['date'];
+            $event_start = $_POST['start_time'];
+            $event_end = $_POST['end_time'];
+            $event_text = $_POST['event_text'];
+            $event_sec_vol = $_POST['sec_volunteers'];
+            $event_bar_vol = $_POST['bar_volunteers'];
+            $event_crew_vol = $_POST['crew_volunteers'];
+            $event_tech_vol = $_POST['tech_volunteers'];
 
-        //Create insert
-        $sql = "UPDATE event SET 
+            //Create insert
+            $sql = "UPDATE event SET 
                 Name        = '$event_name', 
                 Date        = '$event_date', 
                 Time_Start  = '$event_start', 
@@ -561,35 +651,36 @@ Function edit_event($id, $name_attribute) {
                 Event_tech  = '$event_tech_vol'  WHERE
                 ID ='$id';";
 
-        mysqli_query($con, $sql);
+            mysqli_query($con, $sql);
 
 
-        // Check if event was created in DB:
-        $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
-        $sql_exist .= 'Name = "' . $event_name . '" AND ';
-        $sql_exist .= 'Event_text = "' . $event_text . '" AND ';
-        $sql_exist .= 'Date = "' . $event_date . '" AND ';
-        $sql_exist .= 'Time_Start = "' . $event_start . '" AND ';
-        $sql_exist .= 'Time_End = "' . $event_end . '";';
-        $result = mysqli_query($con, $sql_exist);
-        $row = mysqli_fetch_array($result);
+            // Check if event was created in DB:
+            $sql_exist = 'SELECT COUNT(*) AS Existence FROM event WHERE ';
+            $sql_exist .= 'Name = "' . $event_name . '" AND ';
+            $sql_exist .= 'Event_text = "' . $event_text . '" AND ';
+            $sql_exist .= 'Date = "' . $event_date . '" AND ';
+            $sql_exist .= 'Time_Start = "' . $event_start . '" AND ';
+            $sql_exist .= 'Time_End = "' . $event_end . '";';
+            $result = mysqli_query($con, $sql_exist);
+            $row = mysqli_fetch_array($result);
 
-        if ($row['Existence'] == 1) {
+            if ($row['Existence'] == 1) {
 
-            // event was created in DB:
-            $status_db = 1;
+                // event was created in DB:
+                $status_db = 1;
 
-        } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
+            } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
 
-            // event was not created in DB:
-            $status_db = 0;
+                // event was not created in DB:
+                $status_db = 0;
+
+            }
+            //echo $sql;
+            header('Refresh: 0; URL=event_grid.php?updated=event&status=' . $status_db);
+
 
         }
-        //echo $sql;
-        header('Refresh: 0; URL=event_grid.php?updated=event&status=' . $status_db);
-
 
     }
 
-}
 ?>

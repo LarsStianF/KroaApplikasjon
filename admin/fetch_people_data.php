@@ -57,7 +57,7 @@ $output = "";
                         <hr>
                         <h4>Change role of ' .$row['Firstname'] . ' ' . $row['Lastname'] . '  from <span class="text-danger">'.get_volunteer_user_type($id).' </span>to <span id="newRole" class="text-success"></span>?</h4>
                         <button class="btn btn-success fa fa-check fa-3x" type="submit"></button>
-                        </form>
+                        
                         <a class="btn btn-danger text-white fa fa-ban fa-3x ml-5" data-toggle="collapse" data-target="#roleConfirmation"></a>
 
                         </div>
@@ -78,16 +78,16 @@ $output = "";
         '
                         <div id="managerShow" class="collapse">
                         <hr> 
-                         <form method="POST" action="update_handler.php?object=unitlist&name=submit&id='.$id.'">
+                       
                         <div class="d-flex justify-content-around">
                                 <h5>Manager of: </h5>
                                <div class="checkbox"> 
                                
                                 
-                                <label><input class="manCheckbox" type="checkbox" value="Bar" '.populate_user_edit_crew_checkbox($id, $bar).'>Bar</label>
-                                <label><input class="manCheckbox" type="checkbox" value="Security" '.populate_user_edit_crew_checkbox($id, $sec).'>Security</label>
-                                <label><input class="manCheckbox" type="checkbox" value="Crew" '.populate_user_edit_crew_checkbox($id, $crew).'>Crew</label>
-                                <label><input class="manCheckbox" type="checkbox" value="Technical" '.populate_user_edit_crew_checkbox($id, $tech).'>Technical</label>
+                                <label><input class="manCheckbox" name="manRole_list[]" type="checkbox" value="Bar" '.populate_user_edit_crew_checkbox($id, $bar).'>Bar</label>
+                                <label><input class="manCheckbox" name="manRole_list[]" type="checkbox" value="Security" '.populate_user_edit_crew_checkbox($id, $sec).'>Security</label>
+                                <label><input class="manCheckbox" name="manRole_list[]" type="checkbox" value="Crew" '.populate_user_edit_crew_checkbox($id, $crew).'>Crew</label>
+                                <label><input class="manCheckbox" name="manRole_list[]" type="checkbox" value="Technical" '.populate_user_edit_crew_checkbox($id, $tech).'>Technical</label>
                                  
                                  <a class="btn btn-primary" id="manRoleBtn"  href="#manConfimation" role="button">Update</a>
                               

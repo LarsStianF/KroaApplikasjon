@@ -32,4 +32,17 @@ if (isset($_GET['object'])){
 
     }
 
+    // check if object is people
+    if ($_GET['object'] == 'people') {
+
+        $object = $_GET['object'];
+
+        //get variables
+        $name_attribute = $_GET['name'];
+        $id = $_GET['id'];
+
+        admin_set_user_role($id);
+
+    }
+
 }
