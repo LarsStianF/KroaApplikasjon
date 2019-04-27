@@ -562,6 +562,7 @@ echo $newUserType;
     function delete_event($id)
     {
 
+
         global $con;
         // get preliminary data:
         $sql = "SELECT Date FROM event WHERE ID = $id;";
@@ -575,6 +576,42 @@ echo $newUserType;
             header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
             exit();
         } else {
+
+    global $con;
+
+    // get preliminary data:
+    $sql = "SELECT Date FROM event WHERE ID = $id;";
+    $result = mysqli_query($con,$sql);
+    $row = mysqli_fetch_array($result);
+    $event_date = $row['Date'];
+    $today = date("Y-m-d");
+
+    if ($event_date <= $today) {
+        $status_db = 2;
+        header('Refresh: 0; URL=event_grid.php?deleted=event&status=' . $status_db);
+        exit();
+    } else {
+
+        $sqllog = "SELECT COUNT(*) AS Existence FROM logs WHERE event_ID = $id;";
+        $resultlog = mysqli_query($con, $sqllog);
+        $rowlog = mysqli_fetch_array($resultlog);
+        if ($rowlog['Existence'] == 0) {
+            // Remove volunteers on waiting list for the event.
+            $sql1 = "DELETE FROM want_volunteer WHERE Event_ID = $id;";
+            mysqli_query($con,$sql1);
+
+            // Remove accepted volunteers from event volunteers .
+            $sql2 = "DELETE FROM event_volunteer WHERE Event_ID = $id;";
+            mysqli_query($con,$sql2);
+
+            $sql3 = "DELETE FROM event WHERE ID = $id;";
+            mysqli_query($con, $sql3);
+
+
+            // Check if event was deleted in DB:
+            $sql_exist = "SELECT COUNT(*) AS Existence FROM event WHERE ID = $id;";
+            $result = mysqli_query($con, $sql_exist);
+            $row = mysqli_fetch_array($result);
 
             $sqllog = "SELECT COUNT(*) AS Existence FROM logs WHERE event_ID = '$id';";
             $resultlog = mysqli_query($con, $sqllog);
@@ -625,6 +662,7 @@ echo $newUserType;
 
         global $con;
 
+
         if (isset($_POST[$name_attribute])) {
 
             // Extract variables from fields
@@ -639,7 +677,25 @@ echo $newUserType;
             $event_tech_vol = $_POST['tech_volunteers'];
 
             //Create insert
-            $sql = "UPDATE event SET 
+            $sql = "UPDATE event SET "
+    if(isset($_POST[$name_attribute])) {
+
+        // Extract variables from fields
+        $event_name     = mysqli_real_escape_string($con, $_POST['event_name']);
+        $event_date     = mysqli_real_escape_string($con, $_POST['date']);
+        $event_start    = mysqli_real_escape_string($con, $_POST['start_time']);
+        $event_end      = mysqli_real_escape_string($con, $_POST['end_time']);
+        $event_text     = mysqli_real_escape_string($con, $_POST['event_text']);
+        $event_sec_vol  = mysqli_real_escape_string($con, $_POST['sec_volunteers']);
+        $event_bar_vol  = mysqli_real_escape_string($con, $_POST['bar_volunteers']);
+        $event_crew_vol = mysqli_real_escape_string($con, $_POST['crew_volunteers']);
+        $event_tech_vol = mysqli_real_escape_string($con, $_POST['tech_volunteers']);
+
+
+
+        //Create insert
+        $sql = "UPDATE event SET 
+
                 Name        = '$event_name', 
                 Date        = '$event_date', 
                 Time_Start  = '$event_start', 
