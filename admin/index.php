@@ -101,7 +101,7 @@ include 'rsc/imports/modals/event_modal.php';
                                 // Free result set
                                 mysqli_free_result($result);
                             } else{
-                                echo "You have no confirmed events.";
+                                echo "No records matching your query were found.";
                             }
                         } else{
                             echo "ERROR: Could not able to execute";
@@ -180,7 +180,7 @@ include 'rsc/imports/modals/event_modal.php';
                             // Free result set
                             mysqli_free_result($result);
                         } else{
-                            echo "You have no pending event applications.";
+                            echo "No records matching your query were found.";
 
                         }
                     } else{

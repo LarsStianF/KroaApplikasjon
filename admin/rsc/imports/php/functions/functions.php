@@ -452,72 +452,59 @@ echo $newUserType;
         }
     }
 
-    function add_to_want_volunteer($sign_job, $event_id, $vol_id)
-    {
+function add_to_want_volunteer($sign_job, $event_id, $vol_id) {
 
-        global $con;
+    global $con;
 
-        switch ($sign_job) {
-            case "bar":
-                $job = 1;
-                break;
-            case "sec";
-                $job = 2;
-                break;
-            case "crew";
-                $job = 3;
-                break;
-            case "tech";
-                $job = 4;
-                break;
-            default:
-                $job = 1;
-        }
 
+    $sql_exist = 'SELECT COUNT(*) AS Existence FROM want_volunteer WHERE ';
+    $sql_exist .= 'vol_ID = "' . $vol_id . '" AND ';
+    $sql_exist .= 'event_ID = "' . $event_id . '" AND ';
+    $sql_exist .= 'crew_type_ID = "' . $sign_job . '";';
+
+    $result = mysqli_query($con, $sql_exist);
+    $row = mysqli_fetch_array($result);
+
+    if ($row['Existence'] == 1) {
+        // application exists
+        $status_db = 0;
+
+        header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
+
+
+    } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
+
+        $sql = "INSERT INTO want_volunteer(vol_ID, event_ID, crew_type_ID)
+                              VALUES ('$vol_id', '$event_id', '$sign_job');";
+
+        mysqli_query($con, $sql);
+
+        // Check if event was created in DB:
         $sql_exist = 'SELECT COUNT(*) AS Existence FROM want_volunteer WHERE ';
         $sql_exist .= 'vol_ID = "' . $vol_id . '" AND ';
         $sql_exist .= 'event_ID = "' . $event_id . '" AND ';
-        $sql_exist .= 'crew_type_ID = "' . $job . '";';
+        $sql_exist .= 'crew_type_ID = "' . $sign_job . '";';
 
         $result = mysqli_query($con, $sql_exist);
         $row = mysqli_fetch_array($result);
 
         if ($row['Existence'] == 1) {
-            // application exists
-            $status_db = 0;
-            header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
+
+            // event was created in DB:
+            $status_db = 1;
 
         } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
 
-            $sql = "INSERT INTO want_volunteer(vol_ID, event_ID, crew_type_ID)
-                              VALUES ('$vol_id', '$event_id', '$job');";
+            // event was not created in DB:
+            $status_db = 0;
 
-            mysqli_query($con, $sql);
-
-            // Check if event was created in DB:
-            $sql_exist = 'SELECT COUNT(*) AS Existence FROM want_volunteer WHERE ';
-            $sql_exist .= 'vol_ID = "' . $vol_id . '" AND ';
-            $sql_exist .= 'event_ID = "' . $event_id . '" AND ';
-            $sql_exist .= 'crew_type_ID = "' . $job . '";';
-
-            $result = mysqli_query($con, $sql_exist);
-            $row = mysqli_fetch_array($result);
-
-            if ($row['Existence'] == 1) {
-
-                // event was created in DB:
-                $status_db = 1;
-
-            } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
-
-                // event was not created in DB:
-                $status_db = 0;
-
-            }
-            header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
         }
 
+        header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
+
+
     }
+}
 
     function populate_volunteers($id, $crew_id)
     {
