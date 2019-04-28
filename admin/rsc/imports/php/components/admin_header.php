@@ -8,9 +8,10 @@
                 <!-- social icon-->
                 <div class="col-sm-12">
                     <ul class="topbuttons">
-                        <li><a class="hover-effect" href="index.php"><i class="fa fa-home"></i></a></li>
-                        <li><a class="hover-effect" href="#"><i class="fa fa-sign-out"></i></a></li>
+                        <li><a class="hover-effect" href="index.php"><i class="fa fa-home fa-lg"></i></a></li>
+                        <li><a class="hover-effect" href="../rsc/scripts/logout_script.php"><i class="fa fa-sign-out fa-lg"></i></a></li>
                     </ul>
+
                 </div>
             </div>
         </div>

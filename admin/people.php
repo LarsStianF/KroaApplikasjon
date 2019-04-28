@@ -19,7 +19,7 @@ include 'rsc/imports/modals/people_modal.php';
     $(document).ready(function(){
         $("#peopleSearch").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            $("#namerow a").filter(function() {
+            $("#namerow .filterSearch").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
@@ -49,7 +49,7 @@ include 'rsc/imports/modals/people_modal.php';
                     <button class="btn btn-dark filter-button" id="bar" name="1" data-filter="">Bar</button>
                     <button class="btn btn-dark filter-button" id="tech" name="4" data-filter="">Technical</button>
                 </div>
-                <div class=" ml-2 input-group form-inline">
+                <div class=" m-2 input-group form-inline">
                     <input id="peopleSearch" type="text" class="form-control" placeholder="Search for volunteers">
                     <div class="input-group-append">
                     </div>

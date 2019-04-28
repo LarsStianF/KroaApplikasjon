@@ -60,10 +60,10 @@ function volunteers_content($result){
         $id = $row['ID'];
         echo '<div id="namerow">';
         if ($cur_user <= $dag_leder){
-            echo '<a href="#peopleModal" class="list-group-item list-group-item-action flex-column align-items-start view_data" data-toggle="modal" id="'.$id.'">';
+            echo '<a href="#peopleModal" class=" filterSearch list-group-item list-group-item-action flex-column align-items-start view_data" data-toggle="modal" id="'.$id.'">';
 
         } else{
-            echo '<div class="list-group-item list-group-item-action flex-column align-items-start" id="'.$id.'">';
+            echo '<div class="filterSearch list-group-item list-group-item-action flex-column align-items-start" id="'.$id.'">';
         }
         echo '<div class="d-flex w-100 justify-content-between">';
         echo '<ul class="list-inline ">';
@@ -80,7 +80,7 @@ function volunteers_content($result){
 
         echo '</ul>';
 
-        // THIS SHOULD ONLY BE VISABLY TO DAGLIG LEDER
+        // THIS SHOULD ONLY BE VISABLE TO DAGLIG LEDER
         if ($cur_user <= $dag_leder){
             echo '<button class="btn btn-primary" type="submit">Edit</button>';
         }
