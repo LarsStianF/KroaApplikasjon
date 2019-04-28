@@ -12,7 +12,7 @@ include 'rsc/imports/modals/edit_event_modal.php';
 
     <main class="container">
 
-            <div class="bg-light p-2 mt-2 card" >
+            <div class="bg-light p-3 m-0 card" >
                 <h1 class="display-3 text-center"> Event Page </h1>
                 <div>
                     <a href="#newmodal" class="btn btn-dark" id="newevent" data-toggle="modal" >New Event</a>

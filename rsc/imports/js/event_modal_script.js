@@ -18,6 +18,7 @@ $(document).ready(function () {
             }
         });
     });
+
     $('.view_delete_data').click(function () {
         var id = $(this).attr('id');
 
@@ -31,6 +32,7 @@ $(document).ready(function () {
             }
         });
     });
+
     $('.view_edit_data').click(function () {
         var id = $(this).attr('id');
 
@@ -44,4 +46,5 @@ $(document).ready(function () {
             }
         });
     });
+
 });

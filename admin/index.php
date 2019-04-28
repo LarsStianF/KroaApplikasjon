@@ -1,7 +1,9 @@
 <?php
 include 'dbcon.php';
+include 'rsc/imports/php/functions/functions.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
+include 'rsc/imports/modals/event_modal.php';
 
 ?>
 
@@ -14,19 +16,15 @@ include 'rsc/imports/php/components/admin_header.php';
 
 
 
-
-    <main role="main" class="container">
-
-
-    <div class=" ">
+<main role="main" class="container">
+    <div>
         <div class="bg-light p-3 m-0 card" >
             <h1 class="display-3 text-center"> Your Page </h1>
-
         </div>
-        <div class="row mb-3 ">
 
+        <div class="row mb-3">
             <div class="col-md-8 themed-grid-col">
-                <div class="">
+                <div>
                     <div class="d-flex align-items-center p-3 text-white-50 bg-warning rounded shadow-sm ">
                         <img class="mr-3" src="../rsc/img/userpic.jpg" alt="" width="48" height="48">
                         <div class="lh-100">
@@ -35,20 +33,28 @@ include 'rsc/imports/php/components/admin_header.php';
                         </div>
                     </div>
                 </div>
-            <div class="row">
-                <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
+                <div class="row">
+                    <div class="col-md-6 themed-grid-col">
+                        <div class="my-3 p-3 bg-white rounded shadow-sm">
                         <h6 class="border-bottom border-gray pb-2 mb-0">Your confirmed upcoming events</h6>
 
-                        <?php
-                        $link = mysqli_connect("localhost", "root", "", "group11");
+<?php
+                        // get user id
+                        $user_id = $_SESSION['login_id'];
 
-                        if($link === false){
-                            die("ERROR: Could not connect. " . mysqli_connect_error());
-                        }
+                        $sql = "SELECT ID, Name, Event_text, Date, Time_Start, Time_End, Event_sec, Event_bar, Event_crew, Event_tech, event_volunteer.vol_ID, event_volunteer.crew_type_ID
+                                FROM event
+                                INNER JOIN event_volunteer
+                                ON event.ID = event_volunteer.event_ID 
+                                AND event_volunteer.vol_ID = $user_id";
+                     //   echo $sql;
+                        $output_confirmed = "";
+                        $output_signed = "";
 
-                        $sql = "SELECT * FROM event LIMIT 3";
-                        if($result = mysqli_query($link, $sql)){
+                        if($result = mysqli_query($con, $sql)){
+
                             if(mysqli_num_rows($result) > 0){
+
                                 while($row = mysqli_fetch_array($result)){
                                     // Gets date
                                     $id = $row['ID'];
@@ -61,279 +67,211 @@ include 'rsc/imports/php/components/admin_header.php';
                                     $startTime = $sTime->format('H:i');
                                     $endTime = $eTime->format('H:i');
 
-                                    echo '<div class="media text-muted pt-3">';
-                                    echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
-                                    echo    '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                                    echo    '<strong class="d-block text-gray-dark h4">';
-                                    echo    $row['Name'];
-                                    echo    '</strong>';
-                                    echo    ' <strong class="d-block text-gray dark">Date: ';
-                                    echo    $date;
-                                    echo    '<br>';
-                                    echo    ' Time: ';
-                                    echo    $startTime;
-                                    echo    ' - ';
-                                    echo    $endTime;
-                                    echo    '</strong>';
-                                    echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
-                                    echo    '<strong class="d-block text-gray dark">You are working as: Bar</strong>';
-                                    echo    '<strong class="d-block text-gray dark">Volunteers: 10/14 Security, 6/6 Bar, 4/4 Crew, 4/5 Teknisk </strong>';
-                                    echo    '<span class="text-gray dark h6">Additional Notes: </span>' . $row['Event_text'];
-                                    echo    '</p>';
-                                    echo '</div>';
+                                    // get event volunteers
+                                    $volunteers = get_event_volunteers($id);
+                                    $bar = $volunteers[0];
+                                    $security = $volunteers[1];
+                                    $crew = $volunteers[2];
+                                    $technical = $volunteers[3];
+
+                                    $output_confirmed .= '
+                                    <a href="#eventModal" class="view_data click-card" id="' . $id . '" data-toggle="modal" >
+                                    <div class="click-box  pt-3">
+                                        '.get_confirmed_role($user_id, $id).'
+                                        <p class="pb-3 mb-0 small lh-125 border-bottom border-gray">
+                                            <strong class="d-block h4">'.$row['Name'].'</strong>
+                                            <strong class="d-block">
+                                                Date: '.$date.'
+                                                <br>
+                                                Time: '.$startTime.' - '.$endTime.'
+                                            </strong>
+                                            <strong class="d-block">
+                                             
+                                            </strong>
+                                            <strong class="d-block">
+                                            '.$volunteers[1].'/'.$row['Event_sec'].' Security, '.$volunteers[0].'/'.$row['Event_bar'].' Bar, '.$volunteers[2].'/'.$row['Event_crew'].' Crew, '.$volunteers[3].'/'.$row['Event_tech'].' Teknisk 
+                                            </strong>
+                                            '.$row['Event_text'].'
+                                        </p>
+                                        
+                                  </div>
+                                  </a>';
                                 }
+                                echo $output_confirmed;
                                 // Free result set
                                 mysqli_free_result($result);
                             } else{
                                 echo "No records matching your query were found.";
                             }
                         } else{
-                            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                            echo "ERROR: Could not able to execute";
                         }
 
-                        // Close connection
-                        mysqli_close($link);
+
+
                         ?>
                         <small class="d-block text-right mt-3">
-                        <a href="events.php" class="d-block text-gray dark">Sign up for more events!</a>
+                            <a href="event_grid.php" class="d-block text-gray dark">Sign up for more events!</a>
                         </small>
-                    </div></div>
+                    </div>
+                </div>
                 <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
-                        <h6 class="border-bottom border-gray pb-2 mb-0">Your signed upcoming events</h6>
+                    <h6 class="border-bottom border-gray pb-2 mb-0">Your signed upcoming events</h6>
 
-                        <?php
-                        /* Attempt MySQL server connection. Assuming you are running MySQL
-                        server with default setting (user 'root' with no password) */
-                        $link = mysqli_connect("localhost", "root", "", "group11");
+                    <?php
 
-                        // Check connection
-                        if($link === false){
-                            die("ERROR: Could not connect. " . mysqli_connect_error());
-                        }
+                    // Attempt select query execution
+                    $sql = "SELECT DISTINCT ID, Name, Event_text, Date, Time_Start, Time_End, Event_sec, Event_bar, Event_crew, Event_tech
+                            FROM event, want_volunteer
+                            WHERE event.ID = want_volunteer.event_ID 
+                            AND want_volunteer.vol_ID = $user_id";
 
-                        // Attempt select query execution
-                        $sql = "SELECT * FROM event WHERE ID > 3 LIMIT 3";
-                        if($result = mysqli_query($link, $sql)){
-                            if(mysqli_num_rows($result) > 0){
-                                while($row = mysqli_fetch_array($result)){
-                                    // Gets date
-                                    $id = $row['ID'];
-                                    $d = new DateTime($row['Date']);
-                                    $date = $d->format('F jS o');
+                    if($result = mysqli_query($con, $sql)){
 
-                                    // Gets time
-                                    $sTime = new DateTime($row['Time_Start']);
-                                    $eTime = new DateTime($row['Time_End']);
-                                    $startTime = $sTime->format('H:i');
-                                    $endTime = $eTime->format('H:i');
+                        if(mysqli_num_rows($result) > 0){
 
-                                    echo '<div class="media text-muted pt-3">';
-                                    echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
-                                    echo    '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                                    echo    '<strong class="d-block text-gray-dark h4">';
-                                    echo    $row['Name'];
-                                    echo    '</strong>';
-                                    echo    ' <strong class="d-block text-gray dark">Date: ';
-                                    echo    $date;
-                                    echo    '<br>';
-                                    echo    ' Time: ';
-                                    echo    $startTime;
-                                    echo    ' - ';
-                                    echo    $endTime;
-                                    echo    '</strong>';
-                                    echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
-                                    echo    '<strong class="d-block text-gray dark">You are signed as: Security</strong>';
-                                    echo    '<strong class="d-block text-gray dark">Volunteers: 10/14 Security, 6/6 Bar, 4/4 Crew, 4/5 Teknisk</strong>';
-                                    echo    '<span class="text-gray dark h6">Additional Notes: </span>' , $row['Event_text'];
-                                    echo    '</p>';
-                                    echo '</div>';
-                                }
-                                // Free result set
-                                mysqli_free_result($result);
-                            } else{
-                                echo "No records matching your query were found.";
+                            while($row = mysqli_fetch_array($result)){
+                                // Gets date
+                                $id = $row['ID'];
+                                $d = new DateTime($row['Date']);
+                                $date = $d->format('F jS o');
+
+                                // Gets time
+                                $sTime = new DateTime($row['Time_Start']);
+                                $eTime = new DateTime($row['Time_End']);
+                                $startTime = $sTime->format('H:i');
+                                $endTime = $eTime->format('H:i');
+
+                                $volunteers = get_event_volunteers($id);
+                                $bar        = $volunteers[0];
+                                $security   = $volunteers[1];
+                                $crew       = $volunteers[2];
+                                $technical  = $volunteers[3];
+
+                                $output_signed .=  '
+                                <a href="#eventModal" class="view_data click-card" id="' . $id . '" data-toggle="modal" >
+                                <div class="click-box pt-3">
+                                    <div>
+                                        '.get_signed_roles($user_id, $id).'
+                                    </div>
+                                    
+                                    <p class=" pb-3 mb-0 small lh-125 border-bottom border-gray">
+                                        <strong class="d-block h4">
+                                        '.$row['Name'].'
+                                        </strong>
+                                        <strong class="d-block">
+                                        Date: '.$date.'
+                                        <br>
+                                        Time: '.$startTime.' - '.$endTime.'
+                                        </strong>
+                                        <strong class="d-block">
+                                        You are signed as: Security
+                                        </strong>
+                                        <strong class="d-block">
+                                        '.$bar.'/'.$row['Event_bar'].' Bar, '.$security.'/'.$row['Event_sec'].' Security, '.$crew.'/'.$row['Event_crew'].' Crew, '.$technical.'/'.$row['Event_tech'].' Teknisk
+                                        </strong>
+                                        '.$row['Event_text'].'
+                                    </p>
+                                </div>
+                                </a>';
                             }
-                        } else{
-                            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                        }
+                            echo $output_signed;
 
-                        // Close connection
-                        mysqli_close($link);
+                            // Free result set
+                            mysqli_free_result($result);
+                        } else{
+                            echo "No records matching your query were found.";
+
+                        }
+                    } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+                    }
+
+
                         ?>
-                        <small class="d-block text-right mt-3">
-                        <a href="events.php" class="d-block text-gray dark">Sign up for more events!</a>
-                        </small>
-                    </div></div>
+                                <small class="d-block text-right mt-3">
+                                    <a href="event_grid.php" class="d-block text-gray dark">Sign up for more events!</a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 themed-grid-col">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon dib">
+                                    <i class="ti-enhet text-success border-success"></i>
+                                </div>
+                                <div class="stat-content dib">
+                                    <div class="stat-text">
+                                        Spare units
+                                    </div>
+                                    <div class="stat-digit">
+                                        <?php echo $_SESSION['login_unit'] ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon dib">
+                                    <i class="ti-total text-success border-success"></i>
+                                </div>
+                                <div class="stat-content dib">
+                                    <div class="stat-text">Times worked</div>
+                                    <div class="stat-digit">
+                                        <?php echo "haha" ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon dib"><i class="ti-month text-success border-success"></i></div>
+                                <div class="stat-content dib">
+                                    <div class="stat-text">
+                                        Times worked this month
+                                    </div>
+                                    <div class="stat-digit">
+                                        <?php echo "haha" ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon dib">
+                                    <i class="ti-jippi text-success border-success"></i>
+                                </div>
+                                <div class="stat-content dib">
+                                    <div class="stat-text">
+                                        You have JIPPI until
+                                    </div>
+                                    <div class="stat-digit">
+                                        <?php echo "haha" ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-                                    <?php
-                                    /* Attempt MySQL server connection. Assuming you are running MySQL
-                                    server with default setting (user 'root' with no password) */
-                                    $link = mysqli_connect("localhost", "root", "", "group11");
-
-                                    // Check connection
-                                    if($link === false){
-                                        die("ERROR: Could not connect. " . mysqli_connect_error());
-                                    }
-
-                                    // Attempt select query execution
-                                    $sql = "SELECT * FROM volunteer WHERE ID = 1";
-                                    if($result = mysqli_query($link, $sql)){
-                                        if(mysqli_num_rows($result) > 0){
-                                            while($row = mysqli_fetch_array($result)){
-
-                                                echo '<div class="col-md-4 themed-grid-col">';
-                                                echo    '<div class="card">';
-                                                echo        '<div class="card-body">';
-                                                echo            '<div class="stat-widget-one">';
-                                                echo                '<div class="stat-icon dib"><i class="ti-enhet text-success border-success"></i></div>';
-                                                echo                '<div class="stat-content dib">';
-                                                echo                    '<div class="stat-text">Spare units</div>';
-                                                echo                        '<div class="stat-digit">';
-                                                echo                            $_SESSION['login_unit'];
-                                                echo                        '</div>';
-                                                echo                    '</div>';
-                                                echo                '</div>';
-                                                echo            '</div>';
-                                                echo        '</div>';
-                                            }
-                                            // Free result set
-                                            mysqli_free_result($result);
-                                        } else{
-                                            echo "No records matching your query were found.";
-                                        }
-                                    } else{
-                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                                    }
-
-                                    // Close connection
-                                    mysqli_close($link);
-                                    ?>
-                                    <?php
-                                    $link = mysqli_connect("localhost", "root", "", "group11");
-
-                                    if($link === false){
-                                        die("ERROR: Could not connect. " . mysqli_connect_error());
-                                    }
-
-                                    $sql = "SELECT COUNT(*) AS times FROM event_volunteer WHERE " . $_SESSION['login_id'] . " = vol_ID";
-                                    if($result = mysqli_query($link, $sql)){
-                                        if(mysqli_num_rows($result) > 0){
-                                            while($row = mysqli_fetch_array($result)){
-
-                                                echo    '<div class="card">';
-                                                echo        '<div class="card-body">';
-                                                echo            '<div class="stat-widget-one">';
-                                                echo                '<div class="stat-icon dib"><i class="ti-total text-success border-success"></i></div>';
-                                                echo                '<div class="stat-content dib">';
-                                                echo                    '<div class="stat-text">Times worked</div>';
-                                                echo                    '<div class="stat-digit">';
-                                                echo                    $row['times'];
-                                                echo                    '</div>';
-                                                echo                '</div>';
-                                                echo            '</div>';
-                                                echo        '</div>';
-                                                echo    '</div>';
-                                            }
-                                            // Free result set
-                                            mysqli_free_result($result);
-                                        } else{
-                                            echo "No records matching your query were found.";
-                                        }
-                                    } else{
-                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                                    }
-
-                                    // Close connection
-                                    mysqli_close($link);
-                                    ?>
-                                    <?php
-                                    $link = mysqli_connect("localhost", "root", "", "group11");
-
-                                    if($link === false){
-                                        die("ERROR: Could not connect. " . mysqli_connect_error());
-                                    }
-
-                                    $sql = "SELECT COUNT(*) AS time FROM event_volunteer AS ev, event WHERE " . $_SESSION['login_id'] . " = vol_ID AND event.ID = ev.event_ID AND MONTH(CURDATE()) = MONTH(Date)";
-                                    if($result = mysqli_query($link, $sql)){
-                                        if(mysqli_num_rows($result) > 0){
-                                            while($row = mysqli_fetch_array($result)){
-
-                                                echo    '<div class="card">';
-                                                echo        '<div class="card-body">';
-                                                echo            '<div class="stat-widget-one">';
-                                                echo                '<div class="stat-icon dib"><i class="ti-month text-success border-success"></i></div>';
-                                                echo                '<div class="stat-content dib">';
-                                                echo                    '<div class="stat-text">Times worked this month</div>';
-                                                echo                    '<div class="stat-digit">';
-                                                echo                        $row['time'];
-                                                echo                    '</div>';
-                                                echo                '</div>';
-                                                echo            '</div>';
-                                                echo        '</div>';
-                                                echo    '</div>';
-                                            }
-                                            // Free result set
-                                            mysqli_free_result($result);
-                                        } else{
-                                            echo "No records matching your query were found.";
-                                        }
-                                    } else{
-                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                                    }
-
-                                    // Close connection
-                                    mysqli_close($link);
-                                    ?>
-                                    <?php
-                                    $link = mysqli_connect("localhost", "root", "", "group11");
-
-                                    if($link === false){
-                                        die("ERROR: Could not connect. " . mysqli_connect_error());
-                                    }
-
-                                    $sql = "SELECT COUNT(*) AS times FROM event_volunteer WHERE " . $_SESSION['login_id'] . " = vol_ID";
-                                    if($result = mysqli_query($link, $sql)){
-                                        if(mysqli_num_rows($result) > 0){
-                                           while($row = mysqli_fetch_array($result)){
-                                                echo '<div class="card">';
-                                                echo '<div class="card-body">';
-                                                echo '<div class="stat-widget-one">';
-                                                echo '<div class="stat-icon dib"><i class="ti-jippi text-success border-success"></i></div>';
-                                                echo '<div class="stat-content dib">';
-                                                echo '<div class="stat-text">You have JIPPI until</div>';
-                                                echo '<div class="stat-digit">31 February</div>';
-                                                echo '</div>';
-                                                echo '</div>';
-                                                echo '</div>';
-                                                echo '</div>';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-                                                echo '';
-                                            }
-                                            // Free result set
-                                            mysqli_free_result($result);
-                                        } else{
-                                            echo "No records matching your query were found.";
-                                        }
-                                    } else{
-                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                                    }
-
-                                    // Close connection
-                                    mysqli_close($link);
-                                    ?>
-                </div>
         </div>
     </main>
 
-    <script src="rsc/imports/php/functions/functions.php"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
-    <script src="offcanvas.js"></script></body>
+    <script src="../rsc/imports/js/event_modal_script.js">
+    </script>
+
+    </body>
 
 
 

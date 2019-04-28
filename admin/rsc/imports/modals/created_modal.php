@@ -6,7 +6,7 @@ if ( isset($_GET['created']) ) {
     // Check if request is for a file:
     if ($_GET['created'] == 'event') {
         $object = 'event';
-
+        $page = "event_grid.php";
         // Analyze the status codes:
         $status_code = $_GET['status'];
 
@@ -31,6 +31,7 @@ if ( isset($_GET['created']) ) {
     elseif ($_GET['created'] == 'application') {
 
         $object = $_GET['created'];
+        $page = "index.php";
         $status_code = $_GET['status'];
 
         if ($status_code == 1) {
@@ -83,7 +84,9 @@ if ( isset($_GET['created']) ) {
         }
     <!-- Redirect page on modal close: -->
     $(".modal").on("hidden.bs.modal", function () {
-    window.location = "'.$object.'_grid.php";
+        
+            window.location = "' . $page . '";
+          
     });
     </script>
     ';

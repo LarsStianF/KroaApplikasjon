@@ -514,6 +514,7 @@ echo $newUserType;
                 $status_db = 0;
 
             }
+            header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
         }
 
     }
@@ -740,5 +741,72 @@ echo $newUserType;
 
                 }
             }
+
+function get_signed_roles($user_id, $event_id) {
+    global $con;
+
+    $sql = "SELECT want_volunteer.crew_type_ID from want_volunteer WHERE want_volunteer.vol_ID = $user_id AND want_volunteer.event_ID = $event_id";
+
+    $result = mysqli_query($con, $sql);
+
+
+    $output = "<ul class='pr-2' style='list-style: none; padding: 0;'>";
+
+
+
+    while($row = mysqli_fetch_array($result)) {
+
+        if($row['crew_type_ID'] == 1) {
+            $output .= '<li class="mt-2"><i class="man-icons-modal fa fa-user" style="color:orange;font-size:25px;"></i></li>';
+        }
+        if($row['crew_type_ID'] == 2) {
+            $output .= '<li class="mt-2"><i class="man-icons-modal fa fa-user" style="color:red;font-size:25px;"></i></li>';
+        }
+        if($row['crew_type_ID'] == 3) {
+            $output .= '<li class="mt-2"><i class="man-icons-modal fa fa-user" style="color:black;font-size:25px;"></i></li>';
+        }
+        if($row['crew_type_ID'] == 4) {
+            $output .= '<li class="mt-2"><i class="man-icons-modal fa fa-user" style="color:blue;font-size:25px;"></i></li>';
+        }
+    }
+
+    $output .= '</ul>';
+
+    return $output;
+
+}
+
+function get_confirmed_role($user_id, $event_id) {
+    global $con;
+
+    $sql = "SELECT crew_type_ID FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $event_id";
+    $result = mysqli_query($con, $sql);
+
+
+    $output = "<div class='mt-2 pr-2'>";
+
+
+
+    while($row = mysqli_fetch_array($result)) {
+
+        if($row['crew_type_ID'] == 1) {
+            $output .= '<i class="man-icons-modal fa fa-user" style="color:orange;font-size:25px;"></i>';
+        }
+        if($row['crew_type_ID'] == 2) {
+            $output .= '<i class="man-icons-modal fa fa-user" style="color:red;font-size:25px;"></i>';
+        }
+        if($row['crew_type_ID'] == 3) {
+            $output .= '<i class="man-icons-modal fa fa-user" style="color:black;font-size:25px;"></i>';
+        }
+        if($row['crew_type_ID'] == 4) {
+            $output .= '<i class="man-icons-modal fa fa-user" style="color:blue;font-size:25px;"></i>';
+        }
+    }
+
+    $output .= '</div>';
+
+    return $output;
+
+}
 
 ?>

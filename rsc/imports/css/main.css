@@ -302,3 +302,22 @@ div[class*="col-"] {
     color: white;
     font-size: 25px;
 }
+.click-box {
+    display: -webkit-box;
+
+}
+
+a.click-card {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+a.click-card button {
+    z-index: 1;
+}
+
+a.card.disabled,
+a.card[disabled] {
+    pointer-events: none;
+    opacity: .8;
+}

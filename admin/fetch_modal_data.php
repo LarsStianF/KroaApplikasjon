@@ -6,6 +6,7 @@ include 'rsc/imports/php/functions/functions.php';
 if(isset($_POST['id']))
 {
     $id = $_POST['id'];
+    $user_id = $_SESSION['login_id'];
 
     $query = "SELECT * FROM event WHERE ID = '".$id."'";
     $result =  mysqli_query($con, $query);
@@ -31,6 +32,8 @@ if(isset($_POST['id']))
         $security   = $volunteers[1];
         $crew       = $volunteers[2];
         $technical  = $volunteers[3];
+
+
 
             $output = '
             <div class="text-center">
@@ -58,7 +61,16 @@ if(isset($_POST['id']))
                          ';
 
                         if ($compare_date >= $date_today) {
-                            $output .= '<a href="create_handler.php?object=application&job=crew&id=\'.$id.\'" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+
+                            // check if signed
+                            $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 1";
+                            $resultcheck = mysqli_query($con,$sqlcheck);
+
+                            if (!$rows = mysqli_num_rows($resultcheck)) {
+                                $output .= '<a href="create_handler.php?object=application&job=bar&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            } else {
+                                $output .= '<a  href="create_handler.php?object=application&job=bar&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2 invisible">Sign up!</a>';
+                            }
 
                         }
 
@@ -82,7 +94,16 @@ if(isset($_POST['id']))
                         ';
 
                         if ($compare_date >= $date_today) {
-                            $output .= '<a href="create_handler.php?object=application&job=sec&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+
+                            // check if signed
+                            $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 2";
+                            $resultcheck = mysqli_query($con,$sqlcheck);
+
+                            if (!$rows = mysqli_num_rows($resultcheck)) {
+                                $output .= '<a href="create_handler.php?object=application&job=sec&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            } else {
+                                $output .= '<a  href="create_handler.php?object=application&job=sec&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2 invisible">Sign up!</a>';
+                            }
 
                         }
 
@@ -106,7 +127,16 @@ if(isset($_POST['id']))
                         ';
 
                         if ($compare_date >= $date_today) {
-                            $output .= '<a href="create_handler.php?object=application&job=crew&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+
+                            // check if signed
+                            $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 3";
+                            $resultcheck = mysqli_query($con,$sqlcheck);
+
+                            if (!$rows = mysqli_num_rows($resultcheck)) {
+                                $output .= '<a href="create_handler.php?object=application&job=crew&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            } else {
+                                $output .= '<a  href="create_handler.php?object=application&job=crew&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2 invisible">Sign up!</a>';
+                            }
 
                         }
 
@@ -127,10 +157,17 @@ if(isset($_POST['id']))
                          ';
 
                         if ($compare_date >= $date_today) {
-                            $output .= '<a href="create_handler.php?object=application&job==tech&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+
+                            // check if signed
+                            $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 4";
+                            $resultcheck = mysqli_query($con,$sqlcheck);
+                            if (!$rows = mysqli_num_rows($resultcheck)) {
+                                $output .= '<a href="create_handler.php?object=application&job=tech&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            } else {
+                                $output .= '<a  href="create_handler.php?object=application&job=tech&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2 invisible">Sign up!</a>';
+                            }
 
                         }
-
 
           $output .= '    <a class="btn btn-primary btn-small border-dark m-2" type="button" data-toggle="collapse" href="#collapseTech"><i class="fa fa-angle-down"></i></a>
                         </div>

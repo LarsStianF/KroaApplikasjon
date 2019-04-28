@@ -7,8 +7,8 @@ if(isset($_GET['object'])) {
 
     // checks if the object is new event
     if ($_GET['object'] == 'newevent') {
-        $object = $_GET['object'];
-        $name_attribute = $_GET['name'];
+        $object = mysqli_real_escape_string($con, $_GET['object']);
+        $name_attribute = mysqli_real_escape_string($con, $_GET['name']);
 
         create_new_event($name_attribute);
     }
