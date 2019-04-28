@@ -1,5 +1,13 @@
 <?php
 include 'dbcon.php';
+
+if( !isset($_SESSION['login']) ){
+    header("Location:../index.php");
+    exit();
+
+}
+
+
 include 'rsc/imports/php/functions/functions.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';

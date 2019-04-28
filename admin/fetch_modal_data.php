@@ -1,5 +1,9 @@
 <?php
 include 'dbcon.php';
+if( !isset($_SESSION['login']) ){
+    header("Location:../login.php");
+    exit();
+}
 include 'rsc/imports/php/functions/functions.php';
 
 
@@ -7,6 +11,7 @@ if(isset($_POST['id']))
 {
     $id = $_POST['id'];
     $user_id = $_SESSION['login_id'];
+    $user_type = $_SESSION['login_type'];
 
     $query = "SELECT * FROM event WHERE ID = '".$id."'";
     $result =  mysqli_query($con, $query);
@@ -63,19 +68,35 @@ if(isset($_POST['id']))
                         if ($compare_date >= $date_today) {
 
                             // check if signed
-                            $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 1";
-                            $resultcheck = mysqli_query($con,$sqlcheck);
+                            $signcheck = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 1";
+                            $resultsign = mysqli_query($con,$signcheck);
+                            $signrow = mysqli_fetch_array($resultsign);
 
-                            if (!$rows = mysqli_num_rows($resultcheck)) {
-                                $output .= '<a href="create_handler.php?object=application&job=1&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
-                            } else {
+                            //check if confirmed
+                            $confirmcheck = "SELECT COUNT(*) AS Existence FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
+                            $resultconfirm = mysqli_query($con, $confirmcheck);
+                            $confirmrow = mysqli_fetch_array($resultconfirm);
+
+                            if($signrow['Existence'] == 0 && $confirmrow['Existence'] ==  0) {
+
+                                //check if manager for this crew
+                                if(manager_crew_type_check($user_id, 1)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=1&manager=1&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                } else {
+                                    $output .= '<a href="create_handler.php?object=application&job=1&manager=0&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                }
+                            }
+                            elseif ($signrow['Existence'] == 1) {
+                                $output .= '<a  href="delete_handler.php?delete=application&job=1&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
+                            elseif($confirmrow['Existence'] ==  1) {
                                 $output .= '<a  href="delete_handler.php?delete=application&job=1&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
                             }
 
                         }
 
 
-          $output .= '<a class="btn btn-primary btn-small border-dark m-2" type="button" data-toggle="collapse" href="#collapseBar"><i class="fa fa-angle-down"></i></a>
+            $output .= '<a class="btn btn-primary btn-small border-dark m-2" type="button" data-toggle="collapse" href="#collapseBar"><i class="fa fa-angle-down"></i></a>
                         </div>
                     </div>
                     <div id="collapseBar" class="collapse" data-parent="#accordion">
@@ -94,18 +115,33 @@ if(isset($_POST['id']))
                         ';
 
                         if ($compare_date >= $date_today) {
-
                             // check if signed
-                            $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 2";
-                            $resultcheck = mysqli_query($con,$sqlcheck);
+                            $signcheck = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 2";
+                            $resultsign = mysqli_query($con,$signcheck);
+                            $signrow = mysqli_fetch_array($resultsign);
 
-                            if (!$rows = mysqli_num_rows($resultcheck)) {
-                                $output .= '<a href="create_handler.php?object=application&job=2&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
-                            } else {
+                            //check if confirmed
+                            $confirmcheck = "SELECT COUNT(*) AS Existence FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
+                            $resultconfirm = mysqli_query($con, $confirmcheck);
+                            $confirmrow = mysqli_fetch_array($resultconfirm);
+
+                            if($signrow['Existence'] == 0 && $confirmrow['Existence'] ==  0) {
+
+                                //check if manager for this crew
+                                if(manager_crew_type_check($user_id, 1)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=2&manager=1&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                } else {
+                                    $output .= '<a href="create_handler.php?object=application&job=2&manager=0&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                }
+                            }
+                            elseif ($signrow['Existence'] == 1) {
                                 $output .= '<a  href="delete_handler.php?delete=application&job=2&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
                             }
-
+                            elseif($confirmrow['Existence'] ==  1) {
+                                $output .= '<a  href="delete_handler.php?delete=application&job=2&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
                         }
+
 
 
           $output .= '      
@@ -127,14 +163,29 @@ if(isset($_POST['id']))
                         ';
 
                         if ($compare_date >= $date_today) {
-
                             // check if signed
-                            $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 3";
-                            $resultcheck = mysqli_query($con,$sqlcheck);
+                            $signcheck = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 3";
+                            $resultsign = mysqli_query($con,$signcheck);
+                            $signrow = mysqli_fetch_array($resultsign);
 
-                            if (!$rows = mysqli_num_rows($resultcheck)) {
-                                $output .= '<a href="create_handler.php?object=application&job=3&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
-                            } else {
+                            //check if confirmed
+                            $confirmcheck = "SELECT COUNT(*) AS Existence FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
+                            $resultconfirm = mysqli_query($con, $confirmcheck);
+                            $confirmrow = mysqli_fetch_array($resultconfirm);
+
+                            if($signrow['Existence'] == 0 && $confirmrow['Existence'] ==  0) {
+
+                                //check if manager for this crew
+                                if(manager_crew_type_check($user_id, 1)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=3&manager=1&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                } else {
+                                    $output .= '<a href="create_handler.php?object=application&job=3&manager=0&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                }
+                            }
+                            elseif ($signrow['Existence'] == 1) {
+                                $output .= '<a  href="delete_handler.php?delete=application&job=3&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
+                            elseif($confirmrow['Existence'] ==  1) {
                                 $output .= '<a  href="delete_handler.php?delete=application&job=3&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
                             }
 
@@ -159,13 +210,28 @@ if(isset($_POST['id']))
                         if ($compare_date >= $date_today) {
 
                             // check if signed
-                            $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 4";
-                            $resultcheck = mysqli_query($con,$sqlcheck);
-                            if (!$rows = mysqli_num_rows($resultcheck)) {
+                            $signcheck = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 4";
+                            $resultsign = mysqli_query($con,$signcheck);
+                            $signrow = mysqli_fetch_array($resultsign);
 
-                                $output .= '<a href="create_handler.php?object=application&job=4&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
-                            } else {
+                            //check if confirmed
+                            $confirmcheck = "SELECT COUNT(*) AS Existence FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
+                            $resultconfirm = mysqli_query($con, $confirmcheck);
+                            $confirmrow = mysqli_fetch_array($resultconfirm);
 
+                            if($signrow['Existence'] == 0 && $confirmrow['Existence'] ==  0) {
+
+                                //check if manager for this crew
+                                if(manager_crew_type_check($user_id, 1)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=4&manager=1&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                } else {
+                                    $output .= '<a href="create_handler.php?object=application&job=4&manager=0&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                }
+                            }
+                            elseif ($signrow['Existence'] == 1) {
+                                $output .= '<a  href="delete_handler.php?delete=application&job=4&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
+                            elseif($confirmrow['Existence'] ==  1) {
                                 $output .= '<a  href="delete_handler.php?delete=application&job=4&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
                             }
                         }

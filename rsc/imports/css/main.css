@@ -321,3 +321,9 @@ a.card[disabled] {
     pointer-events: none;
     opacity: .8;
 }
+
+.managerchecked {
+    transform: scale(1.25);
+    -webkit-transform: scale(1.25);
+    margin: 3px !important;
+}

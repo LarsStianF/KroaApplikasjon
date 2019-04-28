@@ -1,5 +1,9 @@
 <?php
 include 'dbcon.php';
+if( !isset($_SESSION['login']) ){
+    header("Location:../login.php");
+    exit();
+}
 include 'rsc/imports/php/functions/functions.php';
 
 // Check if there is something to update:

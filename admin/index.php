@@ -1,5 +1,15 @@
 <?php
 include 'dbcon.php';
+
+if( !isset($_SESSION['login']) ){
+    header("Location:../index.php");
+    exit();
+
+}
+
+
+
+
 include 'rsc/imports/php/functions/functions.php';
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
@@ -89,9 +99,9 @@ include 'rsc/imports/modals/event_modal.php';
                                              
                                             </strong>
                                             <strong class="d-block">
-                                            '.$volunteers[1].'/'.$row['Event_sec'].' Security, '.$volunteers[0].'/'.$row['Event_bar'].' Bar, '.$volunteers[2].'/'.$row['Event_crew'].' Crew, '.$volunteers[3].'/'.$row['Event_tech'].' Teknisk 
+                                            '.$bar.'/'.$row['Event_bar'].' Bar, '.$security.'/'.$row['Event_sec'].' Security, '.$crew.'/'.$row['Event_crew'].' Crew, '.$technical.'/'.$row['Event_tech'].' Teknisk
                                             </strong>
-                                            '.$row['Event_text'].'
+                                            '.$row['Event_text'].' 
                                         </p>
                                         
                                   </div>
@@ -164,9 +174,7 @@ include 'rsc/imports/modals/event_modal.php';
                                         <br>
                                         Time: '.$startTime.' - '.$endTime.'
                                         </strong>
-                                        <strong class="d-block">
-                                        You are signed as: Security
-                                        </strong>
+                                        
                                         <strong class="d-block">
                                         '.$bar.'/'.$row['Event_bar'].' Bar, '.$security.'/'.$row['Event_sec'].' Security, '.$crew.'/'.$row['Event_crew'].' Crew, '.$technical.'/'.$row['Event_tech'].' Teknisk
                                         </strong>
@@ -214,6 +222,19 @@ include 'rsc/imports/modals/event_modal.php';
                             </div>
                         </div>
                     </div>
+
+                    <?php
+                    $sql = "SELECT COUNT(*) AS times FROM event_volunteer WHERE vol_ID = $user_id";
+                    if($result = mysqli_query($con, $sql)){
+                        $row = mysqli_fetch_array($result);
+
+
+                    } else  {
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+                    }
+                    mysqli_free_result($result);
+                    ?>
+
                     <div class="card">
                         <div class="card-body">
                             <div class="stat-widget-one">
@@ -223,12 +244,28 @@ include 'rsc/imports/modals/event_modal.php';
                                 <div class="stat-content dib">
                                     <div class="stat-text">Times worked</div>
                                     <div class="stat-digit">
-                                        <?php echo "haha" ?>
+                                        <?php echo $row['times']; ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <?php
+                    $sql = "SELECT COUNT(*) AS time FROM event_volunteer AS ev, event WHERE " . $_SESSION['login_id'] . " = vol_ID AND event.ID = ev.event_ID AND MONTH(CURDATE()) = MONTH(Date)";
+
+                    if($result = mysqli_query($con, $sql)){
+                        $row = mysqli_fetch_array($result);
+
+
+                    } else  {
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+                    }
+
+
+                    ?>
+
+
 
                     <div class="card">
                         <div class="card-body">
@@ -239,7 +276,7 @@ include 'rsc/imports/modals/event_modal.php';
                                         Times worked this month
                                     </div>
                                     <div class="stat-digit">
-                                        <?php echo "haha" ?>
+                                        <?php echo $row['time'];  ?>
                                     </div>
                                 </div>
                             </div>
