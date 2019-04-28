@@ -1,12 +1,28 @@
 <?php
 include 'dbcon.php';
+if( !isset($_SESSION['login']) ){
+    header("Location:../index.php")
+    ;exit();
+
+}elseif ($_SESSION['login_type'] >= 5) {
+    $dag_leder = 2;
+    $cur_user = $_SESSION['login_type'];
+    $id = $_SESSION['login_id'];
+    $tempQuery =  "SELECT * FROM manager WHERE " . $id . " = vol_ID AND crew_type_ID = 1;";
+    $tempRes = mysqli_query($con,$tempQuery);
+    $tempRow = mysqli_fetch_array($tempRes);
+    $bar_manager = $tempRow{'crew_type_ID'};
+
+    if ($cur_user > $dag_leder && $bar_manager != 1) {
+        header("Location:index.php");;
+        exit();
+    }
+}
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
-
-
+include 'rsc/imports/php/functions/functions.php';
 include 'rsc/imports/modals/unitlist_modal.php';
 
-include 'rsc/imports/php/functions/functions.php';
 
 ?>
 

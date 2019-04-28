@@ -1,4 +1,5 @@
 <?php
+$root = 1; $dag_leder = 2; $vol_cord = 3; $event_man = 4; $manager = 5; $volunteer = 6;
 
 function PwCheck ($myemail, $pwhash)
 {
@@ -52,13 +53,18 @@ function populate_volunteers_filter($crew_type_ID){
 }
 
 function volunteers_content($result){
-
-
+    $root = 1; $dag_leder = 2; $vol_cord = 3; $event_man = 4; $manager = 5; $volunteer = 6;
+    $cur_user = $_SESSION['login_type'];
     while ($row = mysqli_fetch_array($result)) {
         $output = "";
         $id = $row['ID'];
         echo '<div id="namerow">';
-        echo '<a href="#peopleModal" class="list-group-item list-group-item-action flex-column align-items-start view_data" data-toggle="modal" id="'.$id.'">';
+        if ($cur_user <= $dag_leder){
+            echo '<a href="#peopleModal" class="list-group-item list-group-item-action flex-column align-items-start view_data" data-toggle="modal" id="'.$id.'">';
+
+        } else{
+            echo '<div class="list-group-item list-group-item-action flex-column align-items-start" id="'.$id.'">';
+        }
         echo '<div class="d-flex w-100 justify-content-between">';
         echo '<ul class="list-inline ">';
         echo '<li class="list-inline-item "><h5 class="mb-1">';
@@ -74,8 +80,10 @@ function volunteers_content($result){
 
         echo '</ul>';
 
-        // THIS SHOULD ONLY BE VISABLY TO DAGLIG LEDER / FRIVILLIGKOORDINATOR
-        echo '<button class="btn btn-primary" type="submit">Edit</button>';
+        // THIS SHOULD ONLY BE VISABLY TO DAGLIG LEDER
+        if ($cur_user <= $dag_leder){
+            echo '<button class="btn btn-primary" type="submit">Edit</button>';
+        }
         //_____________________________________________________________________
 
         echo '</div>';
@@ -85,7 +93,12 @@ function volunteers_content($result){
         echo $row['nr'];
         echo '</p>';
         populate_last_volunteered($id);
-        echo '</a>';
+        if ($cur_user <= $dag_leder){
+            echo '</a>';
+        } else{
+            echo '</div>';
+
+        }
         echo '</div>';
     }
 }

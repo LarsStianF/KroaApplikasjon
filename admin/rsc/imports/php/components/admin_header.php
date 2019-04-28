@@ -1,14 +1,4 @@
 
-<style>
-    :root{ --navbar-height: 9rem; }
-    nav ~ main {margin-top: var(--navbar-height);}
-</style>
-
-
-
-
-
-<!------ Include the above in your HEAD tag ---------->
 
 <!-- Navigation -->
 <div class="">
@@ -48,15 +38,30 @@
                     <li class="nav-item">
                         <a class="nav-link bg-dark py-2 px-3" id="people_nav" href="people.php">Volunteers</a>
                     </li>
-
+<?php
+$cur_user = $_SESSION['login_type'];
+$root = 1; $dag_leder = 2; $vol_cord = 3; $event_man = 4; $manager = 5; $volunteer = 6;
+    if ($cur_user <= $dag_leder || $cur_user == $manager) {
+        echo '      
                     <li class="nav-item">
                         <a class="nav-link bg-dark py-2 px-3" id="man_nav" href="mindex.php">Manage</a>
                     </li>
+                    ';
+    }
+$id = $_SESSION['login_id'];
+$tempQuery =  "SELECT * FROM manager WHERE " . $id . " = vol_ID AND crew_type_ID = 1;";
+$tempRes = mysqli_query($con,$tempQuery);
+$tempRow = mysqli_fetch_array($tempRes);
+$bar_manager = $tempRow{'crew_type_ID'};
 
+    if ($cur_user <= $dag_leder || $bar_manager == 1) {
+         echo '
                     <li class="nav-item">
                         <a class="nav-link bg-dark py-2 px-3 rounded-bottom" id="unit_nav" href="unitlist.php">Unitlist</a>
                     </li>
-
+                    ';
+    }
+?>
                 </ul>
             </div>
 
