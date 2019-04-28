@@ -34,32 +34,9 @@ include 'rsc/imports/modals/unitlist_modal.php';
 
 
 <script>
-      /* ***** AJAX SCRIPT *****
-    $(document).ready(function(){
-        $('.unitSearch input[type="text"]').on("keyup input", function(){
-            // Get input value on change
-            var inputVal = $(this).val();
-            var resultDropdown = $(this).siblings(".result");
-            if(inputVal.length){
-                $.get("fetch_unitlist_data.php", {term: inputVal}).done(function(data){
-                    // Display the returned data in browser
-                    resultDropdown.html(data);
-                });
-            } else{
-                resultDropdown.empty();
-            }
-        });
-
-        // Set search input value on click of result item
-        $(document).on("click", ".result a", function(){
-            $(this).parents("#unitSearch").find('input[type="text"]').val($(this).text());
-            $(this).parent(".result").empty();
-        });
-    });
-      */
 
 
-   //  /* *OLD SCRIPT *
+
     $(document).ready(function(){
         $("#unitSearch").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -68,7 +45,6 @@ include 'rsc/imports/modals/unitlist_modal.php';
             });
         });
     });
-  // */
 </script>
 
 
@@ -123,52 +99,6 @@ include 'rsc/imports/modals/unitlist_modal.php';
 
 
 ?>
-<!--
-        <script>
-
-
-            $(document).ready(function () {
-
-                $('.view_data').click(function () {
-                    var id = $(this).attr('id');
-
-                    $.ajax({
-                        url: "fetch_unitlist_data.php",
-                        method: "post",
-                        data: {id:id},
-                        success:function (data) {
-                            $('#event_detail').html(data);
-
-                        }
-                    });
-                });
-            });
-
-        </script>
--->
-<!--
-  <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h2 class="mb-1">Name Nameson</h2>
-                    <h2 class="mb-1"> <span class="badge badge-success">Units: 4</span> </h2>
-                </div>
-
-            </a>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h2 class="mb-1">Freddie Potasium</h2>
-                    <h2 class="mb-1"> <span class="badge badge-success">Units: 14</span> </h2>
-                </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h2 class="mb-1">Woolbob Roundpants</h2>
-                    <h2 class="mb-1"> <span class="badge badge-danger">Units: 0</span> </h2>
-                </div>
-            </a>
-        </div>
-    -->
 
 
         <script src="../rsc/imports/js/unitlist_modal_script.js">

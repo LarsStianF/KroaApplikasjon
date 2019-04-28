@@ -1,7 +1,16 @@
 <?php
+include 'dbcon.php';
+if( !isset($_SESSION['login']) ){
+    header("Location:../index.php")
+    ;exit();
+
+}elseif ($_SESSION['login_type'] > 5) {
+    header("Location:index.php");;
+    exit();
+}
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
-
+include 'rsc/imports/php/functions/functions.php';
 ?>
 
     <!--
@@ -20,9 +29,16 @@ include 'rsc/imports/php/components/admin_header.php';
         </div>
 
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-dark active btn-lg filter-button" data-filter="Manager">
+            <?php
+            if ($_SESSION['login_type'] >= 5) {
+                echo'
+                <label class="btn btn-dark active btn-lg filter-button" data-filter="Manager">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> Manager
             </label>
+                ';
+            }
+            ?>
+
             <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Bar-log">
                 <input type="radio" name="options" id="option3" autocomplete="off"> Bar log
             </label>
@@ -46,6 +62,13 @@ include 'rsc/imports/php/components/admin_header.php';
             </div>
         </div>
 
+
+         <?php
+            if ($_SESSION['login_type'] >= 5) {
+             echo '
+                
+            
+            
         <!--
         ############################                ############################
         ############################ Manager Button ############################
@@ -55,8 +78,8 @@ include 'rsc/imports/php/components/admin_header.php';
         <div class="row filter Manager">
             <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Upcoming events</h6>
+                    ';
 
-            <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
             server with default setting (user 'root' with no password) */
             $link = mysqli_connect("localhost", "root", "", "group11");
@@ -184,7 +207,9 @@ include 'rsc/imports/php/components/admin_header.php';
                             ?>
                         </div></div>
         </div>
-
+        <?php
+            }
+        ?>
 
         <!--
         ############################                ############################
