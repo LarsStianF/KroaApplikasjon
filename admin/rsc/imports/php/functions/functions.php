@@ -290,7 +290,7 @@ function get_event_volunteers($id) {
             $numSec++;
         else if ($row['crew_type_ID'] == 3)
             $numCrew++;
-        else if ($row['crew_type_ID'] === 4)
+        else if ($row['crew_type_ID'] == 4)
             $numTech++;
     }
     $volunteers = array($numBar,$numSec,$numCrew,$numTech);
