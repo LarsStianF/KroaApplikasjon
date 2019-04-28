@@ -281,7 +281,7 @@ function get_event_volunteers($id) {
 
 
 
-    $query = "SELECT * FROM event_volunteer WHERE event_ID = '.$id.';";
+    $query = "SELECT crew_type_ID FROM event_volunteer WHERE event_ID = $id";
     $result = mysqli_query($con, $query);
     while($row = mysqli_fetch_array($result)) {
         if($row['crew_type_ID'] == 1)
@@ -290,7 +290,7 @@ function get_event_volunteers($id) {
             $numSec++;
         else if ($row['crew_type_ID'] == 3)
             $numCrew++;
-        else if ($row['crew_type_ID'] == 4)
+        else if ($row['crew_type_ID'] === 4)
             $numTech++;
     }
     $volunteers = array($numBar,$numSec,$numCrew,$numTech);
