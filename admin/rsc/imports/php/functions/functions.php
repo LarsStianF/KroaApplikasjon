@@ -837,4 +837,19 @@ function remove_from_want_volunteer($id, $job_id, $user_id) {
 
 }
 
+function manager_crew_type_check($id, $crew_type) {
+
+    global $con;
+    $sql = "SELECT * FROM manager where vol_ID = $id AND crew_type_ID = $crew_type";
+    $result = mysqli_query($con, $sql);
+    $rows = mysqli_num_rows($result);
+
+    if(!$rows) {
+        return false;
+    } else
+        return true;
+
+
+}
+
 ?>
