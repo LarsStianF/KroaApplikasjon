@@ -101,7 +101,7 @@ include 'rsc/imports/modals/event_modal.php';
                                 // Free result set
                                 mysqli_free_result($result);
                             } else{
-                                echo "No records matching your query were found.";
+                                echo "You have no pending event applications.";
                             }
                         } else{
                             echo "ERROR: Could not able to execute";
