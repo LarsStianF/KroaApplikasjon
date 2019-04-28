@@ -4,10 +4,11 @@ if ( isset($_GET['deleted'])) {
 
     // Check if request is for a file:
     if ($_GET['deleted'] == 'event') {
-        $object = 'event';
+        $object = mysqli_real_escape_string($con, $_GET['deleted']);
+        $page = "event_grid.php";
 
         // Analyze the status codes:
-        $status_code = $_GET['status'];
+        $status_code = mysqli_real_escape_string($con, $_GET['status']);
 
         // Generate status feedback in accordance with status codes:
         if ($status_code == '1') {
@@ -35,6 +36,29 @@ if ( isset($_GET['deleted'])) {
             $title_color = 'text-danger';
         }
 
+    }
+
+    if ($_GET['deleted'] == 'application') {
+
+        $object = mysqli_real_escape_string($con, $_GET['deleted']);
+        $status_code = mysqli_real_escape_string($con, $_GET['status']);
+        $page = "index.php";
+
+        if ($status_code == '1') {
+
+            // post created from DB:
+            $status_adjective = 'successfully';
+            $title_text = 'Application removed';
+            $title_color = 'text-success';
+
+        } elseif ($status_code == '0') {
+
+            // post not created from DB:
+            $status_adjective = 'unsuccessfully';
+            $title_text = 'Application could not be removed';
+            $title_color = 'text-danger';
+
+        }
     }
 
     $modal = '
@@ -70,7 +94,7 @@ if ( isset($_GET['deleted'])) {
         }
     <!-- Redirect page on modal close: -->
     $(".modal").on("hidden.bs.modal", function () {
-    window.location = "' . $object . '_grid.php";
+    window.location = "' .$page. '";
     });
     </script>
     ';

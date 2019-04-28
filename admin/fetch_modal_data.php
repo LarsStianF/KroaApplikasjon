@@ -67,9 +67,9 @@ if(isset($_POST['id']))
                             $resultcheck = mysqli_query($con,$sqlcheck);
 
                             if (!$rows = mysqli_num_rows($resultcheck)) {
-                                $output .= '<a href="create_handler.php?object=application&job=bar&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                $output .= '<a href="create_handler.php?object=application&job=1&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
                             } else {
-                                $output .= '<a  href="create_handler.php?object=application&job=bar&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2 invisible">Sign up!</a>';
+                                $output .= '<a  href="delete_handler.php?delete=application&job=1&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
                             }
 
                         }
@@ -100,9 +100,9 @@ if(isset($_POST['id']))
                             $resultcheck = mysqli_query($con,$sqlcheck);
 
                             if (!$rows = mysqli_num_rows($resultcheck)) {
-                                $output .= '<a href="create_handler.php?object=application&job=sec&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                $output .= '<a href="create_handler.php?object=application&job=2&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
                             } else {
-                                $output .= '<a  href="create_handler.php?object=application&job=sec&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2 invisible">Sign up!</a>';
+                                $output .= '<a  href="delete_handler.php?delete=application&job=2&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
                             }
 
                         }
@@ -133,9 +133,9 @@ if(isset($_POST['id']))
                             $resultcheck = mysqli_query($con,$sqlcheck);
 
                             if (!$rows = mysqli_num_rows($resultcheck)) {
-                                $output .= '<a href="create_handler.php?object=application&job=crew&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                $output .= '<a href="create_handler.php?object=application&job=3&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
                             } else {
-                                $output .= '<a  href="create_handler.php?object=application&job=crew&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2 invisible">Sign up!</a>';
+                                $output .= '<a  href="delete_handler.php?delete=application&job=3&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
                             }
 
                         }
@@ -162,11 +162,12 @@ if(isset($_POST['id']))
                             $sqlcheck = "SELECT * FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 4";
                             $resultcheck = mysqli_query($con,$sqlcheck);
                             if (!$rows = mysqli_num_rows($resultcheck)) {
-                                $output .= '<a href="create_handler.php?object=application&job=tech&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
-                            } else {
-                                $output .= '<a  href="create_handler.php?object=application&job=tech&id='.$id.'" type="button"  class="btn btn-primary btn-small border-dark m-2 invisible">Sign up!</a>';
-                            }
 
+                                $output .= '<a href="create_handler.php?object=application&job=4&id=' . $id . '" type="button"  class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            } else {
+
+                                $output .= '<a  href="delete_handler.php?delete=application&job=4&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
                         }
 
           $output .= '    <a class="btn btn-primary btn-small border-dark m-2" type="button" data-toggle="collapse" href="#collapseTech"><i class="fa fa-angle-down"></i></a>

@@ -809,4 +809,32 @@ function get_confirmed_role($user_id, $event_id) {
 
 }
 
+function remove_from_want_volunteer($id, $job_id, $user_id) {
+
+    global $con;
+
+    $sql = "DELETE FROM want_volunteer WHERE event_ID = $id AND vol_ID = $user_id AND crew_type_ID = $job_id";
+    mysqli_query($con,$sql);
+
+    // Check if application was deleted in DB:
+    $sql_exist = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE event_ID = $id AND vol_ID = $user_id AND crew_type_ID = $job_id";
+    $result = mysqli_query($con, $sql_exist);
+    $row = mysqli_fetch_array($result);
+
+    if($row['Existence'] == 0) {
+
+        //event deleted
+        $status_db = 1;
+        header('Refresh: 0; URL=index.php?deleted=application&status=' . $status_db);
+
+    } else if ($row['Existence'] == 1) {
+
+
+        $status_db = 0;
+
+        header('Refresh: 0; URL=index.php?deleted=application&status=' . $status_db);
+    }
+
+}
+
 ?>

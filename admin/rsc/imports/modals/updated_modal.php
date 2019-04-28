@@ -7,7 +7,7 @@ if ( isset($_GET['updated']) ) {
         $object = 'event';
 
         // Analyze the status codes:
-        $status_code = $_GET['status'];
+        $status_code = mysqli_real_escape_string($con, $_GET['status']);
 
         // Generate status feedback in accordance with status codes:
         if ( $status_code == '1' ){

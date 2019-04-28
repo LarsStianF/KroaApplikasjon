@@ -8,7 +8,7 @@ if ( isset($_GET['created']) ) {
         $object = 'event';
         $page = "event_grid.php";
         // Analyze the status codes:
-        $status_code = $_GET['status'];
+        $status_code = mysqli_real_escape_string($con, $_GET['status']);
 
         // Generate status feedback in accordance with status codes:
         if ( $status_code == '1' ){
@@ -32,7 +32,7 @@ if ( isset($_GET['created']) ) {
 
         $object = $_GET['created'];
         $page = "index.php";
-        $status_code = $_GET['status'];
+        $status_code = mysqli_real_escape_string($con, $_GET['status']);
 
         if ($status_code == 1) {
             // user signed up in DB:
