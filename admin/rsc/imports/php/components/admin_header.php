@@ -45,7 +45,7 @@ $root = 1; $dag_leder = 2; $vol_cord = 3; $event_man = 4; $manager = 5; $volunte
     if ($cur_user <= $dag_leder || $cur_user == $manager) {
         echo '      
                     <li class="nav-item">
-                        <a class="nav-link bg-dark py-2 px-3" id="man_nav" href="mindex.php">Manage</a>
+                        <a class="nav-link bg-dark py-2 px-3" id="man_nav" href="manager.php">Manage</a>
                     </li>
                     ';
     }
