@@ -28,7 +28,7 @@ include 'rsc/imports/modals/event_modal.php';
                     <div class="d-flex align-items-center p-3 text-white-50 bg-warning rounded shadow-sm ">
                         <img class="mr-3" src="../rsc/img/userpic.jpg" alt="" width="48" height="48">
                         <div class="lh-100">
-                            <h6 class="mb-0 text-white lh-100">Welcome, <?php echo $_SESSION['login_name'] ?></h6>
+                            <h6 class="mb-0 lh-100">Welcome, <?php echo $_SESSION['login_name'] ?></h6>
                             <small>Last volunteered: </small>
                         </div>
                     </div>
