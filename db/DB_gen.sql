@@ -111,7 +111,7 @@ CREATE TABLE event_volunteer (
   event_ID smallint(6) NOT NULL,
   crew_type_ID smallint(6) NOT NULL,
   manager tinyint(1) NOT NULL,
-  CONSTRAINT event_vol_PK PRIMARY KEY (vol_ID, event_ID, crew_type_ID),
+  CONSTRAINT event_vol_PK PRIMARY KEY (vol_ID, event_ID),
   CONSTRAINT event_vol_crew_type_FK FOREIGN KEY (crew_type_ID) REFERENCES crew_type (ID),
   CONSTRAINT event_vol_event_FK FOREIGN KEY (event_ID) REFERENCES event (ID),
   CONSTRAINT event_vol_vol_FK FOREIGN KEY (vol_ID) REFERENCES volunteer (ID)
@@ -151,7 +151,7 @@ INSERT INTO event (Name, Date, Time_Start, Time_End, Event_text, Event_sec, Even
 ('Quiz', '2019-01-27', '1900', '2300', 'Quiznight tonight!', 2, 3, 3, 2),
 ('Hellbillies', '2019-02-12', '2000', '0230', 'Hellbillies arrives at Kroa!', 12, 8, 5, 4),
 ('Afterski', '2019-02-20', '1900', '0130', 'Longing for more trips to the mountain? We got you covered', 13, 8, 5, 2),
-('X-russ', '2019-03-04', '1900', '0130', 'Norway`s tradition is back!', 15, 8, 5, 4),
+('X-russ', '2019-03-04', '1900', '0130', 'Norwegian tradition is back!', 15, 8, 5, 4),
 ('Sondre Justad', '2019-03-16', '2130', '0100', 'Sondre Justad comes out with a new album!', 11, 8, 4, 3),
 ('Cezinando', '2019-03-28', '2130', '0100', 'Cezinando takes the stage!', 10, 7, 4, 4),
 ('Quiz', '2019-04-02', '1900', '2300', 'New Quizmaster tonight!', 2, 3, 3, 2),
@@ -160,8 +160,8 @@ INSERT INTO event (Name, Date, Time_Start, Time_End, Event_text, Event_sec, Even
 ('Togaparty', '2019-08-15', '2130', '0230', 'Show us how ancient romans celebrated!', 13, 8, 5, 2),
 ('KlubbKroa', '2019-08-30', '2130', '0130', 'Themeparty at Kroa', 5, 4, 2, 3),
 ('Karpe', '2019-09-10', '2130', '0000', 'Karpe is coming to Kroa!', 14, 8, 5, 4),
-('Kroaelection 2019', '1900', '2300', 'Election for new board members!', 0, 2, 2, 2),
-('Octoberfest', '2019-10-20', '2000', '0130', 'Germany`s tradition comes to Kroa!', 15, 8, 5, 4);
+('Kroaelection', '2019-09-15', '1900', '2300', 'Election for new board members!', 0, 2, 2, 2),
+('Octoberfest', '2019-10-20', '2000', '0130', 'German tradition comes to Kroa!', 15, 8, 5, 4);
 
 INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type) VALUES
 ('Per', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0, 1),
