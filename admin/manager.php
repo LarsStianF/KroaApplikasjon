@@ -29,7 +29,7 @@ include 'rsc/imports/php/functions/functions.php';
 
             <div class="btn-group-toggle form-inline" data-toggle="buttons">
                 <?php
-                if ($_SESSION['login_type'] >= 5 && $_SESSION['login_type'] !== 1) {
+                if ($_SESSION['login_type'] >= 5 || $_SESSION['login_type'] == 1) {
                     echo'
                 <label class="btn btn-dark btn-lg filter-button m-1" data-filter="Manager">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> Manager
@@ -65,7 +65,7 @@ include 'rsc/imports/php/functions/functions.php';
 
 
          <?php
-            if ($_SESSION['login_type'] >= 5 && $_SESSION['login_type'] !== 1) {
+            if ($_SESSION['login_type'] >= 5 || $_SESSION['login_type'] == 1) {
              echo '
                 
             
