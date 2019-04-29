@@ -77,18 +77,6 @@ include 'rsc/imports/modals/people_modal.php';
                 populate_volunteers_all();
             }
 
-/*
-             if(isset($_POST['all'])) {
-                populate_volunteers_all();
-            }elseif (!isset($_POST['all'])) {
-                foreach($_POST as $key => $value){
-                    $crew_type = $key;
-                }
-                populate_volunteers_filter($crew_type);
-            } else {
-                 populate_volunteers_all();
-             }
-*/
 
 ?>
             </div>

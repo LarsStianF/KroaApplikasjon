@@ -4,18 +4,9 @@
 ********************************************************/
 
 /*  Fixes vertical gap between first element list and next element  */
-ul {
+#namerow ul {
     margin-block-end: 0;
 }
-/*  adds gap between the main container and the box containing search and filtering  */
-
-/*  Fixes position of the crew "man" icons  */
-.list-people .man-icon{
-    vertical-align:unset;
-}
-
-
-
 
 /*******************************************************
 ************* Made for admin_header.php ****************
@@ -26,31 +17,14 @@ ul {
     padding: 5px;
 
 }
-
-/*
-header top
-*/
-.topnav{
-
-
-}
-
+/* Positions home/logout button */
 .topnav .container .row {
     margin: -7px;
 
 
 }
 
-.active{
-    border-bottom: 5px solid red;
-}
-
-ul.topbuttons li i {
-    margin:0;
-}
-
 ul.topbuttons li {
-    display:inline;
     margin: 0 5px;
     padding: 5px 0 0;
     width: 32px;
@@ -64,11 +38,15 @@ ul.topbuttons {
     float: right;
 }
 
+/* Positions and sets color of topbar <a> buttons to white. Making the a tags "blue" shine on hover */
 .hover-effect {
     vertical-align: middle;
     color: #fff;
 }
 
+/* Sets the background gradient to white / black (bootstraps dark) creating a stylized look,
+   separating the "company logo" and the nav portion of the header in white and black respectably
+   (only really separated on full screen view)*/
 .gradient-background {
     background: -webkit-linear-gradient(45deg, #ffffff 48%, #343A40 48%);
     background: -webkit-linear-gradient(left, #ffffff 48%, #343A40 48%);
