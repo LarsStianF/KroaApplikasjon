@@ -4,7 +4,7 @@ if( !isset($_SESSION['login']) ){
     header("Location:../index.php")
     ;exit();
 
-}elseif ($_SESSION['login_type'] > 5) {
+}elseif ($_SESSION['login_type'] > 5 ) {
     header("Location:index.php");;
     exit();
 }
@@ -26,32 +26,33 @@ include 'rsc/imports/php/functions/functions.php';
         <div class="bg-light p-3 m-0 card" >
             <h1 class="display-3 text-center"> Manage </h1>
 
-        </div>
 
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <?php
-            if ($_SESSION['login_type'] >= 5) {
-                echo'
-                <label class="btn btn-dark active btn-lg filter-button" data-filter="Manager">
+            <div class="btn-group-toggle form-inline" data-toggle="buttons">
+                <?php
+                if ($_SESSION['login_type'] >= 5 && $_SESSION['login_type'] !== 1) {
+                    echo'
+                <label class="btn btn-dark btn-lg filter-button m-1" data-filter="Manager">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> Manager
             </label>
                 ';
-            }
-            ?>
+                }
+                ?>
 
-            <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Bar-log">
-                <input type="radio" name="options" id="option3" autocomplete="off"> Bar log
-            </label>
-            <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Security-log">
-                <input type="radio" name="options" id="option4" autocomplete="off"> Security log
-            </label>
-            <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Crew-log">
-                <input type="radio" name="options" id="option5" autocomplete="off"> Crew log
-            </label>
-            <label class="btn btn-dark btn-default btn-lg filter-button" data-filter="Tech-log">
-                <input type="radio" name="options" id="option6" autocomplete="off"> Tech log
-            </label>
-            <div class="input-group input-group-lg form-inline col-md-7">
+                <label class="btn btn-dark btn-lg filter-button m-1" data-filter="Bar-log">
+                    <input type="radio" name="options" id="option3" autocomplete="off"> Bar log
+                </label>
+                <label class="btn btn-dark btn-lg filter-button m-1" data-filter="Security-log">
+                    <input type="radio" name="options" id="option4" autocomplete="off"> Security log
+                </label>
+                <label class="btn btn-dark btn-lg filter-button m-1" data-filter="Crew-log">
+                    <input type="radio" name="options" id="option5" autocomplete="off"> Crew log
+                </label>
+                <label class="btn btn-dark btn-lg filter-button m-1" data-filter="Tech-log">
+                    <input type="radio" name="options" id="option6" autocomplete="off"> Tech log
+                </label>
+            </div>
+
+            <div class="input-group input-group-lg form-inline my-2">
                 <input type="text" class="form-control" placeholder="Search for logs">
                 <div class="input-group-append">
                     <button class="btn btn-secondary btn-dark" type="button">
@@ -64,7 +65,7 @@ include 'rsc/imports/php/functions/functions.php';
 
 
          <?php
-            if ($_SESSION['login_type'] >= 5) {
+            if ($_SESSION['login_type'] >= 5 && $_SESSION['login_type'] !== 1) {
              echo '
                 
             
