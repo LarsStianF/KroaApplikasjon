@@ -29,7 +29,7 @@ include 'rsc/imports/php/functions/functions.php';
 
             <div class="btn-group-toggle form-inline" data-toggle="buttons">
                 <?php
-                if ($_SESSION['login_type'] >= 5 && $_SESSION['login_type'] !== 1) {
+                if ($_SESSION['login_type'] >= 5 || $_SESSION['login_type'] == 1) {
                     echo'
                 <label class="btn btn-dark btn-lg filter-button m-1" data-filter="Manager">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> Manager
@@ -65,7 +65,7 @@ include 'rsc/imports/php/functions/functions.php';
 
 
          <?php
-            if ($_SESSION['login_type'] >= 5 && $_SESSION['login_type'] !== 1) {
+            if ($_SESSION['login_type'] >= 5 || $_SESSION['login_type'] == 1) {
              echo '
                 
             
@@ -218,6 +218,7 @@ include 'rsc/imports/php/functions/functions.php';
         ############################                ############################
         -->
         <div class="row filter Bar-log">
+            <div class="col">
 
             <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
@@ -230,7 +231,7 @@ include 'rsc/imports/php/functions/functions.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'Bar'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 1";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -287,7 +288,7 @@ include 'rsc/imports/php/functions/functions.php';
             // Close connection
             mysqli_close($link);
             ?>
-
+            </div>
         </div>
         <!--
         ############################                ############################
@@ -295,6 +296,7 @@ include 'rsc/imports/php/functions/functions.php';
         ############################                ############################
         -->
         <div class="row filter Security-log">
+            <div class="col">
 
             <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
@@ -307,7 +309,7 @@ include 'rsc/imports/php/functions/functions.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'Security'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 2";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -365,13 +367,14 @@ include 'rsc/imports/php/functions/functions.php';
             mysqli_close($link);
             ?>
         </div>
+        </div>
         <!--
         ############################                ############################
         ############################ Crew Button    ############################
         ############################                ############################
         -->
         <div class="row filter Crew-log">
-
+            <div class="col">
             <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
             server with default setting (user 'root' with no password) */
@@ -383,7 +386,7 @@ include 'rsc/imports/php/functions/functions.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type = 'crew'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 3";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -441,12 +444,14 @@ include 'rsc/imports/php/functions/functions.php';
             mysqli_close($link);
             ?>
         </div>
+        </div>
         <!--
         ############################                ############################
         ############################ Tech Button    ############################
         ############################                ############################
         -->
         <div class="row filter Tech-log">
+            <div class="col">
             <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
             server with default setting (user 'root' with no password) */
@@ -458,7 +463,7 @@ include 'rsc/imports/php/functions/functions.php';
             }
 
             // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND Crew_type = 'tech'";
+            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 4";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -517,6 +522,8 @@ include 'rsc/imports/php/functions/functions.php';
             ?>
 
         </div>
+        </div>
+
 
     </main>
 
