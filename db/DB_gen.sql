@@ -147,14 +147,17 @@ INSERT INTO user_type (ID, user_type) VALUES
 (6, 'Volunteer');
 
 INSERT INTO event (Name, Date, Time_Start, Time_End, Event_text, Event_sec, Event_bar, Event_crew, Event_tech) VALUES
-('Quiz', '2019-01-22', '1900', '2300', 'Dette er Quiz', 2, 3, 3, 2),
-('Hellbillies', '2019-01-27', '2000', '0230', 'Hellbillies er gøy', 12, 8, 5, 4),
-('Afterski', '2019-02-14', '1900', '0130', 'DJ Dan høster opp afterski stemning', 13, 8, 5, 2),
-('X-russ', '2019-02-24', '1900', '0130', 'På med russebuksa!', 15, 8, 5, 4),
-('Aapen Scene', '2019-02-26', '2130', '0230', 'Fremfør det du vil', 5, 4, 2, 2),
-('Sondre Justad', '2019-03-02', '2130', '0100', 'Sondre Justad kommer til Kroa og det blir gøy!', 11, 8, 4, 3),
-('Oktoberfest', '2019-03-20', '2000', '0130', 'Tysklands tradisjon kommer til å Kroa!', 15, 8, 5, 4),
-('Cezinando', '2019-4-23', '2130', '0100', 'Cezinando fremfører nytt album på storscena', 16, 9, 6, 5);
+('Quiz', '2019-10-23', '1900', '2300', 'Quiznight tonight!', 2, 3, 3, 2),
+('Hellbillies', '2019-01-27', '2000', '0230', 'Hellbillies arrives at Kroa!', 12, 8, 5, 4),
+('Afterski', '2019-03-14', '1900', '0130', 'Longing for more trips to the mountain? We got you covered', 13, 8, 5, 2),
+('X-russ', '2019-08-24', '1900', '0130', 'Norway`s tradition is back!', 15, 8, 5, 4),
+('Open mic', '2019-02-26', '2130', '0230', 'Come show us what you got!', 2, 4, 0, 2),
+('Sondre Justad', '2019-11-02', '2130', '0100', 'Sondre Justad comes out with a new album!', 11, 8, 4, 3),
+('Octoberfest', '2019-10-20', '2000', '0130', 'Germany`s tradition comes to Kroa!', 15, 8, 5, 4),
+('Cezinando', '2019-05-23', '2130', '0100', 'Cezinando takes the stage!', 10, 7, 4, 4),
+('Quiz', '2019-09-10', '1900', '2300', 'New Quizmaster tonight!', 2, 3, 3, 2),
+('Open mic', '2019-05-26', '2130', '0230', 'Come show us what you got!', 2, 4, 0, 2),
+('Togaparty', '2019-08-15', '2130', '0230', 'Show us how ancient romans celebrated!', 13, 8, 5, 2);
 
 INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type) VALUES
 ('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0, 1),
