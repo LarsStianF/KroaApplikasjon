@@ -160,10 +160,15 @@ INSERT INTO event (Name, Date, Time_Start, Time_End, Event_text, Event_sec, Even
 ('Togaparty', '2019-08-15', '2130', '0230', 'Show us how ancient romans celebrated!', 13, 8, 5, 2);
 
 INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type) VALUES
-('root', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0, 1),
-('Kari', 'Øvrebø', 83839292, 'Kari@test.no', md5('Root123'), 3, 5),
+('Per', 'Sunde', 92928383, 'root@test.no', md5('Root123'), 0, 1),
+('Kari', 'Vik', 83839292, 'Kari@test.no', md5('Root123'), 3, 5),
 ('Kim', 'Possible', 77775555, 'Possible@test.no', md5('Root123'), 5, 5),
-('Trym', 'Host', 88884444, 'Host@test.no', md5('Root123'), 6, 5);
+('Trym', 'Host', 88884444, 'Host@test.no', md5('Root123'), 6, 5),
+('Jon', 'Snow', 66665555, 'Snow@test.no', md5('Root123'), 4, 4),
+('Ola', 'Nordmann', 12344321, 'Ola@test.no', md5('Root123'), 0, 6),
+('Emma', 'Huby', 09877890, 'Huby@test.no', md5('Root123'), 2, 6),
+('David', 'Goliat', 76544567, 'Goliat@test.no', md5('Root123'), 10, 2),
+('Ahmad', 'Sola', 76555567, 'Sola@test.no', md5('Root123'), 1, 6);
 
 INSERT INTO Crew_type (ID, type) VALUES
 (1, 'Bar'),
@@ -173,24 +178,38 @@ INSERT INTO Crew_type (ID, type) VALUES
 
 INSERT INTO Manager (vol_ID, crew_type_ID) VALUES
 (1, 1),
-(1, 2),
 (2, 2),
 (2, 3),
 (3, 3),
-(3, 4),
-(4, 4);
+(4, 4),
+(5, 1);
 
 INSERT INTO event_volunteer (vol_ID, event_ID, crew_type_ID, manager) VALUES
-(1, 1, 1, 0),
+(1, 1, 1, 1),
 (1, 2, 2, 0),
-(2, 2, 3, 0),
-(2, 1, 1, 0),
-(3, 1, 4, 1);
+(2, 2, 3, 1),
+(2, 1, 2, 1),
+(3, 1, 4, 0),
+(4, 3, 4, 1),
+(6, 5, 1, 0),
+(6, 8, 2, 0),
+(7, 4, 3, 0),
+(7, 5, 2, 0),
+(9, 11, 2, 0),
+(9, 7, 1, 0),
+(9, 4, 1, 0);
 
 INSERT INTO want_volunteer (vol_ID, event_ID, crew_type_ID) VALUES
 (1, 3, 1),
 (2, 4, 2),
-(3, 4 ,3);
+(3, 4 ,3),
+(3, 10, 1),
+(6, 4, 2),
+(6, 1, 1),
+(6, 9, 4),
+(6, 7, 2),
+(9, 9, 1),
+(9, 10, 2);
 
 INSERT INTO logs (event_ID, crew_type_ID, logs) VALUES
 (1, 1, 'Vi hadde masse trøbbel'),
@@ -224,4 +243,12 @@ INSERT INTO logs (event_ID, crew_type_ID, logs) VALUES
 (8, 1, 'Vi hadde masse trøbbel'),
 (8, 2, 'Dette arrangementet gikk fint'),
 (8, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
-(8, 4, 'De nye høytalerne funka glimrende! Alt vell!');
+(8, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(9, 1, 'Vi hadde masse trøbbel'),
+(9, 2, 'Dette arrangementet gikk fint'),
+(9, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
+(9, 4, 'De nye høytalerne funka glimrende! Alt vell!'),
+(10, 1, 'Vi hadde masse trøbbel'),
+(10, 2, 'Dette arrangementet gikk fint'),
+(10, 3, 'Vi Syns dette arrangementet var kjedelig, forslag til forbedring?'),
+(10, 4, 'De nye høytalerne funka glimrende! Alt vell!');
