@@ -7,7 +7,7 @@ if (isset($_POST['logSearch'])) {
 $searchword = mysqli_real_escape_string($con,$_POST['logSearch']);
 
 // searches database for a name containing the searchword
-$sql = "SELECT * FROM event WHERE Name LIKE '%" . $searchword . "%' ORDER BY Date DESC";
+$sql = "SELECT * FROM event WHERE Name LIKE '%" . $searchword . "%' AND Date < CURDATE() ORDER BY Date DESC";
 // calls function array_list, puts search results in an array
 $row = array_list($sql);
 if(count($row)) {
@@ -100,17 +100,8 @@ if(count($row)) {
                              <hr>
                                                           <h5 class="text-center">'.$crew_name.' volunteers</h5>
 
-                             <div class="table-responsive">
-                             <table class="table">
-                             
-                                <thead>
-                                <tr>
-                                <td><b>First name</b></td>
-                                <td><b>Last name</b></td>
-                                <td><b>Manager</b></td>
-                                </tr>
-                                </thead></table>
-                             </div>           
+                                                    '.populate_volunteers($event_id, $crew_id).'
+        
                          </div>           
                     </div>
                 </div>
