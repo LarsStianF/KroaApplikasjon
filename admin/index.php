@@ -37,8 +37,8 @@ include 'rsc/imports/modals/event_modal.php';
                 <div>
                     <div class="d-flex align-items-center p-3 bg-info rounded shadow-sm ">
                         <img class="mr-3" src="../rsc/img/Kroalogo.png" alt="" width="48" height="48">
-                        <div>
-                            <h6 class="mb-0 text-white ">Welcome, <?php echo $_SESSION['login_name'] ?></h6>
+                        <div class="lh-100">
+                            <h6 class="mb-0 text-white">Welcome, <?php echo $_SESSION['login_name'] ?></h6>
                             <small>Last volunteered: </small>
                         </div>
                     </div>
@@ -113,10 +113,8 @@ include 'rsc/imports/modals/event_modal.php';
                                 // Free result set
                                 mysqli_free_result($result);
                             } else{
-                                echo "No records matching your query were found.";
+                                echo "You have no confirmed events!";
                             }
-                        } else{
-                            echo "ERROR: Could not able to execute";
                         }
                         ?>
                         <small class="d-block text-right mt-3">
@@ -190,11 +188,9 @@ include 'rsc/imports/modals/event_modal.php';
                             // Free result set
                             mysqli_free_result($result);
                         } else{
-                            echo "No records matching your query were found.";
+                            echo "You have no signed events!";
 
                         }
-                    } else{
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
                     }
 
 
@@ -273,7 +269,8 @@ include 'rsc/imports/modals/event_modal.php';
                         <div class="card-body">
                             <div class="stat-info-container">
                                 <div class="stat-icon inline-block">
-                                    <i class="icon-month border-info"></i></div>
+                                    <i class="icon-month border-info"></i>
+                                </div>
                                 <div class="stat-info inline-block">
                                     <div class="stat-text">
                                         Times worked this month

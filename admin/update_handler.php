@@ -47,4 +47,20 @@ if (isset($_GET['object'])){
 
     }
 
+    // check if object is application
+    if ($_GET['object'] == 'application') {
+
+        $user_list = $_POST['user_list'];
+        $event_id = mysqli_real_escape_string($con, $_GET['id']);
+        $job = mysqli_real_escape_string($con, $_GET['job']);
+        foreach ($user_list as $user) {
+
+            add_volunteer_to_event($user, $event_id, $job,0);
+        }
+
+
+
+    }
+
+
 }

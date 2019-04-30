@@ -84,151 +84,127 @@ include 'rsc/imports/modals/new_log_modal.php';
 
          <?php
             if ($_SESSION['login_type'] >= 5 || $_SESSION['login_type'] == 1) {
-             echo '
-                
-            
-            
-        <!--
-        ############################                ############################
-        ############################ Manager Button ############################
-        ############################                ############################
-        -->
-
-        <div class="row filter Manager">
-            <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
-                    <h6 class="border-bottom border-gray pb-2 mb-0">Upcoming events</h6>
-                    ';
-
-            /* Attempt MySQL server connection. Assuming you are running MySQL
-            server with default setting (user 'root' with no password) */
-            $link = mysqli_connect("localhost", "root", "", "group11");
-
-            // Check connection
-            if($link === false){
-                die("ERROR: Could not connect. " . mysqli_connect_error());
-            }
-
-            // Attempt select query execution
-            $sql = "SELECT * FROM event LIMIT 4";
-            if($result = mysqli_query($link, $sql)){
-                if(mysqli_num_rows($result) > 0){
-                    while($row = mysqli_fetch_array($result)){
-                        // Gets date
-                        $id = $row['ID'];
-                        $d = new DateTime($row['Date']);
-                        $date = $d->format('F jS o');
-
-                        // Gets time
-                        $sTime = new DateTime($row['Time_Start']);
-                        $eTime = new DateTime($row['Time_End']);
-                        $startTime = $sTime->format('H:i');
-                        $endTime = $eTime->format('H:i');
 
 
-                        echo '<div class="media text-muted pt-3">';
-                        echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
-                        echo    '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo    '<strong class="d-block text-gray-dark h4">';
-                        echo    $row['Name'];
-                        echo    '</strong>';
-                        echo    ' <strong class="d-block text-gray dark">Date: ';
-                        echo    $date;
-                        echo    '<br>';
-                        echo    ' Time: ';
-                        echo    $startTime;
-                        echo    ' - ';
-                        echo    $endTime;
-                        echo    '</strong>';
-                        echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
-                        echo    '<strong class="d-block text-gray dark">You are working as: Bar</strong>';
-                        echo    '<strong class="d-block text-gray dark">Volunteers: 6/6 Bar, 4/5 Teknisk, 4/4 Crew, 10/14 Security</strong>';
-                        echo    '<strong class="d-block text-gray dark"> Managers: 1/1 Bar, 0/0 Teknisk, 1/1 Crew, 1/1 Security</strong>';
-                        echo    '<span class="text-gray dark h6">Additional Notes: </span>' , $row['Event_text'];
-                        echo    '<button type="button" class="btn btn-primary btn-sm btn-outline-success" style="float: right;">Sign up</button>';
-                        echo    '</p>';
-                        echo '</div>';
+                // get user id
+                $user_id = $_SESSION['login_id'];
+
+                $sql = "SELECT ID, Name, Event_text, Date, Time_Start, Time_End, Event_sec, Event_bar, Event_crew, Event_tech, event_volunteer.vol_ID, event_volunteer.crew_type_ID, event_volunteer.manager
+                                FROM event
+                                INNER JOIN event_volunteer
+                                ON event.ID = event_volunteer.event_ID 
+                                AND event_volunteer.vol_ID = $user_id 
+                                AND event_volunteer.manager = 1
+                                AND Date >= CURDATE();";
+
+                $output = '<section class="container filter Manager my-3 bg-white rounded shadow-sm">
+                                    <h6 class="border-bottom border-gray pb-2 pt-2 mb-0">Your managing these events</h6>
+                                            <div class="row pt-3 px-3 pb-0">';
+
+
+                if ($result = mysqli_query($con, $sql)) {
+
+                    if (mysqli_num_rows($result) > 0) {
+                        $rows = mysqli_num_rows($result);
+                        $counter = 1;
+
+                        while ($row = mysqli_fetch_array($result)) {
+                            // Gets date
+                            $id = $row['ID'];
+                            $crew_id = $row['crew_type_ID'];
+                            $d = new DateTime($row['Date']);
+                            $date = $d->format('F jS o');
+
+                            // Gets time
+                            $sTime = new DateTime($row['Time_Start']);
+                            $eTime = new DateTime($row['Time_End']);
+                            $startTime = $sTime->format('H:i');
+                            $endTime = $eTime->format('H:i');
+
+                            // get event volunteers
+                            $volunteers = get_event_volunteers($id);
+                            $bar = $volunteers[0];
+                            $security = $volunteers[1];
+                            $crew = $volunteers[2];
+                            $technical = $volunteers[3];
+
+                            $output .= '
+                                    
+                                    
+                                        <div class="col d-flex flex-column">
+                                            
+                                            <div class="d-inline-flex">  
+                                                ' . get_confirmed_role($user_id, $id) . ' 
+                                                <strong class="d-block h2">
+                                                    ' . $row['Name'] . '
+                                                </strong>
+                                            </div>
+                                            <div class="mt-2 ml-4 pl-1">
+                                                <strong class="d-block">
+                                                    Date: ' . $date . '
+                                                </strong>
+                                                <strong>
+                                                    Time: ' . $startTime . ' - ' . $endTime . '
+                                                </strong>
+                                            </div>
+                                            <div>
+                                                <strong class="d-block mt-2 ml-4 pl-1">
+                                                    ' . $bar . '/' . $row['Event_bar'] . ' Bar, ' . $security . '/' . $row['Event_sec'] . ' Security, ' . $crew . '/' . $row['Event_crew'] . ' Crew, ' . $technical . '/' . $row['Event_tech'] . ' Teknisk
+                                                </strong>
+                                            </div>
+                                            <div class="justified mt-3 ml-4 pl-1">
+                                                <strong>
+                                                    ' . $row['Event_text'] . ' 
+                                                </strong>
+                                            
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                        <div class="col">
+                                            ' . populate_want_volunteers($id, $crew_id) . '
+                                        </div>
+                                        
+                                   </div>
+                                    <div class="d-flex justify-content-end">
+                                    <a class="btn btn-primary btn-small border-dark mb-2" type="button" data-toggle="collapse"  href="#collapse' . $id . '"><i class="fa fa-angle-down"></i></a>
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+                                   
+                                   <div id="collapse' . $id . '" class="collapse" data-parent="#accordion-manage">
+                                        ' . populate_volunteers($id, $crew_id) . '
+                                    </div>
+                                </div>
+                                   ';
+
+                            if ($counter < $rows) {
+
+                                $output .= '<hr>
+                                                <div class="row pt-3 px-3 pb-0">';
+                            } else {
+
+                            }
+                            $counter++;
+
+                        }
+
+                        // Free result set
+                        mysqli_free_result($result);
                     }
-                    // Free result set
-                    mysqli_free_result($result);
-                } else{
-                    echo "No records matching your query were found.";
                 }
-            } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                $output .= "</section>";
+                echo $output;
             }
 
-            // Close connection
-            mysqli_close($link);
-            ?>
-                </div></div>
-                    <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
-                            <h6 class="border-bottom border-gray pb-2 mb-0">You`re managing these events</h6>
 
-                            <?php
-                            /* Attempt MySQL server connection. Assuming you are running MySQL
-                            server with default setting (user 'root' with no password) */
-                            $link = mysqli_connect("localhost", "root", "", "group11");
+         ?>
 
-                            // Check connection
-                            if($link === false){
-                                die("ERROR: Could not connect. " . mysqli_connect_error());
-                            }
-
-                            // Attempt select query execution
-                            $sql = "SELECT * FROM event WHERE ID > 4 LIMIT 4";
-                            if($result = mysqli_query($link, $sql)){
-                                if(mysqli_num_rows($result) > 0){
-                                    while($row = mysqli_fetch_array($result)){
-                                        // Gets date
-                                        $id = $row['ID'];
-                                        $d = new DateTime($row['Date']);
-                                        $date = $d->format('F jS o');
-
-                                        // Gets time
-                                        $sTime = new DateTime($row['Time_Start']);
-                                        $eTime = new DateTime($row['Time_End']);
-                                        $startTime = $sTime->format('H:i');
-                                        $endTime = $eTime->format('H:i');
-
-                                        echo '<div class="media text-muted pt-3">';
-                                        echo    '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect fill="#007bff" width="100%" height="100%"/><text fill="#007bff" dy=".3em" x="50%" y="50%">32x32</text></svg>';
-                                        echo    '<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                                        echo    '<strong class="d-block text-gray-dark h4">';
-                                        echo    $row['Name'];
-                                        echo    '</strong>';
-                                        echo    ' <strong class="d-block text-gray dark">Date: ';
-                                        echo    $date;
-                                        echo    '<br>';
-                                        echo    ' Time: ';
-                                        echo    $startTime;
-                                        echo    ' - ';
-                                        echo    $endTime;
-                                        echo    '</strong>';
-                                        echo    '<strong class="d-block text-gray dark">Meetup: kl 18.00</strong>';
-                                        echo    '<strong class="d-block text-gray dark">You are working as: Bar</strong>';
-                                        echo    '<strong class="d-block text-gray dark">Volunteers: 6/6 Bar, 4/5 Teknisk, 4/4 Crew, 10/14 Security</strong>';
-                                        echo    '<strong class="d-block text-gray dark"> Managers: 1/1 Bar, 0/0 Teknisk, 1/1 Crew, 1/1 Security</strong>';
-                                        echo    '<span class="text-gray dark h6">Additional Notes: </span>' , $row['Event_text'];
-                                        echo    '</p>';
-                                        echo '</div>';
-                                    }
-                                    // Free result set
-                                    mysqli_free_result($result);
-                                } else{
-                                    echo "No records matching your query were found.";
-                                }
-                            } else{
-                                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                            }
-
-                            // Close connection
-                            mysqli_close($link);
-                            ?>
-                        </div></div>
-        </div>
-        <?php
-            }
-        ?>
+       
 
         <!--
         ############################                ############################
