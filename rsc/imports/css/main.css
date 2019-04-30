@@ -139,30 +139,30 @@ ul.topbuttons {
 /////////////////admin/Index////////////////////
  ////////////////////////////////////////*/
 
-.stat-widget-one .stat-icon {
+.stat-info-container .stat-icon {
     vertical-align: top;
 }
-.dib {
+.inline-block {
     display: inline-block;
 }
 
 
-.stat-widget-one .stat-content {
+.stat-info-container .stat-info {
     margin-left: 30px;
     margin-top: 7px;
 }
 
-.stat-widget-one .stat-text {
+.stat-info-container .stat-text {
     font-size: 14px;
     color: #868e96;
 }
 
-.stat-widget-one .stat-digit {
+.stat-info-container .stat-value {
     font-size: 24px;
     color: #373757;
 }
 
-.stat-widget-one .stat-icon i {
+.stat-info-container .stat-icon i {
     border-style: solid;
     border-radius: 100px;
     padding: 15px;
@@ -172,19 +172,19 @@ ul.topbuttons {
 
 
 
-.ti-enhet:before {
+.icon-enhet::after{
     content: url("../../img/enhet.png");
 }
 
-.ti-total:before {
+.icon-total::after {
     content: url("../../img/total.png");
 }
 
-.ti-month:before {
+.icon-month::after {
     content: url("../../img/month.png");
 }
 
-.ti-jippi:before {
+.icon-jippi::after {
     content: url("../../img/jippi.png");
 }
 

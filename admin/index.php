@@ -35,10 +35,10 @@ include 'rsc/imports/modals/event_modal.php';
         <div class="row mb-3">
             <div class="col-md-8 themed-grid-col">
                 <div>
-                    <div class="d-flex align-items-center p-3 text-white-50 bg-warning rounded shadow-sm ">
-                        <img class="mr-3" src="../rsc/img/userpic.jpg" alt="" width="48" height="48">
-                        <div class="lh-100">
-                            <h6 class="mb-0 text-white lh-100">Welcome, <?php echo $_SESSION['login_name'] ?></h6>
+                    <div class="d-flex align-items-center p-3 bg-info rounded shadow-sm ">
+                        <img class="mr-3" src="../rsc/img/Kroalogo.png" alt="" width="48" height="48">
+                        <div>
+                            <h6 class="mb-0 text-white ">Welcome, <?php echo $_SESSION['login_name'] ?></h6>
                             <small>Last volunteered: </small>
                         </div>
                     </div>
@@ -209,15 +209,15 @@ include 'rsc/imports/modals/event_modal.php';
                 <div class="col-md-4 themed-grid-col">
                     <div class="card">
                         <div class="card-body">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib">
-                                    <i class="ti-enhet text-success border-success"></i>
+                            <div class="stat-info-container">
+                                <div class="stat-icon inline-block">
+                                    <i class="icon-enhet border-info"></i>
                                 </div>
-                                <div class="stat-content dib">
+                                <div class="stat-info inline-block">
                                     <div class="stat-text">
                                         Spare units
                                     </div>
-                                    <div class="stat-digit">
+                                    <div class="stat-value">
                                         <?php echo $_SESSION['login_unit'] ?>
                                     </div>
                                 </div>
@@ -239,13 +239,13 @@ include 'rsc/imports/modals/event_modal.php';
 
                     <div class="card">
                         <div class="card-body">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib">
-                                    <i class="ti-total text-success border-success"></i>
+                            <div class="stat-info-container">
+                                <div class="stat-icon inline-block">
+                                    <i class="icon-total border-info"></i>
                                 </div>
-                                <div class="stat-content dib">
+                                <div class="stat-info inline-block">
                                     <div class="stat-text">Times worked</div>
-                                    <div class="stat-digit">
+                                    <div class="stat-value">
                                         <?php echo $row['times']; ?>
                                     </div>
                                 </div>
@@ -271,13 +271,14 @@ include 'rsc/imports/modals/event_modal.php';
 
                     <div class="card">
                         <div class="card-body">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class="ti-month text-success border-success"></i></div>
-                                <div class="stat-content dib">
+                            <div class="stat-info-container">
+                                <div class="stat-icon inline-block">
+                                    <i class="icon-month border-info"></i></div>
+                                <div class="stat-info inline-block">
                                     <div class="stat-text">
                                         Times worked this month
                                     </div>
-                                    <div class="stat-digit">
+                                    <div class="stat-value">
                                         <?php echo $row['time'];  ?>
                                     </div>
                                 </div>
@@ -287,15 +288,15 @@ include 'rsc/imports/modals/event_modal.php';
 
                     <div class="card">
                         <div class="card-body">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib">
-                                    <i class="ti-jippi text-success border-success"></i>
+                            <div class="stat-info-container">
+                                <div class="stat-icon inline-block">
+                                    <i class="icon-jippi border-info"></i>
                                 </div>
-                                <div class="stat-content dib">
+                                <div class="stat-info inline-block">
                                     <div class="stat-text">
                                         You have JIPPI until
                                     </div>
-                                    <div class="stat-digit">
+                                    <div class="stat-value">
                                         <?php echo "haha" ?>
                                     </div>
                                 </div>
