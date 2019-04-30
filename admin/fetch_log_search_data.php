@@ -44,31 +44,32 @@ if(count($row)) {
         $output     .= '
            <div class=" bg-light border-dark">
 
-           <div class="card">
-                <div class="card-header text-center d-flex justify-content-between">
-                <div class="d-flex justify-content-left">
-                    <h3>
-                         ' . $event_name . '
-                    </h3>
-                </div>
-                <div class="d-flex justify-content-left">
+                 <div class="card">
+                     <div class="card-header text-center d-flex justify-content-between">
+                         <div class="d-flex justify-content-left">
+                             <h3>
+                             ' . $event_name . '
+                             </h3>
+                        </div>
+                        <div class="d-flex justify-content-left">
 
-                    <h4>
-                         ' .DATE("j F Y" ,strtotime($event_date)) . '
-                    </h4>
-                    <div class="ml-3">
-                         <a class="btn btn-primary btn-small border-dark" type="button" data-toggle="collapse" href="#collapseEvent'.$event_id.'" aria-expanded="true"><i class="fa fa-angle-down"></i></a>
-                    </div>
-                    </div>
-                </div>
-                </div>                 
-                
+                              <h4>
+                             ' .DATE("j F Y" ,strtotime($event_date)) . '
+                              </h4>
+                              <div class="ml-3">
+                                    <a class="btn btn-primary btn-small border-dark" type="button" data-toggle="collapse" href="#collapseEvent'.$event_id.'" aria-expanded="true"><i class="fa fa-angle-down"></i></a>
+                              </div>
+                         </div>
+                      </div>
+                 </div>                 
+           </div>                 
+
                                                                   
 ';
 
 
         $output .= '<div id="collapseEvent'.$event_id.'" class="collapse" data-parent="#accordionEvent" style="">
-                    <div id="accordionCrew">';
+                    <div id="accordionCrew'.$event_id.'">';
 
         foreach ($crew_row as $cr){
 
@@ -84,35 +85,45 @@ if(count($row)) {
 
         $output.='
 
-                         <a class=" d-flex justify-content-left list-group-item list-group-item-action flex-column align-items-start" data-toggle="collapse" href="#collapseCrew'.$crew_id.$event_id.'" aria-expanded="true">
-                           <div class="d-flex w-100 justify-content-center">
-                           <h3>'.$crew_name.'</h3>                                              
-                           </div>
-                            
+                         <a class=" d-flex justify-content-left list-group-item list-group-item-action flex-column" data-toggle="collapse" href="#collapseCrew'.$crew_id.$event_id.'" aria-expanded="true">
+                         <div class="d-flex w-100 justify-content-center">
+                             <h3>'.$crew_name.'</h3>                                              
+                         </div>                        
                          </a>
+                         <div id="collapseCrew'.$crew_id.$event_id.'" class="collapse" data-parent="#accordionCrew'.$event_id.'" style="">
+                             <div class="card col mb-4 box-shadow h-md-250">
+            <div class="card-body d-flex flex-column">
+              <h3 class="mb-0 text-dark">
+                ' . $event_name . '
+              </h3>
+              <div class="mb-1 text-muted">' .DATE("j F Y" ,strtotime($event_date)) . '</div>
+              <p class="card-text mb-auto">'. $log_event.'</p>
+       
+            
+                                 
+                             <div>
+                             <hr>
+                                                          <h5 class="text-center">'.$crew_name.' volunteers</h5>
 
-                <div id="collapseCrew'.$crew_id.$event_id.'" class="collapse" data-parent="#accordionCrew" style="">
-                
-                    <div>
-                    <p> testies testies '. $log_event.'</p>
-                    </div>
-                    <div class="table-responsive">
-                         <br><table class="table">
-                        <thead>
-                            <tr>
-                            <td><b>First name</b></td>
-                            <td><b>Last name</b></td>
-                            <td><b>Manager</b></td>
-                            </tr>
-                        </thead></table>
-                    </div>           
+                             <div class="table-responsive">
+                             <table class="table">
+                             
+                                <thead>
+                                <tr>
+                                <td><b>First name</b></td>
+                                <td><b>Last name</b></td>
+                                <td><b>Manager</b></td>
+                                </tr>
+                                </thead></table>
                              </div>           
-
+                         </div>           
+</div>
+          </div></div>
 
                         
                         ';
         }
-        $output .= '</div></div></div>';
+        $output .= '</div></div>';
 
     }
     $output .= '</div>';

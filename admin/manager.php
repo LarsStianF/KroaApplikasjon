@@ -87,8 +87,8 @@ include 'rsc/imports/php/functions/functions.php';
             </div>
 
                 <form method="post" action="fetch_log_search_data.php" class="form-inline m-1">
-                    <div class="input-group input-group-lg form-inline">
-                    <input type="text" id="logSearch" name="logSearch" class="form-control" placeholder="Search for logs">
+                    <div class="input-group input-group-lg w-100">
+                    <input type="text" id="logSearch" name="logSearch" class="form-control" placeholder="Search for logs(read only)">
                 <div class="input-group-append">
                     <input type="submit" value="Search" class="search_button btn btn-dark" />
 
@@ -100,13 +100,13 @@ include 'rsc/imports/php/functions/functions.php';
         </div>
 
         <div class="row">
-            <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
-                    <h6 class="border-bottom border-gray pb-2 mb-0">Upcoming events</h6>
+            <div class="col themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
+                    <h6 class="border-bottom border-gray pb-2 mb-0">Log archive</h6>
 
-                    <div id="searchresults">
-                        <ul id="results" class="update">
+                    <div id="searchresults" >
+                        <div id="results" class="update">
 
-                        </ul>
+                        </div>
                     </div>
                 </div>
             </div>
