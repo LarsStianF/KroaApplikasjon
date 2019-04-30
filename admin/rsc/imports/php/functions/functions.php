@@ -837,13 +837,14 @@ function remove_from_want_volunteer($id, $job_id, $user_id) {
 
     if($row['Existence'] == 0) {
 
-        //event deleted
+        //volunteer removed
         $status_db = 1;
+
         header('Refresh: 0; URL=index.php?deleted=application&status=' . $status_db);
 
     } else if ($row['Existence'] == 1) {
 
-
+        //volunteer not removed
         $status_db = 0;
 
         header('Refresh: 0; URL=index.php?deleted=application&status=' . $status_db);
@@ -863,6 +864,99 @@ function manager_crew_type_check($id, $crew_type) {
     } else
         return true;
 
+
+}
+
+function populate_want_volunteers($id, $crew_id)
+{
+    global $con;
+
+    $sql = "SELECT volunteer.ID, volunteer.Firstname, volunteer.Lastname
+            FROM volunteer
+            INNER JOIN want_volunteer
+            ON volunteer.ID = want_volunteer.vol_ID 
+            AND want_volunteer.crew_type_ID = $crew_id
+            AND want_volunteer.event_ID = $id;";
+
+    $result = mysqli_query($con, $sql);
+
+
+    $output = '<form action="addvolunteer.php" method="POST">  
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr><td><b>First name</b></td><td><b>Last name</b></td><td><b>Add</b></td></tr>
+                        </thead>
+
+
+    
+    ';
+
+
+    while ($row = mysqli_fetch_array($result)) {
+
+        $output .= '<tr><td>' . $row['Firstname'] . '</td><td>' . $row['Lastname'] . '</td><td><input type="checkbox" name="'.$id.'"></td></tr>';
+
+    }
+
+    $output .= '</table>
+              </div>
+              <div class="d-flex justify-content-center mb-3">
+                <input type="submit" name="submit" value="Add volunteers" class="btn btn-small btn-primary">
+              </div>
+              
+              </from>';
+    return $output;
+
+}
+
+function  add_volunteer_to_event($user_id, $event_id, $sign_job, $man) {
+    global $con;
+
+    $sql = "INSERT INTO event_volunteer (vol_ID, event_ID, crew_type_ID, manager) VALUES
+           ($user_id, $event_id, $sign_job, $man);";
+
+    if( mysqli_query($con, $sql)) {
+        $sql = "DELETE FROM want_volunteer 
+                       WHERE vol_ID = $user_id
+                       AND event_ID = $event_id;";
+
+        //delete the other applications for this event
+        mysqli_query($con,$sql);
+        //Volunteer added, and deleted from want_volunteer
+        $status_db = 1;
+
+        header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
+
+
+
+    } else {
+        $status_db = 0;
+        echo $sql;
+        header('Refresh: 0; URL=index.php?created=application&status=' . $status_db);
+    }
+
+
+
+
+
+
+}
+
+function remove_from_event_volunteer($user_id, $event_id) {
+    global $con;
+
+    $sql = "DELETE FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $event_id";
+
+    if(mysqli_query($con, $sql)) {
+        // if removed correctly
+        $status_db = 1;
+        header('Refresh: 0; URL=index.php?deleted=application&status=' . $status_db);
+    } else {
+        // not removed correctly
+        $status_db = 0;
+        header('Refresh: 0; URL=index.php?deleted=application&status=' . $status_db);
+    }
 
 }
 

@@ -18,11 +18,20 @@ if(isset($_GET['object'])) {
     }
 
     if ($_GET['object'] == 'application') {
+        $man = mysqli_real_escape_string($con, $_GET['manager']);
         $sign_job = mysqli_real_escape_string($con, $_GET['job']);
         $event_id = mysqli_real_escape_string($con,$_GET['id']);
         $vol_id = mysqli_real_escape_string($con,$_SESSION['login_id']);
 
-        add_to_want_volunteer($sign_job, $event_id, $vol_id);
+        if($man == 1) {
+            //add as manager
+            add_volunteer_to_event($vol_id, $event_id, $sign_job, $man);
+        } if($man == 0) {
+            // add as volunteer
+            add_to_want_volunteer($sign_job, $event_id, $vol_id);
+        }
+
+
     }
 }
 
