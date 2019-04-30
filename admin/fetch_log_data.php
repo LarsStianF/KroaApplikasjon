@@ -52,7 +52,7 @@ while ($row = mysqli_fetch_array($result)) {
     </div>
 
     <div class="form-group mt-2">
-        <button type="submit" class="btn btn-success" name="submit">Edit event</button>
+        <button type="submit" class="btn btn-success" name="submit">Submit log</button>
     </div>
 
 

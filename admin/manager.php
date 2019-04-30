@@ -213,7 +213,7 @@ include 'rsc/imports/modals/new_log_modal.php';
  -->
         <div class="row filter Bar-log">
             <div class="col">
-                <a href="#newLogModal" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Bar log</a>
+                <a href="#newLogModal" name="1" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Bar log</a>
 
                 <?php
 
@@ -281,7 +281,7 @@ include 'rsc/imports/modals/new_log_modal.php';
         -->
         <div class="row filter Security-log">
             <div class="col">
-                <button class="btn btn-primary btn-lg mt-2">Create new Security log</button>
+                <a href="#newLogModal" name="2" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Security log</a>
 
 
                 <?php
@@ -350,7 +350,7 @@ include 'rsc/imports/modals/new_log_modal.php';
         -->
         <div class="row filter Crew-log">
             <div class="col">
-                <button class="btn btn-primary btn-lg mt-2">Create new Crew log</button>
+                <a href="#newLogModal" name="3" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Crew log</a>
 
                 <?php
 
@@ -417,7 +417,7 @@ include 'rsc/imports/modals/new_log_modal.php';
         -->
         <div class="row filter Tech-log">
             <div class="col">
-                <button class="btn btn-primary btn-lg mt-2">Create new Technical log</button>
+                <a href="#newLogModal" name="4" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Technical log</a>
 
                 <?php
 
