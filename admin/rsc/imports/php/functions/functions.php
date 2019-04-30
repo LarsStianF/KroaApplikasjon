@@ -831,7 +831,7 @@ function manager_crew_type_check($id, $crew_type) {
 function populate_want_volunteers($id, $crew_id)
 {
     global $con;
-
+    $output = '';
     $sql = "SELECT volunteer.ID, volunteer.Firstname, volunteer.Lastname
             FROM volunteer
             INNER JOIN want_volunteer
@@ -842,32 +842,27 @@ function populate_want_volunteers($id, $crew_id)
     $result = mysqli_query($con, $sql);
 
 
-    $output = '<form action="addvolunteer.php" method="POST">  
+    $output .= '<form action="update_handler.php?object=application&id='.$id.'&job='.$crew_id.'&user=" method="POST">  
                 <div class="table-responsive">
                     <table class="table">
-                        <thead>
-                        <tr><td><b>First name</b></td><td><b>Last name</b></td><td><b>Add</b></td></tr>
-                        </thead>
-
-
-    
-    ';
+                        <h4 class="text-center">Add volunteers</h4>
+                        <tr><td class="border-0"><b>First name</b></td><td class="border-0"><b>Last name</b></td><td class="border-0"><b>Add</b></td></tr>';
 
 
     while ($row = mysqli_fetch_array($result)) {
 
-        $output .= '<tr><td>' . $row['Firstname'] . '</td><td>' . $row['Lastname'] . '</td><td><input type="checkbox" name="'.$id.'"></td></tr>';
+        $output .= '<tr><td>' . $row['Firstname'] . '</td><td>' . $row['Lastname'] . '</td><td><input type="checkbox" name="user_list[]" value="'.$row['ID'].'"></tr>';
 
     }
 
     $output .= '</table>
               </div>
               <div class="d-flex justify-content-center mb-3">
-                <input type="submit" name="submit" value="Add volunteers" class="btn btn-small btn-primary">
+                <input type="submit" name="'.$id.'" value="Add volunteers" class="btn btn-small btn-primary">
               </div>
-              
-              </from>';
+              </form>';
     return $output;
+
 
 }
 
