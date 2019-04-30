@@ -15,17 +15,20 @@ return false;
 
 }
 
-function select_list($query)
+function array_list($query)
 {
     global $con;
-    $q = mysqli_query($con,$query);
-    if (!$q) return null;
-    $ret = array();
-    while ($row = mysqli_fetch_array($q)) {
-        array_push($ret, $row);
+    $query = mysqli_query($con,$query);
+    if (!$query) return null;
+
+    // Creates array
+    $array = array();
+    while ($row = mysqli_fetch_array($query)) {
+        array_push($array, $row);
     }
-    mysqli_free_result($q);
-    return $ret;
+    // Frees memory after search
+    mysqli_free_result($query);
+    return $array;
 }
 
 
@@ -312,12 +315,12 @@ function get_event_volunteers($id) {
 
 }
 
-function admin_set_user_role($vol_id)
-{
+function admin_set_user_role($vol_id){
     global $con;
 
     $stmt = $con->prepare("UPDATE volunteer SET user_type = ? WHERE ID = ?");
     $newUserType = $_POST['selRole'];
+    $newUserType = mysqli_real_escape_string($con,$newUserType);
 
     $stmt->bind_param("ii", $newUserType, $vol_id);
     $stmt->execute();
@@ -330,10 +333,7 @@ function admin_set_user_role($vol_id)
 
 echo $newUserType;
     if ($newUserType === '5'){
-
-
         if (!empty($_POST['manRole_list'])) {
-
             $stmt = $con->prepare("INSERT INTO manager(vol_id, crew_type_ID) VALUES(?, ?)");
             foreach ($_POST['manRole_list'] as $crew_name) {
                 if ($crew_name === 'Bar'){
@@ -347,65 +347,26 @@ echo $newUserType;
                 }else{
                     $stmt->close();
                     header('Refresh: 0; URL=people.php');
-
                 }
-
                 $stmt->bind_param("ii", $vol_id, $crew_type);
                 $stmt->execute();
-
             }
             $stmt->close();
         }
-
-/*
-        $stmt = $con->prepare("INSERT INTO manager(vol_id, crew_type_ID) VALUES(?, ?)");
-        $stmtDel = $con->prepare("DELETE FROM manager WHERE vol_id = ? AND crew_type_ID = ?");
-            foreach ($_POST['manRole_list'] as $crew_name) {
-                if ($crew_name === 'Bar'){
-                    $crew_type = 1;
-                }else{
-                    $delete_crew_type = 1;
-                }
-                if ($crew_name === 'Security'){
-                    $crew_type = 2;
-                }else{
-                    $delete_crew_type = 2;
-                }
-                if ($crew_name === 'Crew'){
-                    $crew_type = 3;
-                }else{
-                    $delete_crew_type = 3;
-                }
-                if ($crew_name === 'Technical'){
-                    $crew_type = 4;
-                }else{
-                    $delete_crew_type = 4;
-                }
-
-                $stmtDel->bind_param("ii", $vol_id, $delete_crew_type);
-                $stmtDel->execute();
-                $stmt->bind_param("ii", $vol_id, $crew_type);
-                $stmt->execute();
-
-
-            }
-            $stmtDel->close();
-        $stmt->close();
-*/
-
     }
 
     header('Refresh: 0; URL=people.php');
 
 }
 
-    function volUnitUpdate($vol_id, $name)
+    function volUnitUpdate($vol_id)
     {
         global $con;
 
 
         if (isset($_POST['unitRemove'])) {
             $units = $_POST['unitRemove'];
+            $units= mysqli_real_escape_string($con, $units);
 
             $sql = 'UPDATE volunteer SET ';
             $sql .= 'Unit = Unit - ' . $units . ' ';
@@ -413,7 +374,7 @@ echo $newUserType;
         }
         if (isset($_POST['unitAdd'])) {
             $units = $_POST['unitAdd'];
-
+            $units= mysqli_real_escape_string($con, $units);
             $sql = 'UPDATE volunteer SET ';
             $sql .= 'Unit = Unit + ' . $units . ' ';
             $sql .= 'WHERE ID = ' . $vol_id . ';';

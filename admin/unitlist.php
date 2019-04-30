@@ -33,19 +33,7 @@ include 'rsc/imports/modals/unitlist_modal.php';
     -->
 
 
-<script>
 
-
-
-    $(document).ready(function(){
-        $("#unitSearch").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#namerow a").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
 
 
 
@@ -102,6 +90,8 @@ include 'rsc/imports/modals/unitlist_modal.php';
 
 
         <script src="../rsc/imports/js/unitlist_modal_script.js">
+        </script>
+        <script src="../rsc/imports/js/unitlist_script.js">
         </script>
     </main>
 

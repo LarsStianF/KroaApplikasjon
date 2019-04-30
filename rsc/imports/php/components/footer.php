@@ -39,7 +39,7 @@
     <!-- Copyright-->
     <section class="footer-copyright">
         <div class="container text-center">
-            Created by Spaghetticode Boiz
+            Created by Spaghetticode Boiz(gruppe-11) for APP2000B
         </div>
     </section>
 

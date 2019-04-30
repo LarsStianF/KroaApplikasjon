@@ -15,17 +15,7 @@ include 'rsc/imports/modals/people_modal.php';
 
 ?>
 
-<script>
-    $(document).ready(function(){
-        $("#peopleSearch").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#namerow .filterSearch").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-    // */
-</script>
+
 
 
 
@@ -89,6 +79,8 @@ include 'rsc/imports/modals/people_modal.php';
     </main>
 
     <script src="../rsc/imports/js/people_modal_script.js">
+    </script>
+    <script src="../rsc/imports/js/people_script.js">
     </script>
 
 

@@ -6,6 +6,7 @@ include 'rsc/imports/php/functions/functions.php';
 if(isset($_POST['id']))
 {
     $id = $_POST['id'];
+    $id = mysqli_real_escape_string($con,$id);
 
     $query = "SELECT * FROM volunteer WHERE ID = '".$id."'";
     $result =  mysqli_query($con, $query);
@@ -74,7 +75,7 @@ if(isset($_POST['id']))
     $output.=
                         '
                         <hr> 
-                         <form method="POST" action="update_handler.php?object=unitlist&name=submit&id='.$id.'">
+                         <form method="POST" action="update_handler.php?object=unitlist&id='.$id.'">
                         <div class="d-flex justify-content-around">
                                 <h4>Units to add: </h4>
                                <div class="input-group-append ml-2 form-inline"> 
@@ -119,41 +120,5 @@ if(isset($_POST['id']))
 }
 ?>
 
-<script>
-    $(function(){
-        $('#numUnitsBtn').click(function () {
-    var units = $('#numUnits').val();
-    $('#confNumUnits').html(units);
-    });
-    });
-
-    $(function(){
-        $('#numUnitsBtnAdd').click(function () {
-            var units = $('#numUnitsAdd').val();
-            $('#confNumUnitsAdd').html(units);
-        });
-    });
-
-    $(document).ready(function(){
-
-        $('#numUnits').change(function () {
-            $("#unitConfirmation").collapse('hide');
-        });
-
-        $('#numUnitsAdd').change(function () {
-            $("#unitConfirmationAdd").collapse('hide');
-        });
-
-        $("#numUnitsBtnAdd").click(function(){
-            $("#unitConfirmationAdd").collapse('show');
-            $("#unitConfirmation").collapse('hide');
-        });
-
-        $("#numUnitsBtn").click(function(){
-            $("#unitConfirmation").collapse('show');
-            $("#unitConfirmationAdd").collapse('hide');
-        });
-
-    });
-
+<script src="../rsc/imports/js/unitlist_script.js">
 </script>

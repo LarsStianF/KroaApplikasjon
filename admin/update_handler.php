@@ -18,10 +18,9 @@ if (isset($_GET['object'])){
 
         //get variables
         $vol_id = $_GET['id'];
-        $name = $_GET['name'];
         // Function redirects
 
-        volUnitUpdate($vol_id, $name);
+        volUnitUpdate($vol_id);
     }
     // check if object is event
     if ($_GET['object'] == 'event') {
@@ -41,8 +40,7 @@ if (isset($_GET['object'])){
 
         $object = $_GET['object'];
 
-        //get variables
-        $name_attribute = $_GET['name'];
+        //get variable
         $id = $_GET['id'];
 
         admin_set_user_role($id);

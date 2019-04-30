@@ -1,25 +1,21 @@
 <?php
 include 'rsc/imports/php/functions/functions.php';
 
-//if we got something through $_POST
-
 if (isset($_POST['logSearch'])) {
-    // here you would normally include some database connection
     include('dbcon.php');
-// never trust what user wrote! We must ALWAYS sanitize user input
-$searchword = mysqli_real_escape_string($con,$_POST['logSearch']);
-$searchword = htmlentities($searchword);
 
-// build your search query to the database
+$searchword = mysqli_real_escape_string($con,$_POST['logSearch']);
+
+// searches database for a name containing the searchword
 $sql = "SELECT * FROM event WHERE Name LIKE '%" . $searchword . "%' ORDER BY Date DESC";
-// get results
-$row = select_list($sql);
+// calls function array_list, puts search results in an array
+$row = array_list($sql);
 if(count($row)) {
 
     $crew_fetch = "SELECT * FROM crew_type";
     $crew_res = mysqli_query($con, $crew_fetch);
     $crew_event_row = mysqli_fetch_array($crew_res);
-    $crew_row = select_list($crew_fetch);
+    $crew_row = array_list($crew_fetch);
 
 
 
@@ -116,8 +112,9 @@ if(count($row)) {
                                 </thead></table>
                              </div>           
                          </div>           
-</div>
-          </div></div>
+                    </div>
+                </div>
+          </div>
 
                         
                         ';
