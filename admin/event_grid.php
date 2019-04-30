@@ -19,25 +19,29 @@ include 'rsc/imports/modals/edit_event_modal.php';
 ?>
 
     <main class="container">
+ <?php
+    $output =   '<div class="bg-light p-3 m-0 card" >
+                <h1 class="display-3 text-center"> Event Page </h1>';
+    $user_type = $_SESSION['login_type'];
+    if ($user_type <= 4) {
 
-            <div class="bg-light p-3 m-0 card" >
-                <h1 class="display-3 text-center"> Event Page </h1>
-                <div>
-                    <a href="#newmodal" class="btn btn-dark" id="newevent" data-toggle="modal" >New Event</a>
-                </div>
-
-            </div>
+   $output .=  '<div>
+                    <a href="#newmodal" class="btn btn-dark" id="newevent" data-toggle="modal"> New Event</a>
+                </div>';
+}
+      $output .= '</div>';
 
 
-        <?php
+
 
         $sql = 'SELECT * FROM event WHERE DATE >= Curdate() ORDER BY Date ASC, Time_Start ASC';
         $result = mysqli_query($con, $sql);
         $numrow = mysqli_num_rows($result);
         $counter = 1;
 
+
         // Starts output
-        $output = '<section class="container pt-2">
+        $output .= '<section class="container pt-2">
                     <div class="row">
                     ';
 
@@ -87,15 +91,21 @@ include 'rsc/imports/modals/edit_event_modal.php';
                     
                     
                     <div class="btn-group justify-content-center">
-                        <a href="#eventModal" class="btn btn-block btn-primary border-dark view_data" id="' . $id . '" data-toggle="modal" >Details</a>
-                        <a class="btn btn-primary dropdown-toggle dropdown-toggle-split border-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="#eventModal" class="btn btn-block btn-primary border-dark view_data" id="' . $id . '" data-toggle="modal" >Details</a>';
+
+                if($user_type <= 4 ) {
+             $output .= '<a class="btn btn-primary dropdown-toggle dropdown-toggle-split border-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
                         </a>
                         <div class="dropdown-menu">
                            <a href="#editEventModal" class="dropdown-item view_edit_data" data-toggle="modal" id="' . $id . '" >Edit event</a>
                              <div class="dropdown-divider"></div>
                            <a href="#delEventModal" class="dropdown-item view_delete_data" data-toggle="modal" id="' . $id . '" >Delete event</a>
-                        </div>
+                       </div>';
+                    }
+
+
+            $output .= '
                     </div>
                 </div>
             </div>
@@ -112,7 +122,7 @@ include 'rsc/imports/modals/edit_event_modal.php';
                 $counter++;
             }
             echo $output;
-            $output = "";
+
 
         ?>
 
