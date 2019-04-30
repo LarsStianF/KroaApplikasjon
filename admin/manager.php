@@ -204,85 +204,74 @@ include 'rsc/imports/modals/new_log_modal.php';
 
          ?>
 
-       
+
 
         <!--
-        ############################                ############################
-        ############################    Bar Button  ############################
-        ############################                ############################
-        -->
+ ############################                ############################
+ ############################    Bar Button  ############################
+ ############################                ############################
+ -->
         <div class="row filter Bar-log">
             <div class="col">
-                <a href="#newLogModal" name="1" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Bar log</a>
+                <a href="#newLogModal" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Bar log</a>
 
-            <?php
-            /* Attempt MySQL server connection. Assuming you are running MySQL
-            server with default setting (user 'root' with no password) */
-            $link = mysqli_connect("localhost", "root", "", "group11");
-
-            // Check connection
-            if($link === false){
-                die("ERROR: Could not connect. " . mysqli_connect_error());
-            }
-
-            // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 1";
-            if($result = mysqli_query($link, $sql)){
-                if(mysqli_num_rows($result) > 0){
-                    while($row = mysqli_fetch_array($result)){
-                        // Gets date
-                        $id = $row['ID'];
-                        $d = new DateTime($row['Date']);
-                        $date = $d->format('F jS o');
-
-                        // Gets time
-                        $sTime = new DateTime($row['Time_Start']);
-                        $eTime = new DateTime($row['Time_End']);
-                        $startTime = $sTime->format('H:i');
-                        $endTime = $eTime->format('H:i');
+                <?php
 
 
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo            $date;
-                        echo            '<br>';
-                        echo            ' Time: ';
-                        echo            $startTime;
-                        echo            ' - ';
-                        echo            $endTime;
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Bar logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</form>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4 justify-content-between">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo        '<button class="btn btn-success" type="submit">Add</button>';
-                        echo    '</div>';
-                        echo '</div>';
+                // Attempt select query execution
+                $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 1";
+                if($result = mysqli_query($con, $sql)){
+                    if(mysqli_num_rows($result) > 0){
+                        while($row = mysqli_fetch_array($result)){
+                            // Gets date
+                            $id = $row['ID'];
+                            $d = new DateTime($row['Date']);
+                            $date = $d->format('F jS o');
+
+                            // Gets time
+                            $sTime = new DateTime($row['Time_Start']);
+                            $eTime = new DateTime($row['Time_End']);
+                            $startTime = $sTime->format('H:i');
+                            $endTime = $eTime->format('H:i');
+
+
+                            echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
+                            echo    '<div class="col-md-8">';
+                            echo        '<div class="d-flex w-100 justify-content-between">';
+                            echo            '<strong class="d-block text-gray-dark h4">';
+                            echo            $row['Name'];
+                            echo            '</strong>';
+                            echo        '</div>';
+                            echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
+                            echo            $date;
+                            echo            '<br>';
+                            echo            ' Time: ';
+                            echo            $startTime;
+                            echo            ' - ';
+                            echo            $endTime;
+                            echo        '</strong>';
+                            echo        '<div class="media pt-3">';
+                            echo            '<div class="m-2">';
+
+                            echo            '<h5>'.$row['logs'].'</h5>';
+                            echo            '</div>';
+                            echo        '</div>';
+                            echo    '</div>';
+                            echo    '<div class="col-md-12 ">';
+                            echo        '<strong class="d-block text-gray-dark h4 mb-0 mt-3">Frivillige</strong>';
+                            echo        populate_volunteers($id, $row['crew_type_ID']);
+                            echo    '</div>';
+                            echo '</div>';
+                        }
+                        // Free result set
+                        mysqli_free_result($result);
+                    } else{
+                        echo "No records matching your query were found.";
                     }
-                    // Free result set
-                    mysqli_free_result($result);
-                } else{
-                    echo "No records matching your query were found.";
                 }
-            } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-            }
 
-            // Close connection
-            mysqli_close($link);
-            ?>
+
+                ?>
             </div>
         </div>
         <!--
@@ -292,78 +281,67 @@ include 'rsc/imports/modals/new_log_modal.php';
         -->
         <div class="row filter Security-log">
             <div class="col">
-                <a href="#newLogModal" name="2" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Security log</a>
+                <button class="btn btn-primary btn-lg mt-2">Create new Security log</button>
 
 
                 <?php
-            /* Attempt MySQL server connection. Assuming you are running MySQL
-            server with default setting (user 'root' with no password) */
-            $link = mysqli_connect("localhost", "root", "", "group11");
-
-            // Check connection
-            if($link === false){
-                die("ERROR: Could not connect. " . mysqli_connect_error());
-            }
-
-            // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 2";
-            if($result = mysqli_query($link, $sql)){
-                if(mysqli_num_rows($result) > 0){
-                    while($row = mysqli_fetch_array($result)){
-                        // Gets date
-                        $id = $row['ID'];
-                        $d = new DateTime($row['Date']);
-                        $date = $d->format('F jS o');
-
-                        // Gets time
-                        $sTime = new DateTime($row['Time_Start']);
-                        $eTime = new DateTime($row['Time_End']);
-                        $startTime = $sTime->format('H:i');
-                        $endTime = $eTime->format('H:i');
 
 
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo            $date;
-                        echo            '<br>';
-                        echo            ' Time: ';
-                        echo            $startTime;
-                        echo            ' - ';
-                        echo            $endTime;
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Security logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</form>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4 justify-content-between">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo        '<button class="btn btn-success" type="submit">Add</button>';
-                        echo    '</div>';
-                        echo '</div>';
+                // Attempt select query execution
+                $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 2";
+                if($result = mysqli_query($con, $sql)){
+                    if(mysqli_num_rows($result) > 0){
+                        while($row = mysqli_fetch_array($result)){
+                            // Gets date
+                            $id = $row['ID'];
+                            $d = new DateTime($row['Date']);
+                            $date = $d->format('F jS o');
+
+                            // Gets time
+                            $sTime = new DateTime($row['Time_Start']);
+                            $eTime = new DateTime($row['Time_End']);
+                            $startTime = $sTime->format('H:i');
+                            $endTime = $eTime->format('H:i');
+
+
+                            echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
+                            echo    '<div class="col-md-8">';
+                            echo        '<div class="d-flex w-100 justify-content-between">';
+                            echo            '<strong class="d-block text-gray-dark h4">';
+                            echo            $row['Name'];
+                            echo            '</strong>';
+                            echo        '</div>';
+                            echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
+                            echo            $date;
+                            echo            '<br>';
+                            echo            ' Time: ';
+                            echo            $startTime;
+                            echo            ' - ';
+                            echo            $endTime;
+                            echo        '</strong>';
+                            echo        '<div class="media pt-3">';
+                            echo            '<div class="m-2">';
+
+                            echo            '<h5>'.$row['logs'].'</h5>';
+                            echo            '</div>';
+                            echo        '</div>';
+                            echo    '</div>';
+                            echo    '<div class="col-md-12 ">';
+                            echo        '<strong class="d-block text-gray-dark h4 mb-0 mt-3">Frivillige</strong>';
+                            echo        populate_volunteers($id, $row['crew_type_ID']);
+                            echo    '</div>';
+                            echo '</div>';
+                        }
+                        // Free result set
+                        mysqli_free_result($result);
+                    } else{
+                        echo "No logs were found.";
                     }
-                    // Free result set
-                    mysqli_free_result($result);
-                } else{
-                    echo "No records matching your query were found.";
                 }
-            } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-            }
 
-            // Close connection
-            mysqli_close($link);
-            ?>
-        </div>
+
+                ?>
+            </div>
         </div>
         <!--
         ############################                ############################
@@ -372,77 +350,65 @@ include 'rsc/imports/modals/new_log_modal.php';
         -->
         <div class="row filter Crew-log">
             <div class="col">
-                <a href="#newLogModal" name="3" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Crew log</a>
+                <button class="btn btn-primary btn-lg mt-2">Create new Crew log</button>
 
                 <?php
-            /* Attempt MySQL server connection. Assuming you are running MySQL
-            server with default setting (user 'root' with no password) */
-            $link = mysqli_connect("localhost", "root", "", "group11");
-
-            // Check connection
-            if($link === false){
-                die("ERROR: Could not connect. " . mysqli_connect_error());
-            }
-
-            // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 3";
-            if($result = mysqli_query($link, $sql)){
-                if(mysqli_num_rows($result) > 0){
-                    while($row = mysqli_fetch_array($result)){
-                        // Gets date
-                        $id = $row['ID'];
-                        $d = new DateTime($row['Date']);
-                        $date = $d->format('F jS o');
-
-                        // Gets time
-                        $sTime = new DateTime($row['Time_Start']);
-                        $eTime = new DateTime($row['Time_End']);
-                        $startTime = $sTime->format('H:i');
-                        $endTime = $eTime->format('H:i');
 
 
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo            $date;
-                        echo            '<br>';
-                        echo            ' Time: ';
-                        echo            $startTime;
-                        echo            ' - ';
-                        echo            $endTime;
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Crew logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</form>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4 justify-content-between">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo        '<button class="btn btn-success" type="submit">Add</button>';
-                        echo    '</div>';
-                        echo '</div>';
+                // Attempt select query execution
+                $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 3";
+                if($result = mysqli_query($con, $sql)){
+                    if(mysqli_num_rows($result) > 0){
+                        while($row = mysqli_fetch_array($result)){
+                            // Gets date
+                            $id = $row['ID'];
+                            $d = new DateTime($row['Date']);
+                            $date = $d->format('F jS o');
+
+                            // Gets time
+                            $sTime = new DateTime($row['Time_Start']);
+                            $eTime = new DateTime($row['Time_End']);
+                            $startTime = $sTime->format('H:i');
+                            $endTime = $eTime->format('H:i');
+
+
+                            echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
+                            echo    '<div class="col-md-8">';
+                            echo        '<div class="d-flex w-100 justify-content-between">';
+                            echo            '<strong class="d-block text-gray-dark h4">';
+                            echo            $row['Name'];
+                            echo            '</strong>';
+                            echo        '</div>';
+                            echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
+                            echo            $date;
+                            echo            '<br>';
+                            echo            ' Time: ';
+                            echo            $startTime;
+                            echo            ' - ';
+                            echo            $endTime;
+                            echo        '</strong>';
+                            echo        '<div class="media pt-3">';
+                            echo            '<div class="m-2">';
+                            echo            '<h5>'.$row['logs'].'</h5>';
+                            echo            '</div>';
+                            echo        '</div>';
+                            echo    '</div>';
+                            echo    '<div class="col-md-12 ">';
+                            echo        '<strong class="d-block text-gray-dark h4 mb-0 mt-3">Frivillige</strong>';
+                            echo        populate_volunteers($id, $row['crew_type_ID']);
+                            echo    '</div>';
+                            echo '</div>';
+                        }
+                        // Free result set
+                        mysqli_free_result($result);
+                    } else{
+                        echo "No logs were found.";
                     }
-                    // Free result set
-                    mysqli_free_result($result);
-                } else{
-                    echo "No records matching your query were found.";
                 }
-            } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-            }
 
-            // Close connection
-            mysqli_close($link);
-            ?>
-        </div>
+
+                ?>
+            </div>
         </div>
         <!--
         ############################                ############################
@@ -451,78 +417,67 @@ include 'rsc/imports/modals/new_log_modal.php';
         -->
         <div class="row filter Tech-log">
             <div class="col">
-                <a href="#newLogModal" name="4" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Technical log</a>
+                <button class="btn btn-primary btn-lg mt-2">Create new Technical log</button>
 
                 <?php
-            /* Attempt MySQL server connection. Assuming you are running MySQL
-            server with default setting (user 'root' with no password) */
-            $link = mysqli_connect("localhost", "root", "", "group11");
-
-            // Check connection
-            if($link === false){
-                die("ERROR: Could not connect. " . mysqli_connect_error());
-            }
-
-            // Attempt select query execution
-            $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 4";
-            if($result = mysqli_query($link, $sql)){
-                if(mysqli_num_rows($result) > 0){
-                    while($row = mysqli_fetch_array($result)){
-                        // Gets date
-                        $id = $row['ID'];
-                        $d = new DateTime($row['Date']);
-                        $date = $d->format('F jS o');
-
-                        // Gets time
-                        $sTime = new DateTime($row['Time_Start']);
-                        $eTime = new DateTime($row['Time_End']);
-                        $startTime = $sTime->format('H:i');
-                        $endTime = $eTime->format('H:i');
 
 
-                        echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
-                        echo    '<div class="col-md-8">';
-                        echo        '<div class="d-flex w-100 justify-content-between">';
-                        echo            '<strong class="d-block text-gray-dark h4">';
-                        echo            $row['Name'];
-                        echo            '</strong>';
-                        echo            '<button class="btn btn-success" type="submit">Edit</button>';
-                        echo        '</div>';
-                        echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
-                        echo            $date;
-                        echo            '<br>';
-                        echo            ' Time: ';
-                        echo            $startTime;
-                        echo            ' - ';
-                        echo            $endTime;
-                        echo        '</strong>';
-                        echo        '<div class="media text-muted pt-3">';
-                        echo            '<form class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">';
-                        echo            '<span class="text-gray dark h6">Tech logs: </span>';
-                        echo            $row['logs'];
-                        echo            '</form>';
-                        echo        '</div>';
-                        echo    '</div>';
-                        echo    '<div class="col-md-4 justify-content-between">';
-                        echo        '<strong class="d-block text-gray-dark h4 border-bottom">Frivillige</strong>';
-                        echo        '<button class="btn btn-success" type="submit">+</button>';
-                        echo    '</div>';
-                        echo '</div>';
+                // Attempt select query execution
+                $sql = "SELECT * FROM logs, event WHERE logs.event_ID = event.ID AND crew_type_ID = 4";
+                if($result = mysqli_query($con, $sql)){
+                    if(mysqli_num_rows($result) > 0){
+                        while($row = mysqli_fetch_array($result)){
+                            // Gets date
+                            $id = $row['ID'];
+                            $d = new DateTime($row['Date']);
+                            $date = $d->format('F jS o');
+
+                            // Gets time
+                            $sTime = new DateTime($row['Time_Start']);
+                            $eTime = new DateTime($row['Time_End']);
+                            $startTime = $sTime->format('H:i');
+                            $endTime = $eTime->format('H:i');
+
+
+                            echo '<div class="col-md-12 themed-grid-col each-item my-3 p-3 bg-white rounded shadow-sm">';
+                            echo    '<div class="col-md-8">';
+                            echo        '<div class="d-flex w-100 justify-content-between">';
+                            echo            '<strong class="d-block text-gray-dark h4">';
+                            echo            $row['Name'];
+                            echo            '</strong>';
+                            echo        '</div>';
+                            echo        '<strong class="d-block text-gray dark border-bottom">Date: ';
+                            echo            $date;
+                            echo            '<br>';
+                            echo            ' Time: ';
+                            echo            $startTime;
+                            echo            ' - ';
+                            echo            $endTime;
+                            echo        '</strong>';
+                            echo        '<div class="media pt-3">';
+                            echo            '<div class="m-2">';
+
+                            echo            '<h5>'.$row['logs'].'</h5>';
+                            echo            '</div>';
+                            echo        '</div>';
+                            echo    '</div>';
+                            echo    '<div class="col-md-12 ">';
+                            echo        '<strong class="d-block text-gray-dark h4 mb-0 mt-3">Frivillige</strong>';
+                            echo        populate_volunteers($id, $row['crew_type_ID']);
+                            echo    '</div>';
+                            echo '</div>';
+                        }
+                        // Free result set
+                        mysqli_free_result($result);
+                    } else{
+                        echo "No logs were found.";
                     }
-                    // Free result set
-                    mysqli_free_result($result);
-                } else{
-                    echo "No records matching your query were found.";
                 }
-            } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-            }
 
-            // Close connection
-            mysqli_close($link);
-            ?>
 
-        </div>
+                ?>
+
+            </div>
         </div>
 
 
