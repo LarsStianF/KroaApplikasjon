@@ -42,13 +42,13 @@ if(count($row)) {
 
 
         $output     .= '
-           <div class=" bg-light border-dark">
+           <div class=" bg-secondary rounded">
 
                  <div class="card">
                      <div class="card-header text-center d-flex justify-content-between">
                          <div class="d-flex justify-content-left">
                              <h3>
-                             ' . $event_name . '
+                             ' . $event_name . ' 
                              </h3>
                         </div>
                         <div class="d-flex justify-content-left">
@@ -62,7 +62,6 @@ if(count($row)) {
                          </div>
                       </div>
                  </div>                 
-           </div>                 
 
                                                                   
 ';
@@ -85,16 +84,16 @@ if(count($row)) {
 
         $output.='
 
-                         <a class=" d-flex justify-content-left list-group-item list-group-item-action flex-column" data-toggle="collapse" href="#collapseCrew'.$crew_id.$event_id.'" aria-expanded="true">
+                         <a class=" d-flex justify-content-left list-group-item list-group-item-action flex-column mb-2 bg-light" data-toggle="collapse" href="#collapseCrew'.$crew_id.$event_id.'" aria-expanded="true">
                          <div class="d-flex w-100 justify-content-center">
                              <h3>'.$crew_name.'</h3>                                              
                          </div>                        
                          </a>
-                         <div id="collapseCrew'.$crew_id.$event_id.'" class="collapse" data-parent="#accordionCrew'.$event_id.'" style="">
+                         <div id="collapseCrew'.$crew_id.$event_id.'" class="collapse pb-1" data-parent="#accordionCrew'.$event_id.'" style="">
                              <div class="card col mb-4 box-shadow h-md-250">
-            <div class="card-body d-flex flex-column">
+            <div class="card-body d-flex flex-column ">
               <h3 class="mb-0 text-dark">
-                ' . $event_name . '
+                ' . $event_name . ' - '.$crew_name.' log
               </h3>
               <div class="mb-1 text-muted">' .DATE("j F Y" ,strtotime($event_date)) . '</div>
               <p class="card-text mb-auto">'. $log_event.'</p>
@@ -123,7 +122,8 @@ if(count($row)) {
                         
                         ';
         }
-        $output .= '</div></div>';
+        $output .= '</div></div>           </div>                 
+';
 
     }
     $output .= '</div>';

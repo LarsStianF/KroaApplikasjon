@@ -90,7 +90,7 @@ include 'rsc/imports/php/functions/functions.php';
                     <div class="input-group input-group-lg w-100">
                     <input type="text" id="logSearch" name="logSearch" class="form-control" placeholder="Search for logs(read only)">
                 <div class="input-group-append">
-                    <input type="submit" value="Search" class="search_button btn btn-dark" />
+                    <input type="submit" value="Search" class="filter-button search_button btn btn-dark filter-button" data-filter="Search-log" />
 
                 </div>
                     </div>
@@ -99,12 +99,12 @@ include 'rsc/imports/php/functions/functions.php';
 
         </div>
 
-        <div class="row">
+        <div class="row filter Search-log">
             <div class="col themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Log archive</h6>
 
                     <div id="searchresults" >
-                        <div id="results" class="update">
+                        <div id="results">
 
                         </div>
                     </div>
