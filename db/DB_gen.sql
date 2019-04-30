@@ -179,7 +179,7 @@ INSERT INTO Volunteer (Firstname, Lastname, nr, Email, Password, Unit, user_type
 ('Ahmad', 'Sola', 76555567, 'Sola@test.no', md5('Root123'), 1, 6),
 ('Jurgen', 'Klopp', 38520542, 'Klopp@test.no', md5('Root123'), 2, 6),
 ('Manuel', 'Ernzt', 48274259, 'Ernzt@test.no', md5('Root123'), 7, 6),
-('Frøydis', 'Humle', 48275259, 'Frøydis@test.no', md5('Root123'), 1, 6),
+('Ragnhild', 'Humle', 48275259, 'Raghu@test.no', md5('Root123'), 1, 6),
 ('Maghda', 'Ernzt', 48274259, 'Maghda@test.no', md5('Root123'), 6, 6),
 ('Eivind', 'Underhaug', 48272953, 'Under@test.no', md5('Root123'), 8, 6),
 ('Eric', 'Ernzt', 48270520, 'Eric@test.no', md5('Root123'), 7, 6),
