@@ -15,6 +15,20 @@ return false;
 
 }
 
+function select_list($query)
+{
+    global $con;
+    $q = mysqli_query($con,$query);
+    if (!$q) return null;
+    $ret = array();
+    while ($row = mysqli_fetch_array($q)) {
+        array_push($ret, $row);
+    }
+    mysqli_free_result($q);
+    return $ret;
+}
+
+
 function get_volunteer_user_type($vol_id){
     global $con;
 

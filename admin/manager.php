@@ -12,6 +12,40 @@ include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
 include 'rsc/imports/php/functions/functions.php';
 ?>
+    <script src="../rsc/imports/js/managerjs.js"></script>
+
+    <script type="text/javascript">
+
+        $(function() {
+
+            $(".search_button").click(function() {
+                // getting the value that user typed
+                var searchString    = $("#logSearch").val();
+                // forming the queryString
+                var data            = 'logSearch='+ searchString;
+
+                // if searchString is not empty
+                if(searchString) {
+                    // ajax call
+                    $.ajax({
+                        type: "POST",
+                        url: "fetch_log_search_data.php",
+                        data: data,
+                        beforeSend: function(html) { // this happens before actual call
+                            $("#results").html('');
+                            $("#searchresults").show();
+                            $(".word").html(searchString);
+                        },
+                        success: function(html){ // this happens after we get results
+                            $("#results").show();
+                            $("#results").append(html);
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
 
     <!--
     ##################################################################################
@@ -52,14 +86,29 @@ include 'rsc/imports/php/functions/functions.php';
                 </label>
             </div>
 
-            <div class="input-group input-group-lg form-inline my-2">
-                <input type="text" class="form-control" placeholder="Search for logs">
+                <form method="post" action="fetch_log_search_data.php" class="form-inline m-1">
+                    <div class="input-group input-group-lg form-inline">
+                    <input type="text" id="logSearch" name="logSearch" class="form-control" placeholder="Search for logs">
                 <div class="input-group-append">
-                    <button class="btn btn-secondary btn-dark" type="button">
-                        <i>Search</i>
-                    </button>
-                </div>
+                    <input type="submit" value="Search" class="search_button btn btn-dark" />
 
+                </div>
+                    </div>
+                </form>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
+                    <h6 class="border-bottom border-gray pb-2 mb-0">Upcoming events</h6>
+
+                    <div id="searchresults">
+                        <ul id="results" class="update">
+
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -527,11 +576,7 @@ include 'rsc/imports/php/functions/functions.php';
 
     </main>
 
-    <script src="rsc/imports/php/functions/functions.php"></script>
-    <script src="../rsc/imports/js/managerjs.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
-    <script src="offcanvas.js"></script></body>
+
 
 
 
