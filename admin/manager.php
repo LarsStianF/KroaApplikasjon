@@ -11,12 +11,10 @@ if( !isset($_SESSION['login']) ){
 include 'rsc/imports/php/components/admin_head.php';
 include 'rsc/imports/php/components/admin_header.php';
 include 'rsc/imports/php/functions/functions.php';
+include 'rsc/imports/modals/new_log_modal.php';
+
 ?>
     <script src="../rsc/imports/js/managerjs.js"></script>
-
-    <script type="text/javascript">
-
-    </script>
 
     <!--
     ##################################################################################
@@ -239,6 +237,7 @@ include 'rsc/imports/php/functions/functions.php';
         -->
         <div class="row filter Bar-log">
             <div class="col">
+                <a href="#newLogModal" class="btn btn-primary btn-lg mt-2 newlog" data-toggle="modal">Create new Bar log</a>
 
             <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
@@ -317,8 +316,10 @@ include 'rsc/imports/php/functions/functions.php';
         -->
         <div class="row filter Security-log">
             <div class="col">
+                <button class="btn btn-primary btn-lg mt-2">Create new Security log</button>
 
-            <?php
+
+                <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
             server with default setting (user 'root' with no password) */
             $link = mysqli_connect("localhost", "root", "", "group11");
@@ -395,7 +396,9 @@ include 'rsc/imports/php/functions/functions.php';
         -->
         <div class="row filter Crew-log">
             <div class="col">
-            <?php
+                <button class="btn btn-primary btn-lg mt-2">Create new Crew log</button>
+
+                <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
             server with default setting (user 'root' with no password) */
             $link = mysqli_connect("localhost", "root", "", "group11");
@@ -472,7 +475,9 @@ include 'rsc/imports/php/functions/functions.php';
         -->
         <div class="row filter Tech-log">
             <div class="col">
-            <?php
+                <button class="btn btn-primary btn-lg mt-2">Create new Technical log</button>
+
+                <?php
             /* Attempt MySQL server connection. Assuming you are running MySQL
             server with default setting (user 'root' with no password) */
             $link = mysqli_connect("localhost", "root", "", "group11");
