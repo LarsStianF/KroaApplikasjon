@@ -60,9 +60,14 @@ function populate_volunteers_all(){
 function populate_volunteers_filter($crew_type_ID){
     global $con;
 
-    $sql = 'SELECT * FROM Volunteer, event_volunteer 
-            WHERE Volunteer.ID = event_volunteer.Vol_ID AND user_type > 1 
-              AND  event_volunteer.crew_type_ID = ' . $crew_type_ID.';';
+    $sql = 'select
+            v.*
+            from
+             volunteer AS v
+            where
+             v.ID in (
+        select ev.vol_ID from event_volunteer AS ev 
+        where ev.crew_type_ID = ' . $crew_type_ID.');';
     $result = mysqli_query($con, $sql);
 
         volunteers_content($result);
@@ -386,6 +391,43 @@ echo $newUserType;
         header('Refresh: 0; URL=unitlist.php');
 
 
+    }
+    function create_new_log($crew_id,$event_id,$name_attribute)
+    {
+
+        global $con;
+
+        if (isset($_POST[$name_attribute])) {
+            $log_text = $_POST['log_text'];
+            $log_text = mysqli_real_escape_string($con, $log_text);
+
+            $sql = "INSERT INTO logs(event_ID, crew_type_ID, logs) 
+                     VALUES ('$event_id', '$crew_id', '$log_text');";
+
+            mysqli_query($con, $sql);
+
+            // Check if event was created in DB:
+            $sql_exist = 'SELECT COUNT(*) AS Existence FROM logs WHERE ';
+            $sql_exist .= 'event_ID = "' . $event_id . '" AND ';
+            $sql_exist .= 'crew_type_ID = "' . $crew_id . '" AND ';
+            $sql_exist .= 'logs = "' . $log_text . '";';
+            $result = mysqli_query($con, $sql_exist);
+            $row = mysqli_fetch_array($result);
+
+            if ($row['Existence'] == 1) {
+
+                // event was created in DB:
+                $status_db = 1;
+
+            } elseif ($row['Existence'] == 0 || $row['Existence'] == null) {
+
+                // event was not created in DB:
+                $status_db = 0;
+
+            }
+
+            header('Refresh: 0; URL=manager.php?created=event&status=' . $status_db);
+        }
     }
 
     function create_new_event($name_attribute)

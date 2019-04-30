@@ -33,6 +33,15 @@ if(isset($_GET['object'])) {
 
 
     }
+
+    if ($_GET['object'] == 'log') {
+        $object = mysqli_real_escape_string($con, $_GET['object']);
+        $crew_id = mysqli_real_escape_string($con, $_GET['id']);
+        $event_id = mysqli_real_escape_string($con, $_GET['event_id']);
+        $name_attribute = mysqli_real_escape_string($con, $_GET['name']);
+
+        create_new_log($crew_id, $event_id, $name_attribute);
+    }
 }
 
 ?>

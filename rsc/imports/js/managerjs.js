@@ -24,6 +24,20 @@ $(document).ready(function(){
         $('#newLogModal').modal("show");
 
     });
+
+    $('.newlog').click(function () {
+         var id = $(this).attr('name');
+        $.ajax({
+            url: "fetch_log_data.php",
+            method: "post",
+            data: {id:id},
+            success:function (data) {
+                $('#log_edit_detail').html(data);
+                $('#newLogModal').modal("show");
+            }
+        });
+    });
+
 });
 
 
