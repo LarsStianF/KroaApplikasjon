@@ -1,17 +1,5 @@
 
 
-:root{
-
-    --black-color: #000000;
-    --white-color: #ffffff;
-}
-
-footer#footer{
-    background-color: var(--black-color);
-    color: white;
-
-}
-
 body {
     background-color: #e5e5e5;
     background-image: url("../../img/background.jpg");
@@ -23,10 +11,7 @@ body {
 
 
 main{
-    /*
-    box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
-    background-color: rgba(58, 54, 54, 0.15);
-    */
+
     margin: 2px;
     min-height: 100%;
 
@@ -50,10 +35,7 @@ section.landing-page {
 }
 
 .front-cover {
-
-    background-image: url('../../img/test1.jpg');
     height:100%;
-
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -74,10 +56,7 @@ section.landing-page {
     box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
 }
 
-#navimg{
-    position: absolute;
-    background-repeat: no-repeat;
-}
+
 .footer-copyright{
     background-color: rgba(0,0,0,0.25);
     padding: 20px 0;
@@ -89,81 +68,76 @@ section.landing-page {
     height: 500px;
 }
 
-/* OLD NAV
-nav {
-    box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
-    background-image: url("../../img/navhome1.png");
-    margin-bottom: 20px;
-}
 
-.active{
-    font-size: 25px;
-    color: red;
-    border-bottom: 5px solid red;
-}
-
-.subhide{
-    display: none;
-}
-
-.subshow{
-    display: inline;
-}
-.subshow a {
-    display: inline;
-}
-
-#secondnav{
-display: block;
-    padding-top: 25px;
-    top: auto;
-    z-index: auto;
-
-}
-#customnav img {
-size: 20px;
-    max-width: 25px;
-}
-*/
-.themed-grid-col {
-
-    padding-bottom: 15px;
-   /*
-    background-color: rgba(86, 61, 124, .15);
-    border: 1px solid rgba(86, 61, 124, .2);
-    */
-}
 .card {
     margin-bottom: 1.5rem;
     border-radius: 0;
 }
 
-.card {
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: .25rem;
+
+/*******************************************************
+************* Made for people.php **********************
+********************************************************/
+
+/*  Fixes vertical gap between first element list and next element  */
+#namerow ul {
+    margin-block-end: 0;
 }
 
-.card-body {
-    padding: 15px;
+/*******************************************************
+************* Made for admin_header.php ****************
+********************************************************/
+
+
+.navbar {
+    padding: 5px;
+
 }
-.card-body {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 1.25rem;
+/* Positions home/logout button */
+.topnav .container .row {
+    margin: -7px;
+
+
 }
+
+ul.topbuttons li {
+    margin: 0 5px;
+    padding: 5px 0 0;
+    width: 32px;
+    display: inline-block;
+    text-align: center;
+
+}
+
+ul.topbuttons {
+    margin: 5px 0 10px -25px;
+    float: right;
+}
+
+/* Positions and sets color of topbar <a> buttons to white. Making the a tags "blue" shine on hover */
+.hover-effect {
+    vertical-align: middle;
+    color: #fff;
+}
+
+/* Sets the background gradient to white / black (bootstraps dark) creating a stylized look,
+   separating the "company logo" and the nav portion of the header in white and black respectably
+   (only really separated on full screen view)*/
+.gradient-background {
+    background: -webkit-linear-gradient(45deg, #ffffff 48%, #343A40 48%);
+    background: -webkit-linear-gradient(left, #ffffff 48%, #343A40 48%);
+    background: linear-gradient(45deg, #ffffff 48%, #343A40 48%);
+}
+
+
+
+
+
+
+
+/*//////////////////////////////////////////
+/////////////////admin/Index////////////////////
+ ////////////////////////////////////////*/
 
 .stat-widget-one .stat-icon {
     vertical-align: top;
@@ -172,9 +146,7 @@ size: 20px;
     display: inline-block;
 }
 
-.stat-widget-one .stat-content {
-    margin-left: 15px;
-}
+
 .stat-widget-one .stat-content {
     margin-left: 30px;
     margin-top: 7px;
@@ -191,31 +163,14 @@ size: 20px;
 }
 
 .stat-widget-one .stat-icon i {
-    font-size: 30px;
-    border-width: 3px;
     border-style: solid;
     border-radius: 100px;
     padding: 15px;
-    font-weight: 900;
     display: inline-block;
 }
-[class^="ti-"], [class*=" ti-"] {
-    font-family: 'themify';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.text-success {
-    color: #28a745!important;
-}
-.border-success {
-    border-color: #28a745!important;
-}
+
+
+
 
 .ti-enhet:before {
     content: url("../../img/enhet.png");
@@ -232,12 +187,10 @@ size: 20px;
 .ti-jippi:before {
     content: url("../../img/jippi.png");
 }
-*, ::after, ::before {
-    box-sizing: border-box;
-}
-div[class*="col-"] {
-    float: left;
-}
+
+
+
+
 .card-custom {
     max-width: 360px;
     min-width: 360px;
