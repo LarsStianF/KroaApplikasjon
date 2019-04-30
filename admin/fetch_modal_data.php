@@ -69,30 +69,50 @@ if(isset($_POST['id']))
 
                             // check if signed
                             $signcheck = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 1";
-                            $resultsign = mysqli_query($con,$signcheck);
+                            $resultsign = mysqli_query($con, $signcheck);
                             $signrow = mysqli_fetch_array($resultsign);
 
                             //check if confirmed
-                            $confirmcheck = "SELECT COUNT(*) AS Existence FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
+                            $confirmcheck = "SELECT * FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
                             $resultconfirm = mysqli_query($con, $confirmcheck);
                             $confirmrow = mysqli_fetch_array($resultconfirm);
 
-                            if($signrow['Existence'] == 0 && $confirmrow['Existence'] ==  0) {
 
-                                //check if manager for this crew
-                                if(manager_crew_type_check($user_id, 1)) {
-                                    $output .= '<a href="create_handler.php?object=application&job=1&manager=1&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            //check that there are no existing applications
+                            if ($signrow['Existence'] == 0 && !$confirmrow) {
+
+                                //true: give manager signup button
+                                if (manager_crew_type_check($user_id, 1)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=1&manager=1&id=' . $id . '" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up</a>';
+                                }
+                                // false: give volunteer signup button
+                                if(!manager_crew_type_check($user_id, 1)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=1&manager=0&id=' . $id . '" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up</a>';
+                                }
+
+                            }
+                            // check if volunteer application exists // give remove
+                            elseif($signrow['Existence'] == 1 && !$confirmrow) {
+                                $output .= '<a href="delete_handler.php?delete=application&job=1&manager=0&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
+                            //check if volunteer is accepted to event
+                            elseif($signrow['Existence'] == 0 && $confirmrow) {
+
+                                //if confirmed to this give remove button.
+                                if($confirmrow['crew_type_ID'] == 1) {
+                                    $output .= '<a href="delete_handler.php?delete=application&job=1&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+
+                                    //print invisible button for content placement
                                 } else {
-                                    $output .= '<a href="create_handler.php?object=application&job=1&manager=0&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                    $output .= '<a href="delete_handler.php?delete=application&job=1&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2 invisible">Invisible</a>';
                                 }
                             }
-                            elseif ($signrow['Existence'] == 1) {
-                                $output .= '<a  href="delete_handler.php?delete=application&job=1&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
-                            }
-                            elseif($confirmrow['Existence'] ==  1) {
-                                $output .= '<a  href="delete_handler.php?delete=application&job=1&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
-                            }
 
+
+
+                        }
+                        else {
+                            $output .= '<a href="delete_handler.php?delete=application&job=1&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2 invisible">Invisible</a>';
                         }
 
 
@@ -115,31 +135,52 @@ if(isset($_POST['id']))
                         ';
 
                         if ($compare_date >= $date_today) {
+
                             // check if signed
                             $signcheck = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 2";
-                            $resultsign = mysqli_query($con,$signcheck);
+                            $resultsign = mysqli_query($con, $signcheck);
                             $signrow = mysqli_fetch_array($resultsign);
 
                             //check if confirmed
-                            $confirmcheck = "SELECT COUNT(*) AS Existence FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
+                            $confirmcheck = "SELECT * FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
                             $resultconfirm = mysqli_query($con, $confirmcheck);
                             $confirmrow = mysqli_fetch_array($resultconfirm);
 
-                            if($signrow['Existence'] == 0 && $confirmrow['Existence'] ==  0) {
 
-                                //check if manager for this crew
-                                if(manager_crew_type_check($user_id, 1)) {
-                                    $output .= '<a href="create_handler.php?object=application&job=2&manager=1&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            //check that there are no existing applications
+                            if ($signrow['Existence'] == 0 && !$confirmrow) {
+
+                                //true: give manager signup button
+                                if (manager_crew_type_check($user_id, 2)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=2&manager=1&id=' . $id . '" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up</a>';
+                                }
+                                // false: give volunteer signup button
+                                if(!manager_crew_type_check($user_id, 2)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=2&manager=0&id=' . $id . '" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up</a>';
+                                }
+
+                            }
+                            // check if volunteer application exists // give remove
+                            elseif($signrow['Existence'] == 1 && !$confirmrow) {
+                                $output .= '<a href="delete_handler.php?delete=application&job=2&manager=0&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
+                            //check if volunteer is accepted to event
+                            elseif($signrow['Existence'] == 0 && $confirmrow) {
+
+                                //if confirmed to this give remove button.
+                                if($confirmrow['crew_type_ID'] == 2) {
+                                    $output .= '<a href="delete_handler.php?delete=application&job=2&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+
+                                    //print invisible button for content placement
                                 } else {
-                                    $output .= '<a href="create_handler.php?object=application&job=2&manager=0&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                    $output .= '<a href="delete_handler.php?delete=application&job=2&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2 invisible">Invisible</a>';
                                 }
                             }
-                            elseif ($signrow['Existence'] == 1) {
-                                $output .= '<a  href="delete_handler.php?delete=application&job=2&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
-                            }
-                            elseif($confirmrow['Existence'] ==  1) {
-                                $output .= '<a  href="delete_handler.php?delete=application&job=2&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
-                            }
+
+
+                        }
+                        else {
+                            $output .= '<a href="delete_handler.php?delete=application&job=2&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2 invisible">Invisible</a>';
                         }
 
 
@@ -163,32 +204,53 @@ if(isset($_POST['id']))
                         ';
 
                         if ($compare_date >= $date_today) {
+
                             // check if signed
                             $signcheck = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 3";
-                            $resultsign = mysqli_query($con,$signcheck);
+                            $resultsign = mysqli_query($con, $signcheck);
                             $signrow = mysqli_fetch_array($resultsign);
 
                             //check if confirmed
-                            $confirmcheck = "SELECT COUNT(*) AS Existence FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
+                            $confirmcheck = "SELECT * FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
                             $resultconfirm = mysqli_query($con, $confirmcheck);
                             $confirmrow = mysqli_fetch_array($resultconfirm);
 
-                            if($signrow['Existence'] == 0 && $confirmrow['Existence'] ==  0) {
 
-                                //check if manager for this crew
-                                if(manager_crew_type_check($user_id, 1)) {
-                                    $output .= '<a href="create_handler.php?object=application&job=3&manager=1&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            //check that there are no existing applications
+                            if ($signrow['Existence'] == 0 && !$confirmrow) {
+
+                                //true: give manager signup button
+                                if (manager_crew_type_check($user_id, 3)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=3&manager=1&id=' . $id . '" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up</a>';
+                                }
+                                // false: give volunteer signup button
+                                if(!manager_crew_type_check($user_id, 3)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=3&manager=0&id=' . $id . '" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up</a>';
+                                }
+
+                            }
+                            // check if volunteer application exists // give remove
+                            elseif($signrow['Existence'] == 1 && !$confirmrow) {
+                                $output .= '<a href="delete_handler.php?delete=application&job=3&manager=0&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
+                            //check if volunteer is accepted to event
+                            elseif($signrow['Existence'] == 0 && $confirmrow) {
+
+                                //if confirmed to this give remove button.
+                                if($confirmrow['crew_type_ID'] == 3) {
+                                    $output .= '<a href="delete_handler.php?delete=application&job=3&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+
+                                    //print invisible button for content placement
                                 } else {
-                                    $output .= '<a href="create_handler.php?object=application&job=3&manager=0&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                    $output .= '<a href="delete_handler.php?delete=application&job=3&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2 invisible">Invisible</a>';
                                 }
                             }
-                            elseif ($signrow['Existence'] == 1) {
-                                $output .= '<a  href="delete_handler.php?delete=application&job=3&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
-                            }
-                            elseif($confirmrow['Existence'] ==  1) {
-                                $output .= '<a  href="delete_handler.php?delete=application&job=3&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
-                            }
 
+
+
+
+                        } else {
+                            $output .= '<a href="delete_handler.php?delete=application&job=3&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2 invisible">Invisible</a>';
                         }
 
             $output .= '<a class="btn btn-primary btn-small border-dark m-2" type="button" data-toggle="collapse" href="#collapseCrew"><i class="fa fa-angle-down"></i></a>
@@ -211,30 +273,51 @@ if(isset($_POST['id']))
 
                             // check if signed
                             $signcheck = "SELECT COUNT(*) AS Existence FROM want_volunteer WHERE vol_ID = $user_id AND event_ID = $id AND crew_type_ID = 4";
-                            $resultsign = mysqli_query($con,$signcheck);
+                            $resultsign = mysqli_query($con, $signcheck);
                             $signrow = mysqli_fetch_array($resultsign);
 
                             //check if confirmed
-                            $confirmcheck = "SELECT COUNT(*) AS Existence FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
+                            $confirmcheck = "SELECT * FROM event_volunteer WHERE vol_ID = $user_id AND event_ID = $id";
                             $resultconfirm = mysqli_query($con, $confirmcheck);
                             $confirmrow = mysqli_fetch_array($resultconfirm);
 
-                            if($signrow['Existence'] == 0 && $confirmrow['Existence'] ==  0) {
 
-                                //check if manager for this crew
-                                if(manager_crew_type_check($user_id, 1)) {
-                                    $output .= '<a href="create_handler.php?object=application&job=4&manager=1&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                            //check that there are no existing applications
+                            if ($signrow['Existence'] == 0 && !$confirmrow) {
+
+                                //true: give manager signup button
+                                if (manager_crew_type_check($user_id, 4)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=4&manager=1&id=' . $id . '" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up</a>';
+                                }
+                                // false: give volunteer signup button
+                                if(!manager_crew_type_check($user_id, 4)) {
+                                    $output .= '<a href="create_handler.php?object=application&job=4&manager=0&id=' . $id . '" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up</a>';
+                                }
+
+                            }
+                            // check if volunteer application exists // give remove
+                            elseif($signrow['Existence'] == 1 && !$confirmrow) {
+                                $output .= '<a href="delete_handler.php?delete=application&job=4&manager=0&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+                            }
+                            //check if volunteer is accepted to event
+                            elseif($signrow['Existence'] == 0 && $confirmrow) {
+
+                                //if confirmed to this give remove button.
+                                if($confirmrow['crew_type_ID'] == 4) {
+                                    $output .= '<a href="delete_handler.php?delete=application&job=4&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2">Remove</a>';
+
+                                    //print invisible button for content placement
                                 } else {
-                                    $output .= '<a href="create_handler.php?object=application&job=4&manager=0&id='.$id.'" type="button" class="btn btn-primary btn-small border-dark m-2">Sign up!</a>';
+                                    $output .= '<a href="delete_handler.php?delete=application&job=4&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2 invisible">Invisible</a>';
                                 }
                             }
-                            elseif ($signrow['Existence'] == 1) {
-                                $output .= '<a  href="delete_handler.php?delete=application&job=4&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
-                            }
-                            elseif($confirmrow['Existence'] ==  1) {
-                                $output .= '<a  href="delete_handler.php?delete=application&job=4&id='.$id.'&user='.$user_id.'" type="button"  class="btn btn-danger btn-small border-dark m-2">Remove</a>';
-                            }
+
+
+
+                       } else {
+                            $output .= '<a href="delete_handler.php?delete=application&job=4&manager=1&id=' . $id . '" type="button" class="btn btn-danger btn-small border-dark m-2 invisible">Invisible</a>';
                         }
+
 
           $output .= '    <a class="btn btn-primary btn-small border-dark m-2" type="button" data-toggle="collapse" href="#collapseTech"><i class="fa fa-angle-down"></i></a>
                         </div>

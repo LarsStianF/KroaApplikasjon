@@ -56,8 +56,10 @@ include 'rsc/imports/modals/event_modal.php';
                                 FROM event
                                 INNER JOIN event_volunteer
                                 ON event.ID = event_volunteer.event_ID 
-                                AND event_volunteer.vol_ID = $user_id";
-                     //   echo $sql;
+                                AND event_volunteer.vol_ID = $user_id
+                                AND Date >= CURDATE();";
+
+
                         $output_confirmed = "";
                         $output_signed = "";
 
@@ -116,15 +118,14 @@ include 'rsc/imports/modals/event_modal.php';
                         } else{
                             echo "ERROR: Could not able to execute";
                         }
-
-
-
                         ?>
                         <small class="d-block text-right mt-3">
                             <a href="event_grid.php" class="d-block text-gray dark">Sign up for more events!</a>
                         </small>
                     </div>
                 </div>
+
+
                 <div class="col-md-6 themed-grid-col"> <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Your signed upcoming events</h6>
 
@@ -134,7 +135,8 @@ include 'rsc/imports/modals/event_modal.php';
                     $sql = "SELECT DISTINCT ID, Name, Event_text, Date, Time_Start, Time_End, Event_sec, Event_bar, Event_crew, Event_tech
                             FROM event, want_volunteer
                             WHERE event.ID = want_volunteer.event_ID 
-                            AND want_volunteer.vol_ID = $user_id";
+                            AND want_volunteer.vol_ID = $user_id
+                            AND Date >= CURDATE();";
 
                     if($result = mysqli_query($con, $sql)){
 
